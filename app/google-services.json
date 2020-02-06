@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "57576429823",
+    "firebase_url": "https://taskerfyp.firebaseio.com",
+    "project_id": "taskerfyp",
+    "storage_bucket": "taskerfyp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57576429823:android:75aed19c69d5f37dcbd4ca",
+        "android_client_info": {
+          "package_name": "com.example.taskerfyp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "57576429823-mqglpq92ak10vg59vvl0m324c348c23i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.taskerfyp",
+            "certificate_hash": "cb79754a30541a7ce2360243c33abda1c28c5341"
+          }
+        },
+        {
+          "client_id": "57576429823-9ej8bo09qbepigu3jk4m7d6ak66butvg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATs41L-nZ1fuI615hJoghBwXzI0g_gkfw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "57576429823-9ej8bo09qbepigu3jk4m7d6ak66butvg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

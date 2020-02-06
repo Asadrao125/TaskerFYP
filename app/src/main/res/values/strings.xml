@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">TaskerFYP</string>
+
+    <array name="gender">
+
+        <item>Select Your Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+
+    </array>
+
+    <array name="profession">
+
+        <item>Select Your Profession</item>
+        <item>Content Writing</item>
+        <item>Electrician</item>
+        <item>Convience</item>
+        <item>Sweeper</item>
+        <item>Laundry</item>
+
+    </array>
+
+</resources>

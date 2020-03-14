@@ -137,14 +137,13 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.exists()) {
-
                                         Toast.makeText(LoginActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
                                         loadingBar.dismiss();
                                         edtLoginEmail.setText("");
                                         edtLoginPassword.setText("");
-
-                                        startActivity(new Intent(LoginActivity.this, CustomerWelocmeActivity.class));
-
+                                        Intent intent = new Intent(getApplicationContext(), CustomerWelocmeActivity.class);
+                                        //intent.putExtra("customer_value", "C");
+                                        startActivity(intent);
                                         finish();
                                     } else {
                                         Toast.makeText(LoginActivity.this, "This email doesnot exist in this category", Toast.LENGTH_SHORT).show();
@@ -160,17 +159,21 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
 
                             reference = FirebaseDatabase.getInstance().getReference().child("Users").child("Tasker");
-
                             reference.orderByChild("email").equalTo(email).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.exists()) {
                                         Toast.makeText(LoginActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-
-                                        startActivity(new Intent(LoginActivity.this, TaskerWelocmeActivity.class));
+                                        loadingBar.dismiss();
+                                        edtLoginEmail.setText("");
+                                        edtLoginPassword.setText("");
+                                        Intent intent = new Intent(getApplicationContext(), TaskerWelocmeActivity.class);
+                                        //intent.putExtra("tasker_value", "T");
+                                        startActivity(intent);
                                         finish();
                                     } else {
                                         Toast.makeText(LoginActivity.this, "This email doesnot exist in this category", Toast.LENGTH_SHORT).show();
+                                        loadingBar.dismiss();
                                     }
                                 }
 
@@ -179,9 +182,6 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }
                             });
-                            loadingBar.dismiss();
-                            edtLoginEmail.setText("");
-                            edtLoginPassword.setText("");
                         }
                     } else {
                         String message = task.getException().getMessage();

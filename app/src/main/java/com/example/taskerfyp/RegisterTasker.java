@@ -58,8 +58,8 @@ public class RegisterTasker extends AppCompatActivity {
         });
 
     }
-    private void initialize()
-    {
+
+    private void initialize() {
         edtTaskerUsername = findViewById(R.id.edtTaskerUsername);
         edtTaskerPhonenumber = findViewById(R.id.edtTaskerPhonenumber);
         edtTaskerEmail = findViewById(R.id.edtTaskerEmail);
@@ -70,8 +70,8 @@ public class RegisterTasker extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         btnCreateTasker = findViewById(R.id.btnCreateTasker);
     }
-    private void createTasker()
-    {
+
+    private void createTasker() {
         final String taskerUsername = edtTaskerUsername.getText().toString().trim();
         final String taskerPhonenumber = edtTaskerPhonenumber.getText().toString().trim();
         final String taskerEmail = edtTaskerEmail.getText().toString().trim();
@@ -79,32 +79,19 @@ public class RegisterTasker extends AppCompatActivity {
         final String taskerGender = spinnerTaskerGender.getSelectedItem().toString().trim();
         final String taskerProfession = spinnerTaskerProfession.getSelectedItem().toString().trim();
 
-        if (TextUtils.isEmpty(taskerUsername))
-        {
+        if (TextUtils.isEmpty(taskerUsername)) {
             Toast.makeText(this, "Enter Username!", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(taskerPhonenumber))
-        {
+        } else if (TextUtils.isEmpty(taskerPhonenumber)) {
             Toast.makeText(this, "Enter Phonenumber!", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(taskerEmail))
-        {
+        } else if (TextUtils.isEmpty(taskerEmail)) {
             Toast.makeText(this, "Enter Email!", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(taskerPassword))
-        {
+        } else if (TextUtils.isEmpty(taskerPassword)) {
             Toast.makeText(this, "Enter Password!", Toast.LENGTH_SHORT).show();
-        }
-        else if (!taskerGender.equals("Male") && !taskerGender.equals("Female") && !taskerGender.equals("Other"))
-        {
+        } else if (!taskerGender.equals("Male") && !taskerGender.equals("Female") && !taskerGender.equals("Other")) {
             Toast.makeText(this, "Select Gender Please!", Toast.LENGTH_SHORT).show();
-        }
-        else if (taskerProfession.equals("Select Your Profession"))
-        {
+        } else if (taskerProfession.equals("Select Your Profession")) {
             Toast.makeText(this, "Select Profession Please!", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else {
             loadingBar.setTitle("Authenticating");
             loadingBar.setMessage("Please Wait While We Are Authenticating You.");
             loadingBar.show();
@@ -113,8 +100,7 @@ public class RegisterTasker extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(taskerEmail, taskerPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful())
-                    {
+                    if (task.isSuccessful()) {
                         String current_user_id;
                         DatabaseReference taskerRef;
                         current_user_id = mAuth.getCurrentUser().getUid();
@@ -125,38 +111,33 @@ public class RegisterTasker extends AppCompatActivity {
                         loadingBar.setMessage("Please Wait While We Are Creating Your Account");
                         loadingBar.show();
                         loadingBar.setCanceledOnTouchOutside(false);
-                        HashMap taskerMap = new HashMap();
-                        taskerMap.put("taskerUsername",taskerUsername);
-                        taskerMap.put("taskerPhonenumber",taskerPhonenumber);
-                        taskerMap.put("taskerGender",taskerGender);
-                        taskerMap.put("taskerProfession", taskerProfession);
-                        taskerMap.put("email",taskerEmail);
 
+                        HashMap taskerMap = new HashMap();
+                        taskerMap.put("taskerUsername", taskerUsername);
+                        taskerMap.put("taskerPhonenumber", taskerPhonenumber);
+                        taskerMap.put("taskerGender", taskerGender);
+                        taskerMap.put("taskerProfession", taskerProfession);
+                        taskerMap.put("email", taskerEmail);
 
                         taskerRef.updateChildren(taskerMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
-                                if (task.isSuccessful())
-                                {
+                                if (task.isSuccessful()) {
                                     Toast.makeText(RegisterTasker.this, "Account Created Succesfully.", Toast.LENGTH_SHORT).show();
                                     loadingBar.dismiss();
                                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                                     finish();
-                                }
-                                else
-                                {
+                                } else {
                                     String message = task.getException().getMessage();
-                                    Toast.makeText(RegisterTasker.this, "Error: "+message, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegisterTasker.this, "Error: " + message, Toast.LENGTH_SHORT).show();
                                     loadingBar.dismiss();
                                 }
                             }
                         });
 
-                    }
-                    else
-                    {
+                    } else {
                         String message = task.getException().getMessage();
-                        Toast.makeText(RegisterTasker.this, "Error: "+message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterTasker.this, "Error: " + message, Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
                     }
                 }

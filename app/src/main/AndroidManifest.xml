@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AddPost"></activity>
         <activity android:name=".RegisterTasker" />
         <activity android:name=".RegisterCustomer" />
         <activity android:name=".AskActivity" />
@@ -21,7 +22,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".CustomerWelocmeActivity" />
-        <activity android:name=".TaskerWelocmeActivity"></activity>
+        <activity android:name=".TaskerWelocmeActivity" />
     </application>
 
 </manifest>

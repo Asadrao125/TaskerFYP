@@ -9,8 +9,9 @@ public class AddPostCustomer {
     String time;
     String date;
     String current_user_name;
+    String image;
 
-    public AddPostCustomer(String id, String title, String description, String budget, String deadline, String time, String date, String current_user_name) {
+    public AddPostCustomer(String id, String title, String description, String budget, String deadline, String time, String date, String current_user_name, String image) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -19,6 +20,10 @@ public class AddPostCustomer {
         this.time = time;
         this.date = date;
         this.current_user_name = current_user_name;
+        this.image = image;
+    }
+
+    public AddPostCustomer() {
     }
 
     public String getId() {
@@ -85,6 +90,11 @@ public class AddPostCustomer {
         this.current_user_name = current_user_name;
     }
 
-    public AddPostCustomer() {
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

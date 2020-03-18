@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewPost"></activity>
+        <activity android:name=".Tasker_View_Post"></activity>
+        <activity android:name=".ViewPost" />
         <activity android:name=".AddPost" />
         <activity android:name=".RegisterTasker" />
         <activity android:name=".RegisterCustomer" />

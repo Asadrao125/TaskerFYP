@@ -45,7 +45,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.username.setText(posts.get(position).getCurrent_user_name());
         holder.budget.setText("Budget: " + posts.get(position).getBudget() +" Rs");
-        holder.deadline.setText("Deadline: " + posts.get(position).getDeadline() + "day(s)");
+        holder.deadline.setText("Deadline: " + posts.get(position).getDeadline() + " day(s)");
         holder.prof_title.setText("Title: " + posts.get(position).getTitle());
         holder.task_description.setText("Description: \n" + posts.get(position).getDescription());
         holder.task_time.setText(posts.get(position).getTime());

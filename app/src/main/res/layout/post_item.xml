@@ -100,6 +100,15 @@
             android:text="Description"
             android:textSize="16sp" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/deadline"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:background="@drawable/border_view_post"
+            android:text="Send Offer" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

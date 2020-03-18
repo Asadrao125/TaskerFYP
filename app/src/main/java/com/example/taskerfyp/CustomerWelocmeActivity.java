@@ -35,6 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CustomerWelocmeActivity extends AppCompatActivity {
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     SharedPreferences.Editor editor;
+
     Button btnAddPost, btnViewPost, btnDeleteAccount, btnThemes, btnInviteFriends, btnHelp, btnEditProfile, btnReport;
     CircleImageView imgProfile;
     FirebaseUser currentFirebaseUser;

@@ -44,10 +44,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.username.setText(posts.get(position).getCurrent_user_name());
-        holder.budget.setText(posts.get(position).getBudget());
-        holder.deadline.setText(posts.get(position).getDeadline());
-        holder.prof_title.setText(posts.get(position).getTitle());
-        holder.task_description.setText(posts.get(position).getDescription());
+        holder.budget.setText("Budget: " + posts.get(position).getBudget() +" Rs");
+        holder.deadline.setText("Deadline: " + posts.get(position).getDeadline() + "day(s)");
+        holder.prof_title.setText("Title: " + posts.get(position).getTitle());
+        holder.task_description.setText("Description: \n" + posts.get(position).getDescription());
         holder.task_time.setText(posts.get(position).getTime());
         holder.task_date.setText(posts.get(position).getDate());
         Picasso.get().load(posts.get(position).getImage()).placeholder(R.mipmap.profile).into(holder.profile_image);

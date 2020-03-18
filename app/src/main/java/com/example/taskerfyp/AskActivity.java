@@ -31,14 +31,12 @@ public class AskActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),RegisterCustomer.class));
-                finish();
             }
         });
         btntasker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),RegisterTasker.class));
-                finish();
             }
         });
     }

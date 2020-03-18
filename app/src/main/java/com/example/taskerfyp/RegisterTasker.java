@@ -125,7 +125,7 @@ public class RegisterTasker extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegisterTasker.this, "Account Created Succesfully.", Toast.LENGTH_SHORT).show();
                                     loadingBar.dismiss();
-                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                    startActivity(new Intent(getApplicationContext(), TaskerWelocmeActivity.class));
                                     finish();
                                 } else {
                                     String message = task.getException().getMessage();

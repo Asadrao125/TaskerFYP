@@ -21,4 +21,15 @@
 
     </array>
 
+    <array name="title">
+
+        <item>Select Post Title</item>
+        <item>Content Writing</item>
+        <item>Electrician</item>
+        <item>Convience</item>
+        <item>Sweeper</item>
+        <item>Laundry</item>
+
+    </array>
+
 </resources>

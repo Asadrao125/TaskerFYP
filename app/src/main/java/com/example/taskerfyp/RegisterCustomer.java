@@ -118,7 +118,7 @@ public class RegisterCustomer extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegisterCustomer.this, "Account Created Succesfully.", Toast.LENGTH_SHORT).show();
                                     loadingBar.dismiss();
-                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                    startActivity(new Intent(getApplicationContext(), CustomerWelocmeActivity.class));
                                     finish();
                                 } else {
                                     String message = task.getException().getMessage();

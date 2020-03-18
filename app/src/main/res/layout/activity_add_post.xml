@@ -30,7 +30,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:entries="@array/profession"
+            android:entries="@array/title"
             android:focusable="true" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -77,8 +77,8 @@
                 android:id="@+id/edtTaskeDeadline"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Deadline"
-                android:inputType="date" />
+                android:hint="Deadline In Days"
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

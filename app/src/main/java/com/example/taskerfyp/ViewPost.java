@@ -43,14 +43,16 @@ public class ViewPost extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("All_Posts");
+        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("All_Posts").child(current_user.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Post p = dataSnapshot1.getValue(Post.class);
                     list.add(p);
-                    Toast.makeText(ViewPost.this, "" + dataSnapshot1.getValue(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(ViewPost.this, "" + dataSnapshot1.getValue(), Toast.LENGTH_SHORT).show();
                 }
                 adapter = new MyAdapter(ViewPost.this, list);
                 recyclerView.setAdapter(adapter);

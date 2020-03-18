@@ -93,7 +93,7 @@ public class AddPost extends AppCompatActivity {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         current_user_id = firebaseUser.getUid();
 
-        ref = FirebaseDatabase.getInstance().getReference("All_Posts");
+        ref = FirebaseDatabase.getInstance().getReference("All_Posts").child(current_user_id);
 
         btnAddPostCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +101,6 @@ public class AddPost extends AppCompatActivity {
                 UploadPost();
             }
         });
-
 
 
         // Getting Profile Image Child From Current User To Use In View Post Activity
@@ -118,9 +117,6 @@ public class AddPost extends AppCompatActivity {
 
             }
         });
-
-
-
 
         /* Getting No of Post On Current User ID  */
         DatabaseReference current = FirebaseDatabase.getInstance().getReference("Current_UID_Post_Counter").child(current_user_id);
@@ -142,7 +138,6 @@ public class AddPost extends AppCompatActivity {
             }
         });
         /* Getting No of Post On Current User ID  */
-
     }
 
     public void initilize() {
@@ -178,7 +173,7 @@ public class AddPost extends AppCompatActivity {
 
         // Getting Current Date and Time
         Calendar calFordDate = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd yyyy");
         String date = currentDate.format(calFordDate.getTime());
 
         Calendar calFordTime = Calendar.getInstance();
@@ -191,7 +186,7 @@ public class AddPost extends AppCompatActivity {
         String budget = edtTaskBudget.getText().toString().trim();
         String deadline = edtTaskDeadline.getText().toString().trim();
 
-        if (titleCustomer.equals("Select Your Profession")) {
+        if (titleCustomer.equals("Select Post Title")) {
             Toast.makeText(this, "Select Title", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(description)) {
             TILDescription.setError("Enter Description");

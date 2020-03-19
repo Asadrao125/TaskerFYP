@@ -25,8 +25,11 @@ public class Tasker_View_Post extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseReference databaseReference;
     ArrayList<Post> list;
-    MyAdapter adapter;
+    MyAdapterTasker adapter;
     String ids;
+    FirebaseUser user;
+    String title;
+    String taskerProffession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,21 @@ public class Tasker_View_Post extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("Users").child("Tasker");
+        mRefrence.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Toast.makeText(Tasker_View_Post.this, "Registered Current User: " + dataSnapshot.child("taskerProfession").getValue(), Toast.LENGTH_SHORT).show();
+                taskerProffession = String.valueOf(dataSnapshot.child("taskerProfession").getValue());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         DatabaseReference postrefrence;
         postrefrence = FirebaseDatabase.getInstance().getReference("All_Posts");
         postrefrence.addValueEventListener(new ValueEventListener() {
@@ -57,10 +75,16 @@ public class Tasker_View_Post extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                                 //Toast.makeText(Tasker_View_Post.this, "IDs: "+dataSnapshot1.getKey(), Toast.LENGTH_SHORT).show();
-                                Post p = dataSnapshot1.getValue(Post.class);
-                                list.add(p);
+                                //Toast.makeText(Tasker_View_Post.this, "Hello World: " + dataSnapshot1.child("title").getValue(), Toast.LENGTH_SHORT).show();
+                                title = String.valueOf(dataSnapshot1.child("title").getValue());
+                                //Toast.makeText(Tasker_View_Post.this, "" + title, Toast.LENGTH_SHORT).show();
+                                //DatabaseReference dbref = FirebaseDatabase.getInstance().getReference();
+                                if (taskerProffession.equals(title)) {
+                                    Post p = dataSnapshot1.getValue(Post.class);
+                                    list.add(p);
+                                }
                             }
-                            adapter = new MyAdapter(Tasker_View_Post.this, list);
+                            adapter = new MyAdapterTasker(Tasker_View_Post.this, list);
                             recyclerView.setAdapter(adapter);
                         }
 

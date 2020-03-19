@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.taskerfyp.Models.AddPostCustomer;
+import com.example.taskerfyp.Models.Post;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -102,7 +103,6 @@ public class AddPost extends AppCompatActivity {
             }
         });
 
-
         // Getting Profile Image Child From Current User To Use In View Post Activity
         DatabaseReference imageRefrence = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(currentFirebaseUser.getUid());
         imageRefrence.addValueEventListener(new ValueEventListener() {
@@ -177,7 +177,7 @@ public class AddPost extends AppCompatActivity {
         String date = currentDate.format(calFordDate.getTime());
 
         Calendar calFordTime = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm:ss a");
         String time = currentTime.format(calFordTime.getTime());
         // Getting Current Date and Time
 
@@ -198,7 +198,7 @@ public class AddPost extends AppCompatActivity {
 
             counter++;
 
-            AddPostCustomer addPostCustomer = new AddPostCustomer(current_user_id, titleCustomer, description, budget, deadline, time, date, CurrentUser_Name, imageUrl);
+            Post addPostCustomer = new Post(current_user_id, titleCustomer, description, budget, deadline, time, date, CurrentUser_Name, imageUrl);
             ref.push().setValue(addPostCustomer);
             Toast.makeText(this, "Post Uploaded To Firebase !", Toast.LENGTH_SHORT).show();
 

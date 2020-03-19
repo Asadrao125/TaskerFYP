@@ -3,69 +3,29 @@ package com.example.taskerfyp.Models;
 import android.net.Uri;
 
 public class Post {
-    String budget;
-    String current_user_name;
-    String date;
-    String deadline;
-    String description;
     String id;
-    String time;
     String title;
+    String description;
+    String budget;
+    String deadline;
+    String time;
+    String date;
+    String current_user_name;
     String image;
 
-    public Post(String budget, String current_user_name, String date, String deadline, String description, String id, String time, String title, String image) {
-        this.budget = budget;
-        this.current_user_name = current_user_name;
-        this.date = date;
-        this.deadline = deadline;
-        this.description = description;
+    public Post(String id, String title, String description, String budget, String deadline, String time, String date, String current_user_name, String image) {
         this.id = id;
-        this.time = time;
         this.title = title;
+        this.description = description;
+        this.budget = budget;
+        this.deadline = deadline;
+        this.time = time;
+        this.date = date;
+        this.current_user_name = current_user_name;
         this.image = image;
     }
 
     public Post() {
-    }
-
-    public String getBudget() {
-        return budget;
-    }
-
-    public void setBudget(String budget) {
-        this.budget = budget;
-    }
-
-    public String getCurrent_user_name() {
-        return current_user_name;
-    }
-
-    public void setCurrent_user_name(String current_user_name) {
-        this.current_user_name = current_user_name;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getId() {
@@ -76,6 +36,38 @@ public class Post {
         this.id = id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
     public String getTime() {
         return time;
     }
@@ -84,12 +76,20 @@ public class Post {
         this.time = time;
     }
 
-    public String getTitle() {
-        return title;
+    public String getDate() {
+        return date;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getCurrent_user_name() {
+        return current_user_name;
+    }
+
+    public void setCurrent_user_name(String current_user_name) {
+        this.current_user_name = current_user_name;
     }
 
     public String getImage() {

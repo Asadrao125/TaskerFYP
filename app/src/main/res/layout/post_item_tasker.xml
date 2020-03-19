@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:background="@drawable/border"
     android:orientation="vertical"
-    android:padding="10dp"
-    app:cardElevation="4dp">
+    android:padding="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -98,6 +98,15 @@
             android:padding="5dp"
             android:text="Description"
             android:textSize="16sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/deadline"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/border_view_post"
+            android:text="Send Offer"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 

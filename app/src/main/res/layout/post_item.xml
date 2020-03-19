@@ -23,7 +23,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
-            android:src="@mipmap/profile"
+            android:src="@mipmap/ic_profile"
             app:civ_border_color="#8a8a8a"
             app:civ_border_width="1dp" />
 

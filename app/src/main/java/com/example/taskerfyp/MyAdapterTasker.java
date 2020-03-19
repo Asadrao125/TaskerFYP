@@ -42,7 +42,7 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapter.MyViewHolder
         holder.task_description.setText("Description: \n" + posts.get(position).getDescription());
         holder.task_time.setText(posts.get(position).getTime());
         holder.task_date.setText(posts.get(position).getDate());
-        Picasso.get().load(posts.get(position).getImage()).placeholder(R.mipmap.profile).into(holder.profile_image);
+        Picasso.get().load(posts.get(position).getImage()).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
     }
 
     @Override

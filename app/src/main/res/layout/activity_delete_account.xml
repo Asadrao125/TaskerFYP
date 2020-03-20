@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddPost">
+    tools:context=".DeleteAccount">
 
     <include
         layout="@layout/toolbar"
@@ -13,45 +13,50 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="176dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498">
+        app:layout_constraintTop_toTopOf="@+id/include2"
+        tools:layout_editor_absoluteX="0dp">
 
-        <Spinner
-            android:id="@+id/spinnerCustomerProfession"
-            android:layout_width="300dp"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:entries="@array/title"
-            android:focusable="true" />
+            android:layout_marginBottom="60dp"
+            android:gravity="center_horizontal"
+            android:text="Kindly provide your login email and password. so that we can delete your account. Thank you !"
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/TILDescription"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/edtTaskDescription"
+                android:id="@+id/edtEmail"
                 android:layout_width="300dp"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="Task Description"
-                android:inputType="textMultiLine|textCapSentences"
-                android:lines="5" />
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.414"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.628" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/TILBudget"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,38 +64,27 @@
             android:layout_marginBottom="20dp">
 
             <EditText
-                android:id="@+id/edtTaskBudget"
+                android:id="@+id/edtPassword"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Budget"
-                android:inputType="number" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/TILDeadline"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edtTaskeDeadline"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="Deadline In Days"
-                android:inputType="number" />
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnAddPostCustomer"
-            android:layout_width="300dp"
+            android:id="@+id/btnAuthenticate"
+            android:layout_width="250dp"
             android:layout_height="60dp"
+            android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:textSize="18sp"
             android:background="@drawable/button"
-            android:text="Add Post"
-            android:textColor="#fff"
-            android:textSize="18sp" />
+            android:text="Delete Account"
+            android:textColor="#fff" />
 
     </LinearLayout>
 

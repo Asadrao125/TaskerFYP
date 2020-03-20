@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     int category_val;
     private FirebaseAuth.AuthStateListener firebaseAuthlistner;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
-
+    TextView forgetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +87,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
+            }
+        });
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
         radiobtnTasker = findViewById(R.id.radiobtnTasker);
         loadingBar = new ProgressDialog(this);
         radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
+        forgetPassword = findViewById(R.id.forgetPassword);
         mAuth = FirebaseAuth.getInstance();
     }
 

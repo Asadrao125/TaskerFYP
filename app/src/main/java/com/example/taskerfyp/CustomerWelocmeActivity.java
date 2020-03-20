@@ -2,8 +2,10 @@ package com.example.taskerfyp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -15,9 +17,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.BuildConfig;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -140,13 +144,16 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
         btnInviteFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CustomerWelocmeActivity.this, "Invite Friends", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(CustomerWelocmeActivity.this, "Invite Friends", Toast.LENGTH_SHORT).show();
+                shareIntent();
             }
         });
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CustomerWelocmeActivity.this, "Delete Account", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(CustomerWelocmeActivity.this, "Delete Account", Toast.LENGTH_SHORT).show();
+                //showAlertDialog();
+                startActivity(new Intent(getApplicationContext(), DeleteAccount.class));
             }
         });
         btnHelp.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +168,70 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
                 Toast.makeText(CustomerWelocmeActivity.this, "Report", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void showAlertDialog() {
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(CustomerWelocmeActivity.this);
+        builder.setMessage("All Your Post Will Also Be Deleted.\nDo you still want to delete account?")
+                .setTitle("Delete Account")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        RemoveUserAuth();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Toast.makeText(CustomerWelocmeActivity.this, "Account Deletion Cancel", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        builder.create().show();
+    }
+
+    public void shareIntent() {
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Tasker");
+            String shareMessage = "Let me recommend you this application\n\n";
+            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            startActivity(Intent.createChooser(shareIntent, "choose one"));
+        } catch (Exception e) {
+            e.toString();
+        }
+    }
+
+    private void RemoveUserAuth() {
+
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(currentUser.getUid());
+                        DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("All_Posts").child(currentUser.getUid());
+                        reference.removeValue();
+                        mRefrence.removeValue();
+                        startActivity(new Intent(CustomerWelocmeActivity.this, LoginActivity.class));
+                        Toast.makeText(CustomerWelocmeActivity.this, "Account Deleted Successfully !", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(CustomerWelocmeActivity.this, e.getMessage() + "", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override

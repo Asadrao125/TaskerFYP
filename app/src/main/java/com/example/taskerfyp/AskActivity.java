@@ -22,7 +22,6 @@ public class AskActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Ask Screen");
-        mTitle.setTextSize(26);
 
         btnCustomer = findViewById(R.id.btnCustomer);
         btntasker = findViewById(R.id.btntasker);

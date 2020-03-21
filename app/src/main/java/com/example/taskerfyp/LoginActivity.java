@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), AskActivity.class));
+                finish();
             }
         });
 
@@ -91,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
+                finish();
             }
         });
 

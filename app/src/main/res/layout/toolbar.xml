@@ -10,14 +10,11 @@
         android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="Dummy Text"
-        android:textColor="#fff"
         android:layout_gravity="center"
         android:gravity="center"
+        android:text="Toolbar Text"
+        android:textAlignment="center"
+        android:textColor="#fff"
         android:textSize="22sp" />
-
-    <!-- android:layout_gravity="center"
-        android:gravity="center"-->
 
 </androidx.appcompat.widget.Toolbar>

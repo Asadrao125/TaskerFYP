@@ -31,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 public class DeleteAccount extends AppCompatActivity {
     EditText edtEmail, edtPassword;
     Button btnAuthenticate;
-    long counter, val, newVal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,7 @@ public class DeleteAccount extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Log.d("MyTag", "User re-authenticated.");
-                        Toast.makeText(DeleteAccount.this, "User re-authenticated", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(DeleteAccount.this, "User re-authenticated", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -76,7 +75,7 @@ public class DeleteAccount extends AppCompatActivity {
     public void showAlertDialog() {
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(DeleteAccount.this);
-        builder.setMessage("All Your Post Will Also Be Deleted.\nDo you still want to delete account?")
+        builder.setMessage("All Your Post Will Also Be Deleted.\nDo you want to delete account?")
                 .setTitle("Delete Account")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -89,7 +88,7 @@ public class DeleteAccount extends AppCompatActivity {
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //Toast.makeText(CustomerWelocmeActivity.this, "Account Deletion Cancel", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DeleteAccount.this, "Account Deletion Cancel", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -113,7 +112,7 @@ public class DeleteAccount extends AppCompatActivity {
                         reference.removeValue();
                         mRefrence.removeValue();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                        Toast.makeText(getApplicationContext(), "Account Deleted Successfully !", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Account Deleted !", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }

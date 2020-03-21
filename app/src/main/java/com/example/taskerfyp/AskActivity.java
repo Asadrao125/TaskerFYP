@@ -12,6 +12,7 @@ import android.widget.TextView;
 public class AskActivity extends AppCompatActivity {
 
     Button btnCustomer, btntasker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +30,22 @@ public class AskActivity extends AppCompatActivity {
         btnCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),RegisterCustomer.class));
+                startActivity(new Intent(getApplicationContext(), RegisterCustomer.class));
+                finish();
             }
         });
         btntasker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),RegisterTasker.class));
+                startActivity(new Intent(getApplicationContext(), RegisterTasker.class));
+                finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
     }
 }

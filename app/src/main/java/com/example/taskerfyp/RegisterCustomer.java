@@ -134,7 +134,12 @@ public class RegisterCustomer extends AppCompatActivity {
                     }
                 }
             });
-
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), AskActivity.class));
+        finish();
     }
 }

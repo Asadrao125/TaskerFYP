@@ -12,8 +12,9 @@ public class Post {
     String date;
     String current_user_name;
     String image;
+    String postId;
 
-    public Post(String id, String title, String description, String budget, String deadline, String time, String date, String current_user_name, String image) {
+    public Post(String id, String title, String description, String budget, String deadline, String time, String date, String current_user_name, String image, String postId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -23,6 +24,7 @@ public class Post {
         this.date = date;
         this.current_user_name = current_user_name;
         this.image = image;
+        this.postId = postId;
     }
 
     public Post() {
@@ -98,5 +100,13 @@ public class Post {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
 }

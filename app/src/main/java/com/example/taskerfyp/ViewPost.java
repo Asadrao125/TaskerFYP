@@ -49,10 +49,10 @@ public class ViewPost extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Post p = dataSnapshot1.getValue(Post.class);
                     list.add(p);
-                    // Toast.makeText(ViewPost.this, "" + dataSnapshot1.getValue(), Toast.LENGTH_SHORT).show();
                 }
                 adapter = new MyAdapter(ViewPost.this, list);
                 recyclerView.setAdapter(adapter);

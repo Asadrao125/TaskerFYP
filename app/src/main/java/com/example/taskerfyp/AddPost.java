@@ -197,9 +197,9 @@ public class AddPost extends AppCompatActivity {
         } else {
 
             counter++;
-
-            Post addPostCustomer = new Post(current_user_id, titleCustomer, description, budget, deadline, time, date, CurrentUser_Name, imageUrl);
-            ref.push().setValue(addPostCustomer);
+            String postId = ref.push().getKey();
+            Post post = new Post(current_user_id, titleCustomer, description, budget, deadline, time, date, CurrentUser_Name, imageUrl, postId);
+            ref.child(postId).setValue(post);
             Toast.makeText(this, "Post Uploaded To Firebase !", Toast.LENGTH_SHORT).show();
 
             // Updating Counter

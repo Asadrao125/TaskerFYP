@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,29 +49,16 @@ public class DeleteAccount extends AppCompatActivity {
         edtPassword = findViewById(R.id.edtPassword);
         btnAuthenticate = findViewById(R.id.btnAuthenticate);
 
+        FirebaseUser currentUser_email = FirebaseAuth.getInstance().getCurrentUser();
+        String userEmail = currentUser_email.getEmail();
+        edtEmail.setText(userEmail);
+
         btnAuthenticate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 reAuthenticate();
-                showAlertDialog();
             }
         });
-    }
-
-    public void reAuthenticate() {
-        String email = edtEmail.getText().toString().trim();
-        String password = edtPassword.getText().toString().trim();
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        AuthCredential credential = EmailAuthProvider.getCredential(email, password);
-        user.reauthenticate(credential)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.d("MyTag", "User re-authenticated.");
-                        //Toast.makeText(DeleteAccount.this, "User re-authenticated", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     public void showAlertDialog() {
@@ -80,7 +69,6 @@ public class DeleteAccount extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        reAuthenticate();
                         settingCounterValue();
                         RemoveUserAuth();
                     }
@@ -91,8 +79,31 @@ public class DeleteAccount extends AppCompatActivity {
                         Toast.makeText(DeleteAccount.this, "Account Deletion Cancel", Toast.LENGTH_LONG).show();
                     }
                 });
-
         builder.create().show();
+    }
+
+    public void reAuthenticate() {
+        String email = edtEmail.getText().toString().trim();
+        String password = edtPassword.getText().toString().trim();
+
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Enter Your Email", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Enter Your Password", Toast.LENGTH_SHORT).show();
+        } else {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        showAlertDialog();
+                    } else {
+                        String message = task.getException().getMessage();
+                        Toast.makeText(DeleteAccount.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 
     private void RemoveUserAuth() {
@@ -105,14 +116,11 @@ public class DeleteAccount extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(currentUser.getUid());
                         DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("All_Posts").child(currentUser.getUid());
-
                         reference.removeValue();
                         mRefrence.removeValue();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                        Toast.makeText(getApplicationContext(), "Account Deleted !", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }

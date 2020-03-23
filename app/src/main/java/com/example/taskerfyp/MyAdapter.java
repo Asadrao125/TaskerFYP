@@ -47,7 +47,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         holder.username.setText(posts.get(position).getCurrent_user_name());
         holder.budget.setText("Budget: " + posts.get(position).getBudget() + " Rs");
         holder.deadline.setText("Deadline: " + posts.get(position).getDeadline() + " day(s)");
@@ -56,7 +56,31 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.task_time.setText(posts.get(position).getTime());
         holder.task_date.setText(posts.get(position).getDate());
 
-        Picasso.get().load(posts.get(position).getImage()).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
+        //Picasso.get().load(posts.get(position).getImage()).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
+        ////////
+        DatabaseReference UsersRef;
+        FirebaseUser currentUser;
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customer").child(currentUser.getUid());
+        UsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    if (dataSnapshot.hasChild("profileimage")) {
+                        String image = dataSnapshot.child("profileimage").getValue().toString();
+                        Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
+                    } else {
+                        Toast.makeText(context, "Please select profile image first.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        ////////
         holder.btnEditPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,26 +107,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                         .child(posts.get(position).getPostId());
                                 refrence.removeValue();
                                 Toast.makeText(context, "Post Deleted !", Toast.LENGTH_SHORT).show();
-
-                                final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Current_UID_Post_Counter")
-                                        .child(user.getUid()).child("Count");
-                                ref.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        String value = String.valueOf(dataSnapshot.getValue());
-                                        // Toast.makeText(context, ""+value, Toast.LENGTH_SHORT).show();
-                                        int n = Integer.parseInt(value);
-                                        //Toast.makeText(context, "" + n, Toast.LENGTH_SHORT).show();
-                                        int newN = n - 1;
-                                        String vvvv = String.valueOf(newN);
-                                        //ref.setValue(vvvv);
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -122,9 +126,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView username, budget, deadline, prof_title, task_time, task_date, task_description;
-        CircleImageView profile_image;
-        Button btnEditPost, btnDeletePost;
+        private TextView username, budget, deadline, prof_title, task_time, task_date, task_description;
+        private CircleImageView profile_image;
+        private Button btnEditPost, btnDeletePost;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

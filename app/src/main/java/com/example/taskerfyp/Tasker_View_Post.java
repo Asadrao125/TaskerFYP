@@ -74,11 +74,7 @@ public class Tasker_View_Post extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                //Toast.makeText(Tasker_View_Post.this, "IDs: "+dataSnapshot1.getKey(), Toast.LENGTH_SHORT).show();
-                                //Toast.makeText(Tasker_View_Post.this, "Hello World: " + dataSnapshot1.child("title").getValue(), Toast.LENGTH_SHORT).show();
                                 title = String.valueOf(dataSnapshot1.child("title").getValue());
-                                //Toast.makeText(Tasker_View_Post.this, "" + title, Toast.LENGTH_SHORT).show();
-                                //DatabaseReference dbref = FirebaseDatabase.getInstance().getReference();
                                 if (taskerProffession.equals(title)) {
                                     Post p = dataSnapshot1.getValue(Post.class);
                                     list.add(p);

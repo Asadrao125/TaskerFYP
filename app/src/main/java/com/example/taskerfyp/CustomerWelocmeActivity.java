@@ -137,7 +137,8 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
         btnThemes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CustomerWelocmeActivity.this, "Themes", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(CustomerWelocmeActivity.this, "Themes", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), ViewOfferTasker.class));
             }
         });
 

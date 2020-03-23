@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditPostCustomer"></activity>
+        <activity android:name=".ViewOfferTasker"></activity>
+        <activity android:name=".SendOffer" />
+        <activity android:name=".EditPostCustomer" />
         <activity android:name=".DeleteAccount" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".Tasker_View_Post" />

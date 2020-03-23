@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context=".EditPostCustomer">
+    tools:context=".SendOffer">
 
     <include layout="@layout/toolbar" />
 
@@ -17,24 +17,17 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/spinnerEditPost"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:entries="@array/title" />
-
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/desc"
+                android:id="@+id/edtSendOfferDescription"
                 android:layout_width="300dp"
                 android:layout_height="150dp"
                 android:ems="10"
-                android:hint="Task Description"
+                android:hint="Offer Description"
                 android:inputType="textMultiLine|textCapSentences"
                 android:lines="5" />
 
@@ -44,14 +37,14 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
 
             <EditText
-                android:id="@+id/edtEditBudget"
+                android:id="@+id/edtSendOfferBudget"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Budget"
+                android:hint="Offer Budget"
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -62,21 +55,21 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/edtEditDeadline"
+                android:id="@+id/edtSendOfferDeadline"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Deadline In Days"
+                android:hint="Offer Deadline"
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnUpdatePost"
+            android:id="@+id/btnSendOfferTasker"
             android:layout_width="250dp"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/button"
-            android:text="Update"
+            android:text="Send Offer"
             android:textColor="#fff"
             android:textSize="18sp" />
 

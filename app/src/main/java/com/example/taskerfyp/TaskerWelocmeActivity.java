@@ -138,7 +138,7 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         btnThemes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TaskerWelocmeActivity.this, "Themes", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TaskerWelocmeActivity.this, "Themes", Toast.LENGTH_SHORT).show();
             }
         });
 

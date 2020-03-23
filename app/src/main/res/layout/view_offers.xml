@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_view_post"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tvViewOfferName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/post_gray_border"
+            android:padding="5dp"
+            android:text="Username"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvViewOfferDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvViewOfferName"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/post_gray_border"
+            android:padding="5dp"
+            android:text="Description" />
+
+        <TextView
+            android:id="@+id/tvViewOfferBudget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvViewOfferDescription"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/post_gray_border"
+            android:padding="5dp"
+            android:text="Budget" />
+
+        <TextView
+            android:id="@+id/tvViewOfferDeadine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvViewOfferBudget"
+            android:background="@drawable/post_gray_border"
+            android:padding="5dp"
+            android:text="Deadline" />
+
+        <Button
+            android:id="@+id/btnAcceptOffer"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvViewOfferDeadine"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_view_post"
+            android:text="Accept" />
+
+        <Button
+            android:id="@+id/btnDeclineOffer"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvViewOfferDeadine"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_view_post"
+            android:text="Decline" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

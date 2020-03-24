@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,6 +40,7 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
 
     Button btnAddPost, btnViewPost, btnDeleteAccount, btnThemes, btnInviteFriends, btnHelp, btnEditProfile, btnReport;
+    FloatingActionButton fab;
     CircleImageView imgProfile;
     FirebaseUser currentFirebaseUser;
     int Image_Request_Code = 7;
@@ -65,6 +67,13 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
         btnHelp = findViewById(R.id.btnHelp);
         btnReport = findViewById(R.id.btnReport);
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ViewMessageByTasker.class));
+            }
+        });
 
         // Setting Username On Dashboard
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();

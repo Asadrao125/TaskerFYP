@@ -36,6 +36,7 @@ public class SendOffer extends AppCompatActivity {
         setContentView(R.layout.activity_send_offer);
 
         final String id = getIntent().getStringExtra("Post_krny_waly_ki_id");
+        final String post_ki_id = getIntent().getStringExtra("post_ki_id");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,7 +63,7 @@ public class SendOffer extends AppCompatActivity {
                     edtSendOfferDeadline.setError("Enter Deadline");
                 } else {
                     /* Getting Current Username*/
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     DatabaseReference reffff = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(user.getUid());
                     reffff.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -70,8 +71,8 @@ public class SendOffer extends AppCompatActivity {
                             userName = String.valueOf(dataSnapshot.child("taskerUsername").getValue());
                             DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Offers").child(id);
                             String offer_id = refrence.push().getKey();
-                            SendOfferTasker sendOfferTasker = new SendOfferTasker(offerBudget, offerDeadline, offerDescription, offer_id, userName);
-                            refrence.setValue(sendOfferTasker);
+                            SendOfferTasker sendOfferTasker = new SendOfferTasker(offerBudget, offerDeadline, offerDescription, offer_id, userName, user.getUid(), post_ki_id);
+                            refrence.child(user.getUid()).setValue(sendOfferTasker);
                             Toast.makeText(SendOffer.this, "Offer Sent!", Toast.LENGTH_SHORT).show();
                         }
 

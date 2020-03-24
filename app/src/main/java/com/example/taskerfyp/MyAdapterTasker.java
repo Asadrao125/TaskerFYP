@@ -52,8 +52,10 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
             public void onClick(View v) {
                 //Toast.makeText(context, "ID: " + posts.get(position).getId(), Toast.LENGTH_SHORT).show();
                 String id = posts.get(position).getId();
+                String post_id = posts.get(position).getPostId();
                 Intent intent = new Intent(context, SendOffer.class);
                 intent.putExtra("Post_krny_waly_ki_id", id);
+                intent.putExtra("post_ki_id", post_id);
                 context.startActivity(intent);
             }
         });

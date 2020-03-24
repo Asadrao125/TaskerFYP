@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.taskerfyp.Models.SendOfferTasker;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +41,8 @@ public class ViewOfferTasker extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<SendOfferTasker>();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Offers");
+        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Offers").child(current_user.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

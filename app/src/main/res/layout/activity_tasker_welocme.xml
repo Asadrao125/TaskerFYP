@@ -7,6 +7,17 @@
     android:orientation="vertical"
     tools:context=".TaskerWelocmeActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:id="@+id/fab"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_message" />
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

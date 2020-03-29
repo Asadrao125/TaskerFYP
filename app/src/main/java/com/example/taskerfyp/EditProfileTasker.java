@@ -56,7 +56,7 @@ public class EditProfileTasker extends AppCompatActivity {
         TaskerEditProfileProfession = findViewById(R.id.CustomerEditProfileProfession);
         TaskerEditProfileUpdateButton = findViewById(R.id.CustomerEditProfileUpdateButton);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        TaskerEditProfileRefrence = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(currentUser.getUid());
+        TaskerEditProfileRefrence = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(currentUser.getUid());
     }
 
     private void settingDataInEditText() {

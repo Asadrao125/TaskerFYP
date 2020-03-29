@@ -1,4 +1,4 @@
-package com.example.taskerfyp;
+package com.example.taskerfyp.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,9 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.taskerfyp.Models.Post;
 import com.example.taskerfyp.Models.SendMessage;
 import com.example.taskerfyp.Models.SendOfferTasker;
+import com.example.taskerfyp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,8 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyViewHolder> {
 

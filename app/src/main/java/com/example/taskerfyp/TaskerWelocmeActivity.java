@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.BuildConfig;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,7 +60,7 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
 
         final TextView mTitle = findViewById(R.id.toolbar_title);
         imgProfile = findViewById(R.id.imgProfile);
-        btnAddPost = findViewById(R.id.btnAddpost);
+        //btnAddPost = findViewById(R.id.btnAddpost);
         btnViewPost = findViewById(R.id.btnViewPost);
         btnEditProfile = findViewById(R.id.btnEditProfile);
         btnThemes = findViewById(R.id.btnThemes);
@@ -123,12 +124,12 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         });
         /* Update Profile Image */
 
-        btnAddPost.setOnClickListener(new View.OnClickListener() {
+       /* btnAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(TaskerWelocmeActivity.this, "Add Post", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         btnViewPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,21 +141,21 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TaskerWelocmeActivity.this, "Edit Profile", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), EditProfileTasker.class));
             }
         });
 
         btnThemes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(TaskerWelocmeActivity.this, "Themes", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TaskerWelocmeActivity.this, "Themes", Toast.LENGTH_SHORT).show();
             }
         });
 
         btnInviteFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TaskerWelocmeActivity.this, "Invite Friends", Toast.LENGTH_SHORT).show();
+                shareIntent();
             }
         });
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +179,19 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
 
     }
 
+    public void shareIntent() {
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Tasker");
+            String shareMessage = "Let me recommend you this application\n\n";
+            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            startActivity(Intent.createChooser(shareIntent, "choose one"));
+        } catch (Exception e) {
+            e.toString();
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

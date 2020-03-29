@@ -46,7 +46,6 @@ public class EditPostCustomer extends AppCompatActivity {
         mTitle.setText("Edit Post");
 
         id = getIntent().getStringExtra("id");
-        //Toast.makeText(this, "ID: " + id, Toast.LENGTH_SHORT).show();
 
         edtEditBudget = findViewById(R.id.edtEditBudget);
         edtEditDeadline = findViewById(R.id.edtEditDeadline);
@@ -85,9 +84,6 @@ public class EditPostCustomer extends AppCompatActivity {
                 String budg = edtEditBudget.getText().toString().trim();
                 String dead = edtEditDeadline.getText().toString().trim();
                 String tit = spinnerEditTitle.getSelectedItem().toString().trim();
-
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference rreeff = FirebaseDatabase.getInstance().getReference("All_Posts").child(user.getUid()).child(id);
                 if (TextUtils.isEmpty(desc)) {
                     Toast.makeText(EditPostCustomer.this, "Enter Description", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(budg)) {

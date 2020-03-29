@@ -130,7 +130,8 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CustomerWelocmeActivity.this, "Edit Profile", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(CustomerWelocmeActivity.this, "Edit Profile", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), EditProfileCustomer.class));
             }
         });
 

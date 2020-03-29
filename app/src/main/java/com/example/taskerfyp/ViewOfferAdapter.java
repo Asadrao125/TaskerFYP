@@ -1,6 +1,7 @@
 package com.example.taskerfyp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
     Context context;
     ArrayList<SendOfferTasker> sendOfferTaskers;
     private String name, email, number, gender;
+    boolean flag = true;
 
     public ViewOfferAdapter(Context c, ArrayList<SendOfferTasker> s) {
         context = c;
@@ -55,35 +57,41 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
         holder.btnAcceptOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                // Getting Curent User Name Who Will Accept That Post
-                DatabaseReference currentName = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(user.getUid());
-                currentName.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        name = dataSnapshot.child("customerUsername").getValue().toString();
-                        email = dataSnapshot.child("email").getValue().toString();
-                        number = dataSnapshot.child("customerPhonenumber").getValue().toString();
-                        gender = dataSnapshot.child("customerGender").getValue().toString();
-                        String current_user_id = user.getUid();
-                        String post_id = sendOfferTaskers.get(position).getPost_id();
-                        // Sending message to the tasker, that has offered for the post
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Messages").child(sendOfferTaskers.get(position).getOffer_sender_id());
-                        String message_id = reference.push().getKey();
-                        String message = "Your Offer Has Been Accepted";
-                        SendMessage sendMessage = new SendMessage(post_id, message_id, message, current_user_id, name, email, number, gender);
-                        reference.setValue(sendMessage);
-                        Toast.makeText(context, "Offer accepted messege sent !", Toast.LENGTH_LONG).show();
-                        /////////
-                    }
+                if (flag) {
+                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    // Getting Curent User Name Who Will Accept That Post
+                    DatabaseReference currentName = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(user.getUid());
+                    currentName.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            name = dataSnapshot.child("customerUsername").getValue().toString();
+                            email = dataSnapshot.child("email").getValue().toString();
+                            number = dataSnapshot.child("customerPhonenumber").getValue().toString();
+                            gender = dataSnapshot.child("customerGender").getValue().toString();
+                            String current_user_id = user.getUid();
+                            String post_id = sendOfferTaskers.get(position).getPost_id();
+                            // Sending message to the tasker, that has offered for the post
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Messages").child(sendOfferTaskers.get(position).getOffer_sender_id());
+                            String message_id = reference.push().getKey();
+                            String message = "Your Offer Has Been Accepted";
+                            SendMessage sendMessage = new SendMessage(post_id, message_id, message, current_user_id, name, email, number, gender);
+                            reference.setValue(sendMessage);
+                            Toast.makeText(context, "Offer accepted messege sent !", Toast.LENGTH_LONG).show();
+                            /////////
+                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                }
             }
         });
+        holder.btnAcceptOffer.setText("Offer Accepted");
+        holder.btnAcceptOffer.setEnabled(false);
+        holder.btnAcceptOffer.setBackgroundColor(Color.LTGRAY);
+        flag = false;
 
         holder.btnDeclineOffer.setOnClickListener(new View.OnClickListener() {
             @Override

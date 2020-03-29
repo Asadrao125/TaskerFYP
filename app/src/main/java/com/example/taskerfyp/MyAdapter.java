@@ -56,7 +56,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.task_time.setText(posts.get(position).getTime());
         holder.task_date.setText(posts.get(position).getDate());
 
-        //Picasso.get().load(posts.get(position).getImage()).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
         ////////
         DatabaseReference UsersRef;
         FirebaseUser currentUser;

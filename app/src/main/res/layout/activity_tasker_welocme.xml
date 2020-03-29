@@ -78,7 +78,7 @@
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
 
-                        <androidx.cardview.widget.CardView
+                        <!--<androidx.cardview.widget.CardView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginRight="5dp"
@@ -118,7 +118,7 @@
 
                             </RelativeLayout>
 
-                        </androidx.cardview.widget.CardView>
+                        </androidx.cardview.widget.CardView>-->
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="0dp"

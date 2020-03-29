@@ -2,6 +2,7 @@ package com.example.taskerfyp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskerfyp.Models.Post;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,6 +30,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyViewHolder> {
     Context context;
     ArrayList<Post> posts;
+    String id;
+    boolean flag = true;
 
     public MyAdapterTasker(Context c, ArrayList<Post> p) {
         context = c;
@@ -37,7 +47,7 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         holder.username.setText(posts.get(position).getCurrent_user_name());
         holder.budget.setText("Budget: " + posts.get(position).getBudget() + " Rs");
         holder.deadline.setText("Deadline: " + posts.get(position).getDeadline() + " day(s)");
@@ -45,20 +55,50 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
         holder.task_description.setText("Description: \n" + posts.get(position).getDescription());
         holder.task_time.setText(posts.get(position).getTime());
         holder.task_date.setText(posts.get(position).getDate());
-        Picasso.get().load(posts.get(position).getImage()).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
+        //Picasso.get().load(posts.get(position).getImage()).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
 
         holder.btnSendOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(context, "ID: " + posts.get(position).getId(), Toast.LENGTH_SHORT).show();
-                String id = posts.get(position).getId();
-                String post_id = posts.get(position).getPostId();
-                Intent intent = new Intent(context, SendOffer.class);
-                intent.putExtra("Post_krny_waly_ki_id", id);
-                intent.putExtra("post_ki_id", post_id);
-                context.startActivity(intent);
+                if (flag) {
+                    id = posts.get(position).getId();
+                    String post_id = posts.get(position).getPostId();
+                    Intent intent = new Intent(context, SendOffer.class);
+                    intent.putExtra("Post_krny_waly_ki_id", id);
+                    intent.putExtra("post_ki_id", post_id);
+                    context.startActivity(intent);
+                }
             }
         });
+        holder.btnSendOffer.setText("Offer Sent");
+        holder.btnSendOffer.setEnabled(false);
+        holder.btnSendOffer.setBackgroundColor(Color.LTGRAY);
+        flag = false;
+
+        ////////
+        DatabaseReference UsersRef;
+        id = posts.get(position).getId();
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customer").child(id);
+        UsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    if (dataSnapshot.hasChild("profileimage")) {
+                        String image = dataSnapshot.child("profileimage").getValue().toString();
+                        Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
+                    } else {
+                        Toast.makeText(context, "Please select profile image first.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        ////////
     }
 
     @Override

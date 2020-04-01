@@ -6,4 +6,6 @@
     <color name="cardColor">#ffffff</color>
 
     <color name="gray">#8a8a8a</color>
+    <color name="green">#006400</color>
+    <color name="red">#8B0000</color>
 </resources>

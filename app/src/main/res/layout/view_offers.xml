@@ -55,25 +55,29 @@
 
         <Button
             android:id="@+id/btnAcceptOffer"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvViewOfferDeadine"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/border_view_post"
-            android:text="Accept" />
+            android:padding="10dp"
+            android:text="Accept"
+            android:textColor="@color/green" />
 
         <Button
             android:id="@+id/btnDeclineOffer"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvViewOfferDeadine"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/border_view_post"
-            android:text="Decline" />
+            android:padding="10dp"
+            android:text="Decline"
+            android:textColor="@color/red" />
 
     </RelativeLayout>
 

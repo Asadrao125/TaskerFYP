@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskerfyp.Models.Post;
 import com.example.taskerfyp.R;
 import com.example.taskerfyp.SendOffer;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +33,6 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
     Context context;
     ArrayList<Post> posts;
     String id;
-    boolean flag = true;
 
     public MyAdapterTasker(Context c, ArrayList<Post> p) {
         context = c;
@@ -55,26 +56,39 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
         holder.task_description.setText("Description: \n" + posts.get(position).getDescription());
         holder.task_time.setText(posts.get(position).getTime());
         holder.task_date.setText(posts.get(position).getDate());
-        //Picasso.get().load(posts.get(position).getImage()).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
 
         holder.btnSendOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context, "ID: " + posts.get(position).getId(), Toast.LENGTH_SHORT).show();
-                if (flag) {
-                    id = posts.get(position).getId();
-                    String post_id = posts.get(position).getPostId();
-                    Intent intent = new Intent(context, SendOffer.class);
-                    intent.putExtra("Post_krny_waly_ki_id", id);
-                    intent.putExtra("post_ki_id", post_id);
-                    context.startActivity(intent);
-                }
+                id = posts.get(position).getId();
+                String post_id = posts.get(position).getPostId();
+                Intent intent = new Intent(context, SendOffer.class);
+                intent.putExtra("Post_krny_waly_ki_id", id);
+                intent.putExtra("post_ki_id", post_id);
+                context.startActivity(intent);
             }
         });
-        holder.btnSendOffer.setText("Offer Sent");
-        holder.btnSendOffer.setEnabled(false);
-        holder.btnSendOffer.setBackgroundColor(Color.LTGRAY);
-        flag = false;
+
+        FirebaseUser userC = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offers").child(posts.get(position).getId()).child(userC.getUid());
+        onClickRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("onClick")) {
+                    if (dataSnapshot.child("onClick").getValue().equals("1")) {
+                        holder.btnSendOffer.setText("Offer Sent");
+                        holder.btnSendOffer.setBackgroundColor(Color.LTGRAY);
+                        holder.btnSendOffer.setEnabled(false);
+                    }
+                } else
+                    Toast.makeText(context, "Not Clicked Yet", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         ////////
         DatabaseReference UsersRef;

@@ -1,4 +1,4 @@
-package com.example.taskerfyp;
+package com.example.taskerfyp.Adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,14 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.taskerfyp.EditPostCustomer;
 import com.example.taskerfyp.Models.Post;
+import com.example.taskerfyp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

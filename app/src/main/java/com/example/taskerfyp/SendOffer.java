@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -49,6 +50,26 @@ public class SendOffer extends AppCompatActivity {
         edtSendOfferDescription = findViewById(R.id.edtSendOfferDescription);
         btnSendOfferTasker = findViewById(R.id.btnSendOfferTasker);
 
+        FirebaseUser userC = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offers").child(id).child(userC.getUid());
+        onClickRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("onClick")) {
+                    if (dataSnapshot.child("onClick").getValue().equals("1")) {
+                        btnSendOfferTasker.setText("Offer Sent");
+                        btnSendOfferTasker.setBackgroundColor(Color.LTGRAY);
+                        btnSendOfferTasker.setEnabled(false);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         btnSendOfferTasker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,11 +95,12 @@ public class SendOffer extends AppCompatActivity {
                             SendOfferTasker sendOfferTasker = new SendOfferTasker(offerBudget, offerDeadline, offerDescription, offer_id, userName, user.getUid(), post_ki_id);
                             refrence.child(user.getUid()).setValue(sendOfferTasker);
                             Toast.makeText(SendOffer.this, "Offer Sent!", Toast.LENGTH_SHORT).show();
+                            refrence.child(user.getUid()).child("onClick").setValue("1");
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                            Toast.makeText(SendOffer.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                     /* Getting Current User Name*/

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,6 +36,8 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class CustomerWelocmeActivity extends AppCompatActivity {
     public static final String MY_PREFS_NAME = "MyPrefsFile";
@@ -153,15 +156,26 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(CustomerWelocmeActivity.this, "Delete Account", Toast.LENGTH_SHORT).show();
-                //showAlertDialog();
                 startActivity(new Intent(getApplicationContext(), DeleteAccount.class));
             }
         });
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CustomerWelocmeActivity.this, "Help", Toast.LENGTH_SHORT).show();
+                LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+                View helpView = inflater.inflate(R.layout.help_alert_dialog, null);
+                final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(CustomerWelocmeActivity.this)
+                        .setView(helpView)
+                        .setCancelable(false)
+                        .create();
+                Button btnOk = helpView.findViewById(R.id.btnOk);
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog.show();
             }
         });
         btnReport.setOnClickListener(new View.OnClickListener() {
@@ -173,8 +187,7 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
     }
 
     public void showAlertDialog() {
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(CustomerWelocmeActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(CustomerWelocmeActivity.this);
         builder.setMessage("All Your Post Will Also Be Deleted.\nDo you still want to delete account?")
                 .setTitle("Delete Account")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {

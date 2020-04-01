@@ -28,7 +28,6 @@
         <activity android:name=".AddPost" />
         <activity android:name=".RegisterTasker" />
         <activity android:name=".RegisterCustomer" />
-        <activity android:name=".AskActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

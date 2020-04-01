@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ public class ViewProfileTasker extends AppCompatActivity {
     TextView name, phone_number, email, gender, profession;
     Button btn_call_this_tasker, btn_chat_this_tasker;
     CircleImageView dpTasker;
+    String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +55,6 @@ public class ViewProfileTasker extends AppCompatActivity {
                 Toast.makeText(ViewProfileTasker.this, "Chat", Toast.LENGTH_SHORT).show();
             }
         });
-        btn_call_this_tasker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ViewProfileTasker.this, "Call", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(tasker_ki_profile_ki_id);
         mRefrence.addValueEventListener(new ValueEventListener() {
@@ -66,7 +62,7 @@ public class ViewProfileTasker extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name_tasker = dataSnapshot.child("taskerUsername").getValue().toString();
                 String email_id = dataSnapshot.child("email").getValue().toString();
-                String phone = dataSnapshot.child("taskerPhonenumber").getValue().toString();
+                phone = dataSnapshot.child("taskerPhonenumber").getValue().toString();
                 String prof = dataSnapshot.child("taskerProfession").getValue().toString();
                 String gend = dataSnapshot.child("taskerGender").getValue().toString();
                 String image = dataSnapshot.child("profileimage").getValue().toString();
@@ -82,6 +78,15 @@ public class ViewProfileTasker extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(ViewProfileTasker.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btn_call_this_tasker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phone));
+                startActivity(intent);
             }
         });
     }

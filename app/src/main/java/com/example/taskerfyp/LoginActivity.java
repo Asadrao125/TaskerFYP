@@ -5,12 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.method.MultiTapKeyListener;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,8 +84,33 @@ public class LoginActivity extends AppCompatActivity {
         tvCreateNewAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AskActivity.class));
-                finish();
+
+                LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+                View v = inflater.inflate(R.layout.ask_alert_dialog, null);
+
+                Button btnCustomer = v.findViewById(R.id.cus);
+                Button btnTasker = v.findViewById(R.id.tas);
+
+                btnCustomer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getApplicationContext(), RegisterCustomer.class));
+                        finish();
+                    }
+                });
+                btnTasker.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getApplicationContext(), RegisterTasker.class));
+                        finish();
+                    }
+                });
+
+                AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this)
+                        .setView(v)
+                        .create();
+
+                alertDialog.show();
             }
         });
 

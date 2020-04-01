@@ -1,6 +1,7 @@
 package com.example.taskerfyp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.taskerfyp.MainActivity;
 import com.example.taskerfyp.Models.SendMessage;
 import com.example.taskerfyp.Models.SendOfferTasker;
 import com.example.taskerfyp.R;
 import com.example.taskerfyp.SendOffer;
+import com.example.taskerfyp.ViewProfileTasker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,8 +26,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyViewHolder> {
 
@@ -47,7 +53,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull final ViewOfferAdapter.MyViewHolder holder, final int position) {
-        holder.username.setText("Name: " + sendOfferTaskers.get(position).getUserName());
+        holder.username.setText(sendOfferTaskers.get(position).getUserName());
         holder.budget.setText("Budget: " + sendOfferTaskers.get(position).getOffer_budget());
         holder.deadline.setText("Deadline: " + sendOfferTaskers.get(position).getOffer_deadline());
         holder.description.setText("Description: \n" + sendOfferTaskers.get(position).getOffer_description());
@@ -65,6 +71,23 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         holder.btnDeclineOffer.setBackgroundColor(Color.LTGRAY);
                         holder.btnDeclineOffer.setEnabled(false);
                     }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        /* Getting Tasker Profile Image Here*/
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(sendOfferTaskers.get(position).getOffer_sender_id());
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("profileimage")) {
+                    String image = dataSnapshot.child("profileimage").getValue().toString();
+                    Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(holder.prfile_image_tasker);
                 }
             }
 
@@ -95,7 +118,6 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
 
             }
         });
-
 
         holder.btnAcceptOffer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +186,25 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                 });
             }
         });
+
+        holder.prfile_image_tasker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ViewProfileTasker.class);
+                String tasker_ki_profile_ki_id = sendOfferTaskers.get(position).getOffer_sender_id().toString();
+                intent.putExtra("tasker_ki_profile_ki_id", tasker_ki_profile_ki_id);
+                context.startActivity(intent);
+            }
+        });
+        holder.username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ViewProfileTasker.class);
+                String tasker_ki_profile_ki_id = sendOfferTaskers.get(position).getOffer_sender_id().toString();
+                intent.putExtra("tasker_ki_profile_ki_id", tasker_ki_profile_ki_id);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -174,6 +215,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
     static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView username, budget, deadline, description;
         private Button btnAcceptOffer, btnDeclineOffer;
+        CircleImageView prfile_image_tasker;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -183,6 +225,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
             description = itemView.findViewById(R.id.tvViewOfferDescription);
             btnAcceptOffer = itemView.findViewById(R.id.btnAcceptOffer);
             btnDeclineOffer = itemView.findViewById(R.id.btnDeclineOffer);
+            prfile_image_tasker = itemView.findViewById(R.id.profile_image_tasker);
         }
     }
 }

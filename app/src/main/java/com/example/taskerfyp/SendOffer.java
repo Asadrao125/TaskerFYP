@@ -30,6 +30,7 @@ public class SendOffer extends AppCompatActivity {
     EditText edtSendOfferDescription, edtSendOfferBudget, edtSendOfferDeadline;
     Button btnSendOfferTasker;
     String userName;
+    String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,11 @@ public class SendOffer extends AppCompatActivity {
                     reffff.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChild("profileimage")) {
+                                image = dataSnapshot.child("profileimage").getValue().toString();
+                            } else {
+                                Toast.makeText(SendOffer.this, "No Profile Image", Toast.LENGTH_SHORT).show();
+                            }
                             userName = String.valueOf(dataSnapshot.child("taskerUsername").getValue());
                             DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Offers").child(id);
                             String offer_id = refrence.push().getKey();

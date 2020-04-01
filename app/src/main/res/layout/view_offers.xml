@@ -13,13 +13,21 @@
         android:background="@drawable/border_view_post"
         android:padding="10dp">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_tasker"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:src="@mipmap/ic_profile" />
+
         <TextView
             android:id="@+id/tvViewOfferName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/post_gray_border"
-            android:padding="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@id/profile_image_tasker"
             android:text="Username"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -28,7 +36,7 @@
             android:id="@+id/tvViewOfferDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvViewOfferName"
+            android:layout_below="@id/profile_image_tasker"
             android:layout_marginBottom="10dp"
             android:background="@drawable/post_gray_border"
             android:padding="5dp"
@@ -63,8 +71,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/border_view_post"
             android:padding="10dp"
-            android:text="Accept"
-            android:textColor="@color/green" />
+            android:text="Accept" />
 
         <Button
             android:id="@+id/btnDeclineOffer"
@@ -76,8 +83,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/border_view_post"
             android:padding="10dp"
-            android:text="Decline"
-            android:textColor="@color/red" />
+            android:text="Decline" />
 
     </RelativeLayout>
 

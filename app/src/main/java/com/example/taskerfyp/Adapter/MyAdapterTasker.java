@@ -80,8 +80,7 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
                         holder.btnSendOffer.setBackgroundColor(Color.LTGRAY);
                         holder.btnSendOffer.setEnabled(false);
                     }
-                } else
-                    Toast.makeText(context, "Not Clicked Yet", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

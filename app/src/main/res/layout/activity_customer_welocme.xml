@@ -496,7 +496,7 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerInParent="true"
-                                    android:src="@mipmap/ic_add_post" />
+                                    android:src="@mipmap/ic_location" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -581,7 +581,7 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerInParent="true"
-                                    android:src="@mipmap/new_icon_profile" />
+                                    android:src="@mipmap/ic_view_profile_ic" />
 
                                 <TextView
                                     android:layout_width="wrap_content"

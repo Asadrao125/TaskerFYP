@@ -7,7 +7,7 @@
     android:background="@color/colorPrimary"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ViewProfileTasker">
+    tools:context=".ViewProfileByCustomer">
 
     <include layout="@layout/toolbar" />
 
@@ -194,7 +194,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.949" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

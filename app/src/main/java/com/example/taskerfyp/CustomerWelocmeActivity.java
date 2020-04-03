@@ -43,7 +43,7 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     SharedPreferences.Editor editor;
 
-    Button btnAddPost, btnViewPost, btnDeleteAccount, btnThemes, btnInviteFriends, btnHelp, btnEditProfile, btnReport;
+    Button btnAddPost, btnViewPost, btnDeleteAccount, btnThemes, btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnProfile;
     CircleImageView imgProfile;
     FirebaseUser currentFirebaseUser;
     int Image_Request_Code = 7;
@@ -70,6 +70,7 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
         btnHelp = findViewById(R.id.btnHelp);
         btnReport = findViewById(R.id.btnReport);
+        btnProfile = findViewById(R.id.btnProfile);
 
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mRef = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(currentFirebaseUser.getUid());
@@ -113,6 +114,13 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ViewProfile_of_Customer.class));
             }
         });
 
@@ -178,6 +186,7 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

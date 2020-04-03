@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ViewProfileTasker extends AppCompatActivity {
+public class ViewProfileByCustomer extends AppCompatActivity {
     TextView name, phone_number, email, gender, profession;
     Button btn_call_this_tasker, btn_chat_this_tasker;
     CircleImageView dpTasker;
@@ -30,7 +30,7 @@ public class ViewProfileTasker extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_profile_tasker);
+        setContentView(R.layout.activity_view_profile_by_customer);
 
         String tasker_ki_profile_ki_id = getIntent().getStringExtra("tasker_ki_profile_ki_id");
 
@@ -52,7 +52,7 @@ public class ViewProfileTasker extends AppCompatActivity {
         btn_chat_this_tasker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ViewProfileTasker.this, "Chat", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ViewProfileByCustomer.this, "Chat", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -77,7 +77,7 @@ public class ViewProfileTasker extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(ViewProfileTasker.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ViewProfileByCustomer.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -40,8 +41,7 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     SharedPreferences.Editor editor;
 
-    Button btnAddPost, btnViewPost, btnDeleteAccount, btnThemes, btnInviteFriends, btnHelp, btnEditProfile, btnReport;
-    FloatingActionButton fab;
+    Button btnViewPost, btnDeleteAccount, btnNotification, btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnViewprofile;
     CircleImageView imgProfile;
     FirebaseUser currentFirebaseUser;
     int Image_Request_Code = 7;
@@ -60,21 +60,14 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
 
         final TextView mTitle = findViewById(R.id.toolbar_title);
         imgProfile = findViewById(R.id.imgProfile);
-        //btnAddPost = findViewById(R.id.btnAddpost);
         btnViewPost = findViewById(R.id.btnViewPost);
         btnEditProfile = findViewById(R.id.btnEditProfile);
-        btnThemes = findViewById(R.id.btnThemes);
+        btnNotification = findViewById(R.id.btnNotification);
         btnInviteFriends = findViewById(R.id.btnInviteFriends);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
         btnHelp = findViewById(R.id.btnHelp);
         btnReport = findViewById(R.id.btnReport);
-        fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ViewMessageByTasker.class));
-            }
-        });
+        btnViewprofile = findViewById(R.id.btnViewProfile);
 
         // Setting Username On Dashboard
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -124,12 +117,12 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         });
         /* Update Profile Image */
 
-       /* btnAddPost.setOnClickListener(new View.OnClickListener() {
+        btnViewprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TaskerWelocmeActivity.this, "Add Post", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), ViewProfile_of_Tasker.class));
             }
-        });*/
+        });
 
         btnViewPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,10 +138,10 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
             }
         });
 
-        btnThemes.setOnClickListener(new View.OnClickListener() {
+        btnNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TaskerWelocmeActivity.this, "Themes", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), ViewMessageByTasker.class));
             }
         });
 
@@ -158,25 +151,40 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
                 shareIntent();
             }
         });
+
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(TaskerWelocmeActivity.this, "Delete Account", Toast.LENGTH_SHORT).show();
             }
         });
+
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TaskerWelocmeActivity.this, "Help", Toast.LENGTH_SHORT).show();
+                LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+                View helpView = inflater.inflate(R.layout.help_alert_dialog, null);
+                final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(TaskerWelocmeActivity.this)
+                        .setView(helpView)
+                        .setCancelable(false)
+                        .create();
+                Button btnOk = helpView.findViewById(R.id.btnOk);
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog.show();
             }
         });
+
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(TaskerWelocmeActivity.this, "Report", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     public void shareIntent() {
@@ -243,6 +251,4 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
             }
         }
     }
-
-
 }

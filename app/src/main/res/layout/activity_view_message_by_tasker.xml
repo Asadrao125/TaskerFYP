@@ -4,87 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     tools:context=".ViewMessageByTasker">
 
-    <TextView
-        android:id="@+id/tvMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        android:text="Message"
-        android:textAlignment="center"
-        android:textSize="22sp" />
+    <include layout="@layout/toolbar" />
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        android:text="Name"
-        android:textAlignment="center"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/tvEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        android:text="Email"
-        android:textAlignment="center"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/tvGender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        android:text="Gender"
-        android:textAlignment="center"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/tvNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        android:text="Number"
-        android:textAlignment="center"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/tvPostId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        android:text="Post_ID"
-        android:textAlignment="center"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/tvMessageId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        android:text="Message ID"
-        android:textAlignment="center"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/tvCurrentUserId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Current User ID"
-        android:textAlignment="center"
-        android:textSize="22sp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_messages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

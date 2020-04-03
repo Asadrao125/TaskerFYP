@@ -9,8 +9,10 @@ public class SendMessage {
     String customer_email;
     String customer_number;
     String customer_gender;
+    String time;
+    String date;
 
-    public SendMessage(String post_id, String message_id, String message, String current_user_id, String customer_name, String customer_email, String customer_number, String customer_gender) {
+    public SendMessage(String post_id, String message_id, String message, String current_user_id, String customer_name, String customer_email, String customer_number, String customer_gender, String time, String date) {
         this.post_id = post_id;
         this.message_id = message_id;
         this.message = message;
@@ -19,6 +21,8 @@ public class SendMessage {
         this.customer_email = customer_email;
         this.customer_number = customer_number;
         this.customer_gender = customer_gender;
+        this.time = time;
+        this.date = date;
     }
 
     public SendMessage() {
@@ -86,5 +90,21 @@ public class SendMessage {
 
     public void setCustomer_gender(String customer_gender) {
         this.customer_gender = customer_gender;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

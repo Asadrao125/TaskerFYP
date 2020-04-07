@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.taskerfyp.Adapter.ViewOfferAdapter;
 import com.example.taskerfyp.Models.SendOfferTasker;
@@ -26,6 +27,7 @@ public class ViewOfferTasker extends AppCompatActivity {
     DatabaseReference databaseReference;
     ArrayList<SendOfferTasker> list;
     ViewOfferAdapter adapter;
+    String ids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +49,15 @@ public class ViewOfferTasker extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    SendOfferTasker sendOfferTasker = dataSnapshot1.getValue(SendOfferTasker.class);
-                    list.add(sendOfferTasker);
+                    list.clear();
+                    for (DataSnapshot ds : dataSnapshot1.getChildren()) {
+                        SendOfferTasker sendOfferTasker = ds.getValue(SendOfferTasker.class);
+                        list.add(sendOfferTasker);
+                    }
+                    adapter = new ViewOfferAdapter(ViewOfferTasker.this, list);
+                    recyclerView.setAdapter(adapter);
                 }
-                adapter = new ViewOfferAdapter(ViewOfferTasker.this, list);
-                recyclerView.setAdapter(adapter);
             }
 
             @Override

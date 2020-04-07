@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskerfyp.Models.Post;
 import com.example.taskerfyp.R;
 import com.example.taskerfyp.SendOffer;
+import com.example.taskerfyp.ViewProfileCustomerByTasker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -69,8 +70,30 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
             }
         });
 
+        holder.username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String iidd;
+                iidd = posts.get(position).getId();
+                Intent intent = new Intent(context, ViewProfileCustomerByTasker.class);
+                intent.putExtra("Post_krny_waly_ki_id", iidd);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String iidd;
+                iidd = posts.get(position).getId();
+                Intent intent = new Intent(context, ViewProfileCustomerByTasker.class);
+                intent.putExtra("Post_krny_waly_ki_id", iidd);
+                context.startActivity(intent);
+            }
+        });
+
         FirebaseUser userC = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offers").child(posts.get(position).getId()).child(userC.getUid());
+        final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offers").child(posts.get(position).getId()).child(userC.getUid()).child(posts.get(position).getPostId());
         onClickRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

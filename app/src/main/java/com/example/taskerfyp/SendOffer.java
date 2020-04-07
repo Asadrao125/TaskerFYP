@@ -31,13 +31,14 @@ public class SendOffer extends AppCompatActivity {
     Button btnSendOfferTasker;
     String userName;
     String image;
+    String offer_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_offer);
 
-        final String id = getIntent().getStringExtra("Post_krny_waly_ki_id");
+        final String post_krny_waly_ki_id = getIntent().getStringExtra("Post_krny_waly_ki_id");
         final String post_ki_id = getIntent().getStringExtra("post_ki_id");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -52,7 +53,7 @@ public class SendOffer extends AppCompatActivity {
         btnSendOfferTasker = findViewById(R.id.btnSendOfferTasker);
 
         FirebaseUser userC = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offers").child(id).child(userC.getUid());
+        final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offers").child(post_krny_waly_ki_id).child(userC.getUid()).child(post_ki_id);
         onClickRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -96,12 +97,12 @@ public class SendOffer extends AppCompatActivity {
                                 Toast.makeText(SendOffer.this, "No Profile Image", Toast.LENGTH_SHORT).show();
                             }
                             userName = String.valueOf(dataSnapshot.child("taskerUsername").getValue());
-                            DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Offers").child(id);
-                            String offer_id = refrence.push().getKey();
+                            DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Offers").child(post_krny_waly_ki_id);
+                            offer_id = refrence.push().getKey();
                             SendOfferTasker sendOfferTasker = new SendOfferTasker(offerBudget, offerDeadline, offerDescription, offer_id, userName, user.getUid(), post_ki_id);
-                            refrence.child(user.getUid()).setValue(sendOfferTasker);
+                            refrence.child(user.getUid()).child(post_ki_id).setValue(sendOfferTasker);
                             Toast.makeText(SendOffer.this, "Offer Sent!", Toast.LENGTH_SHORT).show();
-                            refrence.child(user.getUid()).child("onClick").setValue("1");
+                            refrence.child(user.getUid()).child(post_ki_id).child("onClick").setValue("1");
                         }
 
                         @Override

@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewProfile_of_Customer"></activity>
+        <activity android:name=".ViewProfileCustomerByTasker"></activity>
+        <activity android:name=".ViewProfile_of_Customer" />
         <activity android:name=".ViewProfile_of_Tasker" />
         <activity android:name=".ViewProfileByCustomer" />
         <activity android:name=".EditProfileTasker" />

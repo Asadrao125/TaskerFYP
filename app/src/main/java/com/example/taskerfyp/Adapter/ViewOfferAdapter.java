@@ -37,6 +37,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
     Context context;
     ArrayList<SendOfferTasker> sendOfferTaskers;
     private String name, email, number, gender;
+    String message_id;
 
     public ViewOfferAdapter(Context c, ArrayList<SendOfferTasker> s) {
         context = c;
@@ -58,51 +59,6 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
         holder.deadline.setText("Deadline: " + sendOfferTaskers.get(position).getOffer_deadline());
         holder.description.setText("Description: \n" + sendOfferTaskers.get(position).getOffer_description());
 
-        final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Messages").child(sendOfferTaskers.get(position).getOffer_sender_id());
-        onClickRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
-                    //Toast.makeText(context, "" + dataSnapshot2.child("message_id").getValue(), Toast.LENGTH_SHORT).show();
-                    final String message_id = dataSnapshot2.child("message_id").getValue().toString();
-
-                    onClickRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            // Toast.makeText(context, "" + dataSnapshot.child(message_id).getValue(), Toast.LENGTH_SHORT).show();
-                            if (dataSnapshot.child(message_id).hasChild("onClick")) {
-                                if (dataSnapshot.child(message_id).child("onClick").getValue().equals("1")) {
-                                    holder.btnAcceptOffer.setText("Offer Accpted");
-                                    holder.btnAcceptOffer.setBackgroundColor(Color.LTGRAY);
-                                    holder.btnAcceptOffer.setEnabled(false);
-
-                                    holder.btnDeclineOffer.setBackgroundColor(Color.LTGRAY);
-                                    holder.btnDeclineOffer.setEnabled(false);
-                                } else {
-                                    holder.btnDeclineOffer.setText("Offer Declined");
-                                    holder.btnDeclineOffer.setBackgroundColor(Color.LTGRAY);
-                                    holder.btnDeclineOffer.setEnabled(false);
-
-                                    holder.btnAcceptOffer.setBackgroundColor(Color.LTGRAY);
-                                    holder.btnAcceptOffer.setEnabled(false);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
         /* Getting Tasker Profile Image Here*/
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(sendOfferTaskers.get(position).getOffer_sender_id());
         mRef.addValueEventListener(new ValueEventListener() {
@@ -111,6 +67,36 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                 if (dataSnapshot.hasChild("profileimage")) {
                     String image = dataSnapshot.child("profileimage").getValue().toString();
                     Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(holder.prfile_image_tasker);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        String offer_sender_ki_id = sendOfferTaskers.get(position).getOffer_sender_id();
+        String post_ki_id = sendOfferTaskers.get(position).getPost_id();
+        DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("Messages").child(offer_sender_ki_id).child(post_ki_id);
+        mRefrence.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("onClick")) {
+                    if (dataSnapshot.child("onClick").getValue().toString().equals("1")) {
+                        holder.btnAcceptOffer.setText("Offer Accepted");
+                        holder.btnAcceptOffer.setBackgroundColor(Color.LTGRAY);
+                        holder.btnAcceptOffer.setEnabled(false);
+
+                        holder.btnDeclineOffer.setBackgroundColor(Color.LTGRAY);
+                        holder.btnDeclineOffer.setEnabled(false);
+                    } else if (dataSnapshot.child("onClick").getValue().toString().equals("0")) {
+                        holder.btnDeclineOffer.setText("Offer Declined");
+                        holder.btnDeclineOffer.setBackgroundColor(Color.LTGRAY);
+                        holder.btnDeclineOffer.setEnabled(false);
+
+                        holder.btnAcceptOffer.setBackgroundColor(Color.LTGRAY);
+                        holder.btnAcceptOffer.setEnabled(false);
+                    }
                 }
             }
 
@@ -151,8 +137,8 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         // Getting Current Date and Time
 
                         SendMessage sendMessage = new SendMessage(post_id, message_id, message, current_user_id, name, email, number, gender, time, date);
-                        reference.child(message_id).setValue(sendMessage);
-                        reference.child(message_id).child("onClick").setValue("1");
+                        reference.child(sendOfferTaskers.get(position).getPost_id()).setValue(sendMessage);
+                        reference.child(sendOfferTaskers.get(position).getPost_id()).child("onClick").setValue("1");
                         Toast.makeText(context, "Offer accepted messege sent !", Toast.LENGTH_LONG).show();
                         /////////
                     }
@@ -196,8 +182,8 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         // Getting Current Date and Time
 
                         SendMessage sendMessage = new SendMessage(post_id, message_id, message, current_user_id, name, email, number, gender, time, date);
-                        reference.child(message_id).setValue(sendMessage);
-                        reference.child(message_id).child("onClick").setValue("0");
+                        reference.child(sendOfferTaskers.get(position).getPost_id()).setValue(sendMessage);
+                        reference.child(sendOfferTaskers.get(position).getPost_id()).child("onClick").setValue("0");
                         Toast.makeText(context, "Offer declined messege sent !", Toast.LENGTH_LONG).show();
                         /////////
                     }

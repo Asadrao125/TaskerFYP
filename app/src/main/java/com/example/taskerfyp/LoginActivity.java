@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener firebaseAuthlistner;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     TextView forgetPassword;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,16 +104,18 @@ public class LoginActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         startActivity(new Intent(getApplicationContext(), RegisterTasker.class));
                         finish();
+
                     }
                 });
 
-                AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this)
+                 alertDialog = new AlertDialog.Builder(LoginActivity.this)
                         .setView(v)
                         .create();
 
                 alertDialog.show();
             }
         });
+
 
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,5 +241,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mAuth.removeAuthStateListener(firebaseAuthlistner);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (alertDialog !=null && alertDialog.isShowing() ){
+            alertDialog.cancel();
+        }
     }
 }

@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taskerfyp.Models.CustomerUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -96,7 +97,7 @@ public class RegisterCustomer extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         String current_user_id;
-                        final DatabaseReference customerRef, usercategoryref;
+                        final DatabaseReference customerRef;
                         current_user_id = mAuth.getCurrentUser().getUid();
                         customerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customer").child(current_user_id);
 
@@ -111,6 +112,14 @@ public class RegisterCustomer extends AppCompatActivity {
                         customerrMap.put("customerPhonenumber", customerPhonenumber);
                         customerrMap.put("customerGender", customerGender);
                         customerrMap.put("email", customerEmail);
+
+                        CustomerUser user = new CustomerUser();
+                        user.setCustomerEmail(edtCustomerEmail.getText().toString());
+                        user.setCustomerUsername(edtCustomerUsername.getText().toString());
+                        user.setCustomerGender(spinnerCustomerGender.getSelectedItem().toString());
+                        user.setCustomerPhonenumber(edtCustomerPhonenumber.getText().toString());
+
+
 
                         customerRef.updateChildren(customerrMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override

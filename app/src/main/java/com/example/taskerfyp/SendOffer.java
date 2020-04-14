@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.taskerfyp.Models.SendOfferTasker;
+import com.example.taskerfyp.Models.TaskerUser;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,10 +39,12 @@ import java.util.HashMap;
 
 public class SendOffer extends AppCompatActivity {
     EditText edtSendOfferDescription, edtSendOfferBudget, edtSendOfferDeadline;
-    Button btnSendOfferTasker;
+    Button btnSendOfferTasker , btnTrackingTasker;
     String userName;
     String image;
     String offer_id;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +53,7 @@ public class SendOffer extends AppCompatActivity {
 
         final String post_krny_waly_ki_id = getIntent().getStringExtra("Post_krny_waly_ki_id");
         final String post_ki_id = getIntent().getStringExtra("post_ki_id");
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,6 +65,7 @@ public class SendOffer extends AppCompatActivity {
         edtSendOfferDeadline = findViewById(R.id.edtSendOfferDeadline);
         edtSendOfferDescription = findViewById(R.id.edtSendOfferDescription);
         btnSendOfferTasker = findViewById(R.id.btnSendOfferTasker);
+        btnTrackingTasker = findViewById(R.id.btnTrackingTasker);
 
         FirebaseUser userC = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offers").child(post_krny_waly_ki_id).child(userC.getUid()).child(post_ki_id);
@@ -114,5 +129,10 @@ public class SendOffer extends AppCompatActivity {
                 }
             }
         });
+
+
     }
-}
+
+
+    }
+

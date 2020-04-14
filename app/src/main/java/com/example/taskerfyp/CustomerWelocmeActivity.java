@@ -43,7 +43,8 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     SharedPreferences.Editor editor;
 
-    Button btnAddPost, btnViewPost, btnDeleteAccount, btnThemes, btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnProfile;
+    Button btnAddPost, btnViewPost, btnDeleteAccount, btnThemes,
+            btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnProfile , btnMap;
     CircleImageView imgProfile;
     FirebaseUser currentFirebaseUser;
     int Image_Request_Code = 7;
@@ -71,6 +72,7 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
         btnHelp = findViewById(R.id.btnHelp);
         btnReport = findViewById(R.id.btnReport);
         btnProfile = findViewById(R.id.btnProfile);
+        btnMap = findViewById(R.id.btnMap);
 
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mRef = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(currentFirebaseUser.getUid());
@@ -114,6 +116,13 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CustomerWelocmeActivity.this , MapsActivityCustomer.class));
             }
         });
 

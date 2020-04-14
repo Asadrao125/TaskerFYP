@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taskerfyp.Models.TaskerUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -119,13 +120,21 @@ public class RegisterTasker extends AppCompatActivity {
                         taskerMap.put("taskerProfession", taskerProfession);
                         taskerMap.put("email", taskerEmail);
 
+                        TaskerUser taskerUser = new TaskerUser();
+                        taskerUser.setTaskerEmail(edtTaskerEmail.getText().toString());
+                        taskerUser.setTaskerPhonenumber(edtTaskerPhonenumber.getText().toString());
+                        taskerUser.setTaskerUsername(edtTaskerUsername.getText().toString());
+                        taskerUser.setTaskerProfession(spinnerTaskerProfession.getSelectedItem().toString());
+
+
+
                         taskerRef.updateChildren(taskerMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegisterTasker.this, "Account Created Succesfully.", Toast.LENGTH_SHORT).show();
                                     loadingBar.dismiss();
-                                    startActivity(new Intent(getApplicationContext(), TaskerWelocmeActivity.class));
+                                    startActivity(new Intent(RegisterTasker.this, TaskerWelocmeActivity.class));
                                     finish();
                                 } else {
                                     String message = task.getException().getMessage();

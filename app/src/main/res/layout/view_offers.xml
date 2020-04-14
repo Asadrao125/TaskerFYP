@@ -78,12 +78,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvViewOfferDeadine"
+           android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_view_post"
+            android:padding="10dp"
+            android:text="Decline" />
+
+        <Button
+            android:id="@+id/btnTrackingCustomer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvViewOfferDeadine"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/border_view_post"
             android:padding="10dp"
-            android:text="Decline" />
+            android:text="Tracking" />
 
     </RelativeLayout>
 

@@ -3,7 +3,6 @@ package com.example.taskerfyp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.BuildConfig;
@@ -41,7 +39,7 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     SharedPreferences.Editor editor;
 
-    Button btnViewPost, btnDeleteAccount, btnNotification, btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnViewprofile;
+    Button btnViewPost, btnDeleteAccount, btnNotification, btnInviteFriends, btnHelp, btnEditProfile, btnMaps, btnViewprofile;
     CircleImageView imgProfile;
     FirebaseUser currentFirebaseUser;
     int Image_Request_Code = 7;
@@ -66,7 +64,7 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         btnInviteFriends = findViewById(R.id.btnInviteFriends);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
         btnHelp = findViewById(R.id.btnHelp);
-        btnReport = findViewById(R.id.btnReport);
+        btnMaps = findViewById(R.id.btnMaps);
         btnViewprofile = findViewById(R.id.btnViewProfile);
 
         // Setting Username On Dashboard
@@ -179,10 +177,10 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
             }
         });
 
-        btnReport.setOnClickListener(new View.OnClickListener() {
+        btnMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TaskerWelocmeActivity.this, "Report", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(TaskerWelocmeActivity.this , MapsActivityTasker.class));
             }
         });
     }

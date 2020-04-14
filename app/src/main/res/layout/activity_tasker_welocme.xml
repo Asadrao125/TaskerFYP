@@ -417,11 +417,11 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
-                                    android:text="Report"
+                                    android:text="Maps"
                                     android:textSize="14sp" />
 
                                 <Button
-                                    android:id="@+id/btnReport"
+                                    android:id="@+id/btnMaps"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@android:color/transparent" />

@@ -3,6 +3,7 @@ package com.example.taskerfyp.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.taskerfyp.MapsActivityTasker;
+import com.example.taskerfyp.Models.CustomerUser;
 import com.example.taskerfyp.Models.Post;
+import com.example.taskerfyp.Models.TaskerUser;
 import com.example.taskerfyp.R;
 import com.example.taskerfyp.SendOffer;
 import com.example.taskerfyp.ViewProfileCustomerByTasker;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +46,7 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
     Context context;
     ArrayList<Post> posts;
     String id;
+
 
     public MyAdapterTasker(Context c, ArrayList<Post> p) {
         context = c;
@@ -67,6 +80,19 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
                 intent.putExtra("Post_krny_waly_ki_id", id);
                 intent.putExtra("post_ki_id", post_id);
                 context.startActivity(intent);
+            }
+        });
+
+        holder.btnTrackingTasker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                id = posts.get(position).getId();
+
+                Intent intent = new Intent (context , MapsActivityTasker.class);
+               context.startActivity(intent);
+
+
+                //Toast.makeText(context, "Adapter call"+id, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -145,7 +171,7 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
     static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView username, budget, deadline, prof_title, task_time, task_date, task_description;
         private CircleImageView profile_image;
-        private Button btnSendOffer;
+        private Button btnSendOffer , btnTrackingTasker;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -158,6 +184,10 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
             task_date = itemView.findViewById(R.id.task_date);
             task_description = itemView.findViewById(R.id.task_description);
             btnSendOffer = itemView.findViewById(R.id.btnSendOffer);
+            btnTrackingTasker = itemView.findViewById(R.id.btnTrackingTasker);
+
         }
     }
+
+
 }

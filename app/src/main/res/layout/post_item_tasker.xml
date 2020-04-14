@@ -109,6 +109,16 @@
             android:text="Send Offer"
             android:textSize="18sp" />
 
+        <Button
+            android:id="@+id/btnTrackingTasker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnSendOffer"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/border_view_post"
+            android:text="Tracking"
+            android:textSize="18sp" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

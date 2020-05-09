@@ -119,8 +119,6 @@ public class RegisterCustomer extends AppCompatActivity {
                         user.setCustomerGender(spinnerCustomerGender.getSelectedItem().toString());
                         user.setCustomerPhonenumber(edtCustomerPhonenumber.getText().toString());
 
-
-
                         customerRef.updateChildren(customerrMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {

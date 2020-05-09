@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.taskerfyp.MapsActivityCustomer;
 import com.example.taskerfyp.Models.SendMessage;
 import com.example.taskerfyp.Models.SendOfferTasker;
 import com.example.taskerfyp.R;
@@ -196,6 +197,15 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
             }
         });
 
+        holder.btnTrackingCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MapsActivityCustomer.class);
+                intent.putExtra("offer_sender_id", sendOfferTaskers.get(position).getOffer_sender_id());
+                context.startActivity(intent);
+            }
+        });
+
         holder.prfile_image_tasker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,7 +233,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView username, budget, deadline, description;
-        private Button btnAcceptOffer, btnDeclineOffer;
+        private Button btnAcceptOffer, btnDeclineOffer, btnTrackingCustomer;
         CircleImageView prfile_image_tasker;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -235,6 +245,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
             btnAcceptOffer = itemView.findViewById(R.id.btnAcceptOffer);
             btnDeclineOffer = itemView.findViewById(R.id.btnDeclineOffer);
             prfile_image_tasker = itemView.findViewById(R.id.profile_image_tasker);
+            btnTrackingCustomer = itemView.findViewById(R.id.btnTrackingCustomer);
         }
     }
 }

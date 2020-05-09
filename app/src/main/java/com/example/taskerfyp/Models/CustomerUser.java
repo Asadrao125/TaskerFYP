@@ -2,7 +2,7 @@ package com.example.taskerfyp.Models;
 
 public class CustomerUser {
 
-    private String customerUsername, customerPhonenumber , customerGender , customerEmail , id;
+    private String customerUsername, customerPhonenumber, customerGender, customerEmail, id;
 
     public CustomerUser() {
     }

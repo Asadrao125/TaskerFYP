@@ -44,7 +44,7 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
 
     Button btnAddPost, btnViewPost, btnDeleteAccount, btnThemes,
-            btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnProfile , btnMap;
+            btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnProfile, btnMap;
     CircleImageView imgProfile;
     FirebaseUser currentFirebaseUser;
     int Image_Request_Code = 7;
@@ -122,7 +122,7 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CustomerWelocmeActivity.this , MapsActivityCustomer.class));
+                //startActivity(new Intent(CustomerWelocmeActivity.this, MapsActivityCustomer.class));
             }
         });
 

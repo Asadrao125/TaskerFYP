@@ -47,7 +47,6 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
     ArrayList<Post> posts;
     String id;
 
-
     public MyAdapterTasker(Context c, ArrayList<Post> p) {
         context = c;
         posts = p;
@@ -87,10 +86,9 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
             @Override
             public void onClick(View v) {
                 id = posts.get(position).getId();
-
-                Intent intent = new Intent (context , MapsActivityTasker.class);
-               context.startActivity(intent);
-
+                Intent intent = new Intent(context, MapsActivityTasker.class);
+                intent.putExtra("post_krny_waly_ki_iddd", id);
+                context.startActivity(intent);
 
                 //Toast.makeText(context, "Adapter call"+id, Toast.LENGTH_LONG).show();
             }
@@ -171,7 +169,7 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
     static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView username, budget, deadline, prof_title, task_time, task_date, task_description;
         private CircleImageView profile_image;
-        private Button btnSendOffer , btnTrackingTasker;
+        private Button btnSendOffer, btnTrackingTasker;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

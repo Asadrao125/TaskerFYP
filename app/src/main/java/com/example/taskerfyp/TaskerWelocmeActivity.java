@@ -180,7 +180,8 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         btnMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(TaskerWelocmeActivity.this , MapsActivityTasker.class));
+                //startActivity(new Intent(TaskerWelocmeActivity.this , MapsActivityTasker.class));
+                Toast.makeText(TaskerWelocmeActivity.this, "Maps", Toast.LENGTH_SHORT).show();
             }
         });
     }

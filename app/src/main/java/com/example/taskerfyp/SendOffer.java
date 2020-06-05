@@ -39,11 +39,10 @@ import java.util.HashMap;
 
 public class SendOffer extends AppCompatActivity {
     EditText edtSendOfferDescription, edtSendOfferBudget, edtSendOfferDeadline;
-    Button btnSendOfferTasker , btnTrackingTasker;
+    Button btnSendOfferTasker, btnTrackingTasker;
     String userName;
     String image;
     String offer_id;
-
 
 
     @Override
@@ -66,6 +65,26 @@ public class SendOffer extends AppCompatActivity {
         edtSendOfferDescription = findViewById(R.id.edtSendOfferDescription);
         btnSendOfferTasker = findViewById(R.id.btnSendOfferTasker);
         btnTrackingTasker = findViewById(R.id.btnTrackingTasker);
+
+
+        DatabaseReference A_O_R = FirebaseDatabase.getInstance().getReference("Accepted_Offers");
+        A_O_R.child(post_ki_id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    btnSendOfferTasker.setText("Disabled!");
+                    btnSendOfferTasker.setBackgroundColor(Color.LTGRAY);
+                    btnSendOfferTasker.setEnabled(false);
+                    Toast.makeText(SendOffer.this, "True", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
         FirebaseUser userC = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offers").child(post_krny_waly_ki_id).child(userC.getUid()).child(post_ki_id);
@@ -134,5 +153,5 @@ public class SendOffer extends AppCompatActivity {
     }
 
 
-    }
+}
 

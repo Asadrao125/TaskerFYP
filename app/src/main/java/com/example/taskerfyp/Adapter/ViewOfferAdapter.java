@@ -142,6 +142,9 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         reference.child(sendOfferTaskers.get(position).getPost_id()).child("onClick").setValue("1");
                         Toast.makeText(context, "Offer accepted messege sent !", Toast.LENGTH_LONG).show();
                         /////////
+                        
+                        DatabaseReference accepted_0ffer_refrence = FirebaseDatabase.getInstance().getReference("Accepted_Offers");
+                        accepted_0ffer_refrence.child(sendOfferTaskers.get(position).getPost_id()).setValue("Accepted!");
                     }
 
                     @Override
@@ -187,6 +190,9 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         reference.child(sendOfferTaskers.get(position).getPost_id()).child("onClick").setValue("0");
                         Toast.makeText(context, "Offer declined messege sent !", Toast.LENGTH_LONG).show();
                         /////////
+
+                        DatabaseReference declined_0ffer_refrence = FirebaseDatabase.getInstance().getReference("Declined_Offers");
+                        declined_0ffer_refrence.child(sendOfferTaskers.get(position).getPost_id()).setValue("Declined!");
                     }
 
                     @Override

@@ -82,6 +82,24 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
             }
         });
 
+        String postkiid = posts.get(position).getPostId();
+        DatabaseReference A_O_R = FirebaseDatabase.getInstance().getReference("Accepted_Offers");
+        A_O_R.child(postkiid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    holder.tv_offer_accepted.setVisibility(View.VISIBLE);
+                    holder.btnSendOffer.setBackgroundColor(Color.LTGRAY);
+                    holder.btnSendOffer.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         holder.btnTrackingTasker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,8 +107,6 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
                 Intent intent = new Intent(context, MapsActivityTasker.class);
                 intent.putExtra("post_krny_waly_ki_iddd", id);
                 context.startActivity(intent);
-
-                //Toast.makeText(context, "Adapter call"+id, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -167,7 +183,7 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView username, budget, deadline, prof_title, task_time, task_date, task_description;
+        private TextView username, budget, deadline, prof_title, task_time, task_date, task_description, tv_offer_accepted;
         private CircleImageView profile_image;
         private Button btnSendOffer, btnTrackingTasker;
 
@@ -183,9 +199,8 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
             task_description = itemView.findViewById(R.id.task_description);
             btnSendOffer = itemView.findViewById(R.id.btnSendOffer);
             btnTrackingTasker = itemView.findViewById(R.id.btnTrackingTasker);
+            tv_offer_accepted = itemView.findViewById(R.id.tv_offer_accepted);
 
         }
     }
-
-
 }

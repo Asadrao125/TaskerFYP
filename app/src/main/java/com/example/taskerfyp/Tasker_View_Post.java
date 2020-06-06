@@ -67,9 +67,9 @@ public class Tasker_View_Post extends AppCompatActivity {
         postrefrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     ids = dataSnapshot1.getKey();
-
                     databaseReference = FirebaseDatabase.getInstance().getReference("All_Posts").child(ids);
                     databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override

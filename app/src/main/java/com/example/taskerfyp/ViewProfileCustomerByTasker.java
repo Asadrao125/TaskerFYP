@@ -49,17 +49,19 @@ public class ViewProfileCustomerByTasker extends AppCompatActivity {
         mRefrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name_tasker = dataSnapshot.child("customerUsername").getValue().toString();
-                String email_id = dataSnapshot.child("email").getValue().toString();
-                phone = dataSnapshot.child("customerPhonenumber").getValue().toString();
-                String gend = dataSnapshot.child("customerGender").getValue().toString();
-                String image = dataSnapshot.child("profileimage").getValue().toString();
+                if (dataSnapshot.exists()) {
+                    String name_tasker = dataSnapshot.child("customerUsername").getValue().toString();
+                    String email_id = dataSnapshot.child("email").getValue().toString();
+                    phone = dataSnapshot.child("customerPhonenumber").getValue().toString();
+                    String gend = dataSnapshot.child("customerGender").getValue().toString();
+                    String image = dataSnapshot.child("profileimage").getValue().toString();
 
-                phone_number.setText(phone);
-                email.setText(email_id);
-                gender.setText(gend);
-                name.setText(name_tasker);
-                Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(dpTasker);
+                    phone_number.setText(phone);
+                    email.setText(email_id);
+                    gender.setText(gend);
+                    name.setText(name_tasker);
+                    Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(dpTasker);
+                }
             }
 
             @Override

@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-                 alertDialog = new AlertDialog.Builder(LoginActivity.this)
+                alertDialog = new AlertDialog.Builder(LoginActivity.this)
                         .setView(v)
                         .create();
 
@@ -163,7 +163,6 @@ public class LoginActivity extends AppCompatActivity {
             loadingBar.setMessage("Please Wait while we are logging in you");
             loadingBar.show();
             loadingBar.setCanceledOnTouchOutside(true);
-
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -246,7 +245,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (alertDialog !=null && alertDialog.isShowing() ){
+        if (alertDialog != null && alertDialog.isShowing()) {
             alertDialog.cancel();
         }
     }

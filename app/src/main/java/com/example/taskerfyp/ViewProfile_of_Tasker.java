@@ -48,19 +48,21 @@ public class ViewProfile_of_Tasker extends AppCompatActivity {
         mRefrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name_tasker = dataSnapshot.child("taskerUsername").getValue().toString();
-                String email_id = dataSnapshot.child("email").getValue().toString();
-                phone = dataSnapshot.child("taskerPhonenumber").getValue().toString();
-                String prof = dataSnapshot.child("taskerProfession").getValue().toString();
-                String gend = dataSnapshot.child("taskerGender").getValue().toString();
-                String image = dataSnapshot.child("profileimage").getValue().toString();
+                if (dataSnapshot.exists()) {
+                    String name_tasker = dataSnapshot.child("taskerUsername").getValue().toString();
+                    String email_id = dataSnapshot.child("email").getValue().toString();
+                    phone = dataSnapshot.child("taskerPhonenumber").getValue().toString();
+                    String prof = dataSnapshot.child("taskerProfession").getValue().toString();
+                    String gend = dataSnapshot.child("taskerGender").getValue().toString();
+                    String image = dataSnapshot.child("profileimage").getValue().toString();
 
-                phone_number.setText(phone);
-                email.setText(email_id);
-                gender.setText(gend);
-                name.setText(name_tasker);
-                profession.setText(prof);
-                Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(dpTasker);
+                    phone_number.setText(phone);
+                    email.setText(email_id);
+                    gender.setText(gend);
+                    name.setText(name_tasker);
+                    profession.setText(prof);
+                    Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(dpTasker);
+                }
             }
 
             @Override

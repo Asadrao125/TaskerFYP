@@ -41,6 +41,7 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
 
     Button btnViewPost, btnDeleteAccount, btnNotification, btnInviteFriends, btnHelp, btnEditProfile, btnMaps, btnViewprofile;
     CircleImageView imgProfile;
+    TextView tv_job_title;
     FirebaseUser currentFirebaseUser;
     int Image_Request_Code = 7;
     DatabaseReference mRef;
@@ -66,6 +67,7 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         btnHelp = findViewById(R.id.btnHelp);
         btnMaps = findViewById(R.id.btnMaps);
         btnViewprofile = findViewById(R.id.btnViewProfile);
+        tv_job_title = findViewById(R.id.tv_job_title);
 
         // Setting Username On Dashboard
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -73,8 +75,10 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //Toast.makeText(TaskerWelocmeActivity.this, "" + dataSnapshot.child("taskerUsername").getValue(), Toast.LENGTH_SHORT).show();
-                mTitle.setText("" + dataSnapshot.child("taskerUsername").getValue());
+                if (dataSnapshot.exists()) {
+                    mTitle.setText("" + dataSnapshot.child("taskerUsername").getValue());
+                    tv_job_title.setText("Logined As: Tasker >> " + dataSnapshot.child("taskerProfession").getValue());
+                }
             }
 
             @Override

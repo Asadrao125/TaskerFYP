@@ -47,6 +47,17 @@
             android:layout_toRightOf="@id/icon_notification"
             android:text="Message Date" />
 
+        <Button
+            android:id="@+id/btnDetail"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/notification_message_tv"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_view_post"
+            android:text="View Detail" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

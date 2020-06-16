@@ -287,7 +287,7 @@ public class MapsActivityTasker extends FragmentActivity implements OnMapReadyCa
                                 CustomerUser customerUser = dataSnapshot.getValue(CustomerUser.class);
 
                                 mMap.addMarker(new MarkerOptions()
-                                        .position(new LatLng(location.latitude, location.longitude))
+                                        .position(new LatLng(lastlocation.getLatitude(), lastlocation.getLongitude()))
                                         .flat(true)
                                         .title("Name: " + customerUser.getCustomerUsername())
                                         .snippet("Phone : " + customerUser.getCustomerPhonenumber())

@@ -17,6 +17,7 @@ import com.example.taskerfyp.MapsActivityCustomer;
 import com.example.taskerfyp.Models.SendMessage;
 import com.example.taskerfyp.Models.SendOfferTasker;
 import com.example.taskerfyp.R;
+import com.example.taskerfyp.ViewPostDetail;
 import com.example.taskerfyp.ViewProfileByCustomer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -84,14 +85,14 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("onClick")) {
                     if (dataSnapshot.child("onClick").getValue().toString().equals("1")) {
-                        holder.btnAcceptOffer.setText("Offer Accepted");
+                        holder.btnAcceptOffer.setText("Accepted");
                         holder.btnAcceptOffer.setBackgroundColor(Color.LTGRAY);
                         holder.btnAcceptOffer.setEnabled(false);
 
                         holder.btnDeclineOffer.setBackgroundColor(Color.LTGRAY);
                         holder.btnDeclineOffer.setEnabled(false);
                     } else if (dataSnapshot.child("onClick").getValue().toString().equals("0")) {
-                        holder.btnDeclineOffer.setText("Offer Declined");
+                        holder.btnDeclineOffer.setText("Declined");
                         holder.btnDeclineOffer.setBackgroundColor(Color.LTGRAY);
                         holder.btnDeclineOffer.setEnabled(false);
 
@@ -142,7 +143,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         reference.child(sendOfferTaskers.get(position).getPost_id()).child("onClick").setValue("1");
                         Toast.makeText(context, "Offer accepted messege sent !", Toast.LENGTH_LONG).show();
                         /////////
-                        
+
                         DatabaseReference accepted_0ffer_refrence = FirebaseDatabase.getInstance().getReference("Accepted_Offers");
                         accepted_0ffer_refrence.child(sendOfferTaskers.get(position).getPost_id()).setValue("Accepted!");
                     }
@@ -230,6 +231,15 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                 context.startActivity(intent);
             }
         });
+        holder.btnViewPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String post_id = sendOfferTaskers.get(position).getPost_id();
+                Intent intent = new Intent(context, ViewPostDetail.class);
+                intent.putExtra("post_ki_id", post_id);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -241,6 +251,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
         private TextView username, budget, deadline, description;
         private Button btnAcceptOffer, btnDeclineOffer, btnTrackingCustomer;
         CircleImageView prfile_image_tasker;
+        Button btnViewPost;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -252,6 +263,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
             btnDeclineOffer = itemView.findViewById(R.id.btnDeclineOffer);
             prfile_image_tasker = itemView.findViewById(R.id.profile_image_tasker);
             btnTrackingCustomer = itemView.findViewById(R.id.btnTrackingCustomer);
+            btnViewPost = itemView.findViewById(R.id.btnViewPost);
         }
     }
 }

@@ -56,12 +56,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="Logined As: "
+                        android:text="Job Title"
                         android:textAlignment="center"
                         android:textColor="#fff"
                         android:textSize="22sp"
                         android:textStyle="bold" />
-
 
                 </LinearLayout>
 

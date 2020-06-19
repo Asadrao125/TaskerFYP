@@ -49,13 +49,15 @@ public class ViewMessageByTasker extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    SendMessage sendMessage = dataSnapshot1.getValue(SendMessage.class);
-                    list.add(sendMessage);
-                }
-                adapter = new Notification_Tasker_Adapeter(ViewMessageByTasker.this, list);
-                recyclerView.setAdapter(adapter);
+                if (dataSnapshot.exists()) {
+                    list.clear();
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        SendMessage sendMessage = dataSnapshot1.getValue(SendMessage.class);
+                        list.add(sendMessage);
+                    }
+                    adapter = new Notification_Tasker_Adapeter(ViewMessageByTasker.this, list);
+                    recyclerView.setAdapter(adapter);
+                } else setContentView(R.layout.no_notification_yet);
             }
 
             @Override

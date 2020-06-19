@@ -52,7 +52,6 @@ public class Tasker_View_Post extends AppCompatActivity {
         mRefrence.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //Toast.makeText(Tasker_View_Post.this, "Registered Current User: " + dataSnapshot.child("taskerProfession").getValue(), Toast.LENGTH_SHORT).show();
                 taskerProffession = String.valueOf(dataSnapshot.child("taskerProfession").getValue());
             }
 
@@ -67,30 +66,32 @@ public class Tasker_View_Post extends AppCompatActivity {
         postrefrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    ids = dataSnapshot1.getKey();
-                    databaseReference = FirebaseDatabase.getInstance().getReference("All_Posts").child(ids);
-                    databaseReference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                title = String.valueOf(dataSnapshot1.child("title").getValue());
-                                if (taskerProffession.equals(title)) {
-                                    Post p = dataSnapshot1.getValue(Post.class);
-                                    list.add(p);
+                if (dataSnapshot.exists()) {
+                    list.clear();
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        ids = dataSnapshot1.getKey();
+                        databaseReference = FirebaseDatabase.getInstance().getReference("All_Posts").child(ids);
+                        databaseReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                    title = String.valueOf(dataSnapshot1.child("title").getValue());
+                                    if (taskerProffession.equals(title)) {
+                                        Post p = dataSnapshot1.getValue(Post.class);
+                                        list.add(p);
+                                    }
                                 }
+                                adapter = new MyAdapterTasker(Tasker_View_Post.this, list);
+                                recyclerView.setAdapter(adapter);
                             }
-                            adapter = new MyAdapterTasker(Tasker_View_Post.this, list);
-                            recyclerView.setAdapter(adapter);
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } else setContentView(R.layout.no_post_yet);
             }
 
             @Override

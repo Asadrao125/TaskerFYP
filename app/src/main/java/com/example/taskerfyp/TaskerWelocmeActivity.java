@@ -76,8 +76,8 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    mTitle.setText("" + dataSnapshot.child("taskerUsername").getValue());
-                    tv_job_title.setText("Logined As: Tasker >> " + dataSnapshot.child("taskerProfession").getValue());
+                    mTitle.setText(dataSnapshot.child("taskerUsername").getValue().toString());
+                    tv_job_title.setText(dataSnapshot.child("taskerProfession").getValue().toString());
                 }
             }
 

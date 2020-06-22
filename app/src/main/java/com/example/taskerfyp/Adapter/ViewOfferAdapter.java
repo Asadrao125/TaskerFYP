@@ -57,8 +57,8 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull final ViewOfferAdapter.MyViewHolder holder, final int position) {
         holder.username.setText(sendOfferTaskers.get(position).getUserName());
-        holder.budget.setText("Budget: " + sendOfferTaskers.get(position).getOffer_budget());
-        holder.deadline.setText("Deadline: " + sendOfferTaskers.get(position).getOffer_deadline());
+        holder.budget.setText("Budget: " + sendOfferTaskers.get(position).getOffer_budget() + " Rs");
+        holder.deadline.setText("Deadline: " + sendOfferTaskers.get(position).getOffer_deadline() + " Day(s)");
         holder.description.setText("Description: \n" + sendOfferTaskers.get(position).getOffer_description());
 
         /* Getting Tasker Profile Image Here*/
@@ -141,7 +141,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         SendMessage sendMessage = new SendMessage(post_id, message_id, message, current_user_id, name, email, number, gender, time, date);
                         reference.child(sendOfferTaskers.get(position).getPost_id()).setValue(sendMessage);
                         reference.child(sendOfferTaskers.get(position).getPost_id()).child("onClick").setValue("1");
-                        Toast.makeText(context, "Offer accepted messege sent !", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Offer accepted !", Toast.LENGTH_LONG).show();
                         /////////
 
                         DatabaseReference accepted_0ffer_refrence = FirebaseDatabase.getInstance().getReference("Accepted_Offers");
@@ -189,7 +189,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         SendMessage sendMessage = new SendMessage(post_id, message_id, message, current_user_id, name, email, number, gender, time, date);
                         reference.child(sendOfferTaskers.get(position).getPost_id()).setValue(sendMessage);
                         reference.child(sendOfferTaskers.get(position).getPost_id()).child("onClick").setValue("0");
-                        Toast.makeText(context, "Offer declined messege sent !", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Offer declined messege x!", Toast.LENGTH_LONG).show();
                         /////////
 
                         DatabaseReference declined_0ffer_refrence = FirebaseDatabase.getInstance().getReference("Declined_Offers");
@@ -235,7 +235,9 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
             @Override
             public void onClick(View v) {
                 String post_id = sendOfferTaskers.get(position).getPost_id();
+                String offer_send_krny_waly_ki_id = sendOfferTaskers.get(position).getOffer_sender_id();
                 Intent intent = new Intent(context, ViewPostDetail.class);
+                intent.putExtra("offer_send_krny_waly_ki_id", offer_send_krny_waly_ki_id);
                 intent.putExtra("post_ki_id", post_id);
                 context.startActivity(intent);
             }

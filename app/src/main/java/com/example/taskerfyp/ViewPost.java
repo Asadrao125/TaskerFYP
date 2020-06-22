@@ -49,13 +49,15 @@ public class ViewPost extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    Post p = dataSnapshot1.getValue(Post.class);
-                    list.add(p);
-                }
-                adapter = new MyAdapter(ViewPost.this, list);
-                recyclerView.setAdapter(adapter);
+                if (dataSnapshot.exists()) {
+                    list.clear();
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        Post p = dataSnapshot1.getValue(Post.class);
+                        list.add(p);
+                    }
+                    adapter = new MyAdapter(ViewPost.this, list);
+                    recyclerView.setAdapter(adapter);
+                } else Toast.makeText(ViewPost.this, "No Post To Show", Toast.LENGTH_SHORT).show();
             }
 
             @Override

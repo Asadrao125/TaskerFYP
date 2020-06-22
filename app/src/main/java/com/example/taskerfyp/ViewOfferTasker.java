@@ -49,15 +49,18 @@ public class ViewOfferTasker extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    list.clear();
-                    for (DataSnapshot ds : dataSnapshot1.getChildren()) {
-                        SendOfferTasker sendOfferTasker = ds.getValue(SendOfferTasker.class);
-                        list.add(sendOfferTasker);
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        list.clear();
+                        for (DataSnapshot ds : dataSnapshot1.getChildren()) {
+                            SendOfferTasker sendOfferTasker = ds.getValue(SendOfferTasker.class);
+                            list.add(sendOfferTasker);
+                        }
+                        adapter = new ViewOfferAdapter(ViewOfferTasker.this, list);
+                        recyclerView.setAdapter(adapter);
                     }
-                    adapter = new ViewOfferAdapter(ViewOfferTasker.this, list);
-                    recyclerView.setAdapter(adapter);
-                }
+                } else
+                    Toast.makeText(ViewOfferTasker.this, "No Offers To Show", Toast.LENGTH_SHORT).show();
             }
 
             @Override

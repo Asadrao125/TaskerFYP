@@ -2,17 +2,18 @@ package com.example.taskerfyp.Models;
 
 public class TaskerUser {
 
-    private String taskerUsername, taskerPhonenumber , taskerGender , taskerProfession , taskerEmail;
+    private String taskerUsername, taskerPhonenumber, taskerGender, taskerProfession, image, taskerEmail;
 
-    public TaskerUser() {
-    }
-
-    public TaskerUser(String taskerUsername, String taskerPhonenumber, String taskerGender, String taskerProfession, String taskerEmail) {
+    public TaskerUser(String taskerUsername, String taskerPhonenumber, String taskerGender, String taskerProfession, String image, String taskerEmail) {
         this.taskerUsername = taskerUsername;
         this.taskerPhonenumber = taskerPhonenumber;
         this.taskerGender = taskerGender;
         this.taskerProfession = taskerProfession;
+        this.image = image;
         this.taskerEmail = taskerEmail;
+    }
+
+    public TaskerUser() {
     }
 
     public String getTaskerUsername() {
@@ -45,6 +46,14 @@ public class TaskerUser {
 
     public void setTaskerProfession(String taskerProfession) {
         this.taskerProfession = taskerProfession;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getTaskerEmail() {

@@ -1,11 +1,13 @@
 package com.example.taskerfyp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,14 +18,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.taskerfyp.Models.TaskerUser;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterTasker extends AppCompatActivity {
     private EditText edtTaskerUsername;
@@ -32,9 +43,14 @@ public class RegisterTasker extends AppCompatActivity {
     private EditText edtTaskerPassword;
     private Spinner spinnerTaskerGender;
     private Spinner spinnerTaskerProfession;
-    private ProgressDialog loadingBar;
     private FirebaseAuth mAuth;
     private Button btnCreateTasker;
+    CircleImageView imgProfile;
+    int Image_Request_Code = 7;
+    DatabaseReference mRef;
+    String downloadUrl;
+    ProgressDialog loadingBar;
+    StorageReference UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +73,15 @@ public class RegisterTasker extends AppCompatActivity {
                 createTasker();
             }
         });
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, Image_Request_Code);
+            }
+        });
 
     }
 
@@ -67,18 +92,64 @@ public class RegisterTasker extends AppCompatActivity {
         edtTaskerPassword = findViewById(R.id.edtTaskerPassword);
         spinnerTaskerGender = findViewById(R.id.spinnerTaskerGender);
         spinnerTaskerProfession = findViewById(R.id.spinnerTaskerProfession);
-        loadingBar = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
         btnCreateTasker = findViewById(R.id.btnCreateTasker);
+        imgProfile = findViewById(R.id.imgProfile);
+        loadingBar = new ProgressDialog(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null) {
+            Uri ImageUri = data.getData();
+
+            CropImage.activity(ImageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1, 1)
+                    .start(this);
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+
+                final StorageReference filePath = UserProfileImageRef.child(".jpg");
+
+                filePath.putFile(resultUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+                        return filePath.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downUri = task.getResult();
+                            downloadUrl = downUri.toString();
+                        }
+                    }
+                });
+            }
+        }
     }
 
     private void createTasker() {
         final String taskerUsername = edtTaskerUsername.getText().toString().trim();
         final String taskerPhonenumber = edtTaskerPhonenumber.getText().toString().trim();
-        final String taskerEmail = edtTaskerEmail.getText().toString().trim();
-        final String taskerPassword = edtTaskerPassword.getText().toString().trim();
         final String taskerGender = spinnerTaskerGender.getSelectedItem().toString().trim();
         final String taskerProfession = spinnerTaskerProfession.getSelectedItem().toString().trim();
+        final String taskerEmail = edtTaskerEmail.getText().toString().trim();
+        final String taskerPassword = edtTaskerPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(taskerUsername)) {
             Toast.makeText(this, "Enter Username!", Toast.LENGTH_SHORT).show();
@@ -93,8 +164,7 @@ public class RegisterTasker extends AppCompatActivity {
         } else if (taskerProfession.equals("Select Your Profession")) {
             Toast.makeText(this, "Select Profession Please!", Toast.LENGTH_SHORT).show();
         } else {
-            loadingBar.setTitle("Authenticating");
-            loadingBar.setMessage("Please Wait While We Are Authenticating You.");
+            loadingBar.setMessage("Creating Account");
             loadingBar.show();
             loadingBar.setCanceledOnTouchOutside(false);
 
@@ -102,61 +172,26 @@ public class RegisterTasker extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        String current_user_id;
-                        DatabaseReference taskerRef;
-                        current_user_id = mAuth.getCurrentUser().getUid();
-                        taskerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Tasker").child(current_user_id);
-
+                        mRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Tasker");
+                        TaskerUser taskerUser = new TaskerUser(taskerUsername, taskerPhonenumber, taskerGender, taskerProfession, downloadUrl, taskerEmail);
+                        String current_user = mAuth.getCurrentUser().getUid();
+                        mRef.child(current_user).setValue(taskerUser);
+                        Toast.makeText(RegisterTasker.this, "Account Created !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), TaskerWelocmeActivity.class));
+                        finish();
                         loadingBar.dismiss();
-                        loadingBar.setTitle("Creating Account");
-                        loadingBar.setMessage("Please Wait While We Are Creating Your Account");
-                        loadingBar.show();
-                        loadingBar.setCanceledOnTouchOutside(false);
-
-                        HashMap taskerMap = new HashMap();
-                        taskerMap.put("taskerUsername", taskerUsername);
-                        taskerMap.put("taskerPhonenumber", taskerPhonenumber);
-                        taskerMap.put("taskerGender", taskerGender);
-                        taskerMap.put("taskerProfession", taskerProfession);
-                        taskerMap.put("email", taskerEmail);
-
-                        TaskerUser taskerUser = new TaskerUser();
-                        taskerUser.setTaskerEmail(edtTaskerEmail.getText().toString());
-                        taskerUser.setTaskerPhonenumber(edtTaskerPhonenumber.getText().toString());
-                        taskerUser.setTaskerUsername(edtTaskerUsername.getText().toString());
-                        taskerUser.setTaskerProfession(spinnerTaskerProfession.getSelectedItem().toString());
-
-
-
-                        taskerRef.updateChildren(taskerMap).addOnCompleteListener(new OnCompleteListener() {
-                            @Override
-                            public void onComplete(@NonNull Task task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(RegisterTasker.this, "Account Created Succesfully.", Toast.LENGTH_SHORT).show();
-                                    loadingBar.dismiss();
-                                    startActivity(new Intent(RegisterTasker.this, TaskerWelocmeActivity.class));
-                                    finish();
-                                } else {
-                                    String message = task.getException().getMessage();
-                                    Toast.makeText(RegisterTasker.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                                    loadingBar.dismiss();
-                                }
-                            }
-                        });
+                        edtTaskerUsername.setText("");
+                        edtTaskerEmail.setText("");
+                        edtTaskerPhonenumber.setText("");
+                        edtTaskerPassword.setText("");
 
                     } else {
                         String message = task.getException().getMessage();
                         Toast.makeText(RegisterTasker.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                        loadingBar.dismiss();
                     }
                 }
             });
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        finish();
-    }
 }

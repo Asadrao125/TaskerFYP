@@ -67,8 +67,8 @@ public class EditProfileTasker extends AppCompatActivity {
                     TaskerEditProfileUsername.setText(dataSnapshot.child("taskerUsername").getValue().toString());
                     TaskerEditProfilePhone.setText(dataSnapshot.child("taskerPhonenumber").getValue().toString());
                     TaskerEditProfileEmail.setText(currentUser.getEmail());
-                    if (dataSnapshot.hasChild("profileimage")) {
-                        String image = dataSnapshot.child("profileimage").getValue().toString();
+                    if (dataSnapshot.hasChild("image")) {
+                        String image = dataSnapshot.child("image").getValue().toString();
                         Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(TaskerEditProfileImage);
                     } else {
                         Toast.makeText(EditProfileTasker.this, "You Havn't Updated Your Profile Image", Toast.LENGTH_SHORT).show();

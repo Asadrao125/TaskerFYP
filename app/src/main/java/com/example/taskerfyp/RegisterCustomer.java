@@ -102,8 +102,7 @@ public class RegisterCustomer extends AppCompatActivity {
                         customerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customer").child(current_user_id);
 
                         loadingBar.dismiss();
-                        loadingBar.setTitle("Creating Account");
-                        loadingBar.setMessage("Please Wait While We Are Creating Your Account");
+                        loadingBar.setMessage("Creating Your Account");
                         loadingBar.show();
                         loadingBar.setCanceledOnTouchOutside(false);
 

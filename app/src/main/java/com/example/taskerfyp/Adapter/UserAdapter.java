@@ -53,7 +53,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot shot : dataSnapshot.getChildren()) {
                     holder.user_ka_nam.setText(taskerUser.get(position).getTaskerUsername());
-                    //Picasso.get().load(shot.child("profileimage").getValue().toString()).placeholder(R.mipmap.ic_profile).into(holder.DP);
+                    Picasso.get().load(taskerUser.get(position).getImage()).placeholder(R.mipmap.ic_profile).into(holder.DP);
                 }
             }
 

@@ -169,7 +169,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         if (radiobtnCustomer.isChecked()) {
                             reference = FirebaseDatabase.getInstance().getReference().child("Users").child("Customer");
-
                             reference.orderByChild("email").equalTo(email).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -179,7 +178,6 @@ public class LoginActivity extends AppCompatActivity {
                                         edtLoginEmail.setText("");
                                         edtLoginPassword.setText("");
                                         Intent intent = new Intent(getApplicationContext(), CustomerWelocmeActivity.class);
-                                        //intent.putExtra("customer_value", "C");
                                         startActivity(intent);
                                         finish();
                                     } else {
@@ -196,16 +194,14 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
 
                             reference = FirebaseDatabase.getInstance().getReference().child("Users").child("Tasker");
-                            reference.orderByChild("email").equalTo(email).addValueEventListener(new ValueEventListener() {
+                            reference.orderByChild("taskerEmail").equalTo(email).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.exists()) {
-                                        //Toast.makeText(LoginActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
                                         loadingBar.dismiss();
                                         edtLoginEmail.setText("");
                                         edtLoginPassword.setText("");
                                         Intent intent = new Intent(getApplicationContext(), TaskerWelocmeActivity.class);
-                                        //intent.putExtra("tasker_value", "T");
                                         startActivity(intent);
                                         finish();
                                     } else {

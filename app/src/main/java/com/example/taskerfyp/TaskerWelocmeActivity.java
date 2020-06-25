@@ -43,10 +43,8 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
     CircleImageView imgProfile;
     TextView tv_job_title;
     FirebaseUser currentFirebaseUser;
-    int Image_Request_Code = 7;
     DatabaseReference mRef;
     DatabaseReference UsersRef;
-    StorageReference UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +67,7 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         btnViewprofile = findViewById(R.id.btnViewProfile);
         tv_job_title = findViewById(R.id.tv_job_title);
 
-        // Setting Username On Dashboard
+
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(currentFirebaseUser.getUid());
         mRef.addValueEventListener(new ValueEventListener() {
@@ -87,24 +85,13 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
             }
         });
 
-        /* Update Profile Image */
-        imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, Image_Request_Code);
-            }
-        });
-
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Tasker").child(currentFirebaseUser.getUid());
         UsersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    if (dataSnapshot.hasChild("profileimage")) {
-                        String image = dataSnapshot.child("profileimage").getValue().toString();
+                    if (dataSnapshot.hasChild("image")) {
+                        String image = dataSnapshot.child("image").getValue().toString();
                         Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(imgProfile);
                     } else {
                         Toast.makeText(getApplicationContext(), "Please select profile image first.", Toast.LENGTH_SHORT).show();
@@ -117,7 +104,6 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
 
             }
         });
-        /* Update Profile Image */
 
         btnViewprofile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,57 +187,6 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
             startActivity(Intent.createChooser(shareIntent, "choose one"));
         } catch (Exception e) {
             e.toString();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null) {
-            Uri ImageUri = data.getData();
-
-            CropImage.activity(ImageUri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1, 1)
-                    .start(this);
-        }
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-
-                final StorageReference filePath = UserProfileImageRef.child(currentFirebaseUser + ".jpg");
-
-                filePath.putFile(resultUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if (!task.isSuccessful()) {
-                            throw task.getException();
-                        }
-                        return filePath.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()) {
-                            Uri downUri = task.getResult();
-                            //Toast.makeText(getApplicationContext(), "Profile Image stored successfully to Firebase storage...", Toast.LENGTH_SHORT).show();
-                            final String downloadUrl = downUri.toString();
-                            mRef.child("profileimage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(getApplicationContext(), "Profile Image Updated!", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        String message = task.getException().getMessage();
-                                        Toast.makeText(getApplicationContext(), "Error Occured: " + message, Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                        }
-                    }
-                });
-            }
         }
     }
 }

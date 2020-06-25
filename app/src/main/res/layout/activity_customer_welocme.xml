@@ -262,24 +262,24 @@
                                 android:background="@drawable/border">
 
                                 <ImageView
-                                    android:id="@+id/imgInviteFriends"
+                                    android:id="@+id/image_profile"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerInParent="true"
-                                    android:src="@mipmap/ic_invite" />
+                                    android:src="@mipmap/ic_view_profile_ic" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/imgInviteFriends"
+                                    android:layout_below="@id/image_profile"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
-                                    android:text="Invite Friends"
+                                    android:text="View Profile"
                                     android:textSize="14sp" />
 
                                 <Button
-                                    android:id="@+id/btnInviteFriends"
+                                    android:id="@+id/btnProfile"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@android:color/transparent" />
@@ -334,11 +334,12 @@
 
                     </LinearLayout>
                     <!-- VIEW OFFER, INVITE FRIENDS AND DELETE ACCOUNT -->
-                    <!-- HELP, REPORT AND NOTIFICATIONS -->
+
+                    <!-- MAPS, INBOX AND VIEW PROFILE -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
 
                         <androidx.cardview.widget.CardView
@@ -374,142 +375,6 @@
 
                                 <Button
                                     android:id="@+id/btnHelp"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
-
-                            </RelativeLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            app:cardCornerRadius="10dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/border">
-
-                                <ImageView
-                                    android:id="@+id/imgReport"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_centerInParent="true"
-                                    android:src="@mipmap/ic_report" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/imgReport"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:text="Report"
-                                    android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnReport"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
-
-                            </RelativeLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            app:cardCornerRadius="10dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/border">
-
-                                <ImageView
-                                    android:id="@+id/imgNotification"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_centerInParent="true"
-                                    android:src="@mipmap/ic_ic_notification" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/imgNotification"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:text="Notifications"
-                                    android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnNotification"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
-
-                            </RelativeLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
-                    <!-- HELP, REPORT AND NOTIFICATIONS-->
-
-                    <!-- MAPS, INBOX AND VIEW PROFILE -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="114dp"
-                        android:layout_marginBottom="5dp"
-                        android:orientation="horizontal">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="5dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="5dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/border">
-
-                                <ImageView
-                                    android:id="@+id/imgMaps"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_centerInParent="true"
-                                    android:src="@mipmap/ic_location" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/imgMaps"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:text="Maps"
-                                    android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnMap"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@android:color/transparent" />
@@ -577,24 +442,24 @@
                                 android:background="@drawable/border">
 
                                 <ImageView
-                                    android:id="@+id/image_profile"
+                                    android:id="@+id/imgInviteFriends"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerInParent="true"
-                                    android:src="@mipmap/ic_view_profile_ic" />
+                                    android:src="@mipmap/ic_invite" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/image_profile"
+                                    android:layout_below="@id/imgInviteFriends"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
-                                    android:text="View Profile"
+                                    android:text="Invite Friends"
                                     android:textSize="14sp" />
 
                                 <Button
-                                    android:id="@+id/btnProfile"
+                                    android:id="@+id/btnInviteFriends"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@android:color/transparent" />
@@ -605,6 +470,59 @@
 
                     </LinearLayout>
                     <!-- MAPS, INBOX and VIEW PROFILE -->
+
+                    <!-- HELP, REPORT AND NOTIFICATIONS -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="114dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:cardCornerRadius="10dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border">
+
+                                <ImageView
+                                    android:id="@+id/imgReport"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@mipmap/ic_report" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/imgReport"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:text="Report"
+                                    android:textSize="14sp" />
+
+                                <Button
+                                    android:id="@+id/btnReport"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent" />
+
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+                    <!-- HELP, REPORT AND NOTIFICATIONS-->
+
 
                 </LinearLayout>
 

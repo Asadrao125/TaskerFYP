@@ -45,10 +45,6 @@ public class Notification_Tasker_Adapeter extends RecyclerView.Adapter<Notificat
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* id = posts.get(position).getId();
-                Intent intent = new Intent(context, Offer_Detail_Complete.class);
-                intent.putExtra("post_krny_waly_ki_iddd", id);
-                context.startActivity(intent);*/
                 String post_ki_id = sendMessage.get(position).getPost_id();
                 String current_user_ki_id = sendMessage.get(position).getCurrent_user_id();
                 String message = sendMessage.get(position).getMessage();
@@ -65,7 +61,6 @@ public class Notification_Tasker_Adapeter extends RecyclerView.Adapter<Notificat
 
             }
         });
-
     }
 
     @Override

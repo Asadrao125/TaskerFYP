@@ -19,7 +19,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewPostDetail"></activity>
+        <activity android:name=".ChatSystem.Inbox"></activity>
+        <activity
+            android:name=".ChatSystem.MessageActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".ViewPostDetail" />
         <activity android:name=".Offer_Detail_Complete" />
         <activity
             android:name=".custom_info_window"

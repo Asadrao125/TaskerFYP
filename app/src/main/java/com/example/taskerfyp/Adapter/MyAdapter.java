@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskerfyp.EditPostCustomer;
 import com.example.taskerfyp.Models.Post;
+import com.example.taskerfyp.Models.TaskerUser;
 import com.example.taskerfyp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -56,6 +58,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.task_description.setText("Description: \n" + posts.get(position).getDescription());
         holder.task_time.setText(posts.get(position).getTime());
         holder.task_date.setText(posts.get(position).getDate());
+
+        String post_id = posts.get(position).getPostId();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Accepted_Offers").child(post_id);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    holder.btnEditPost.setEnabled(false);
+                    holder.btnEditPost.setBackgroundColor(Color.LTGRAY);
+                    holder.btnDeletePost.setEnabled(false);
+                    holder.btnDeletePost.setBackgroundColor(Color.LTGRAY);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         ////////
         DatabaseReference UsersRef;

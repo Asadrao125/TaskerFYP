@@ -73,7 +73,7 @@
             android:padding="10dp"
             android:text="Accept" />
 
-        <Button
+       <!-- <Button
             android:id="@+id/btnDeclineOffer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/border_view_post"
             android:padding="10dp"
-            android:text="Decline" />
+            android:text="Decline" />-->
 
         <Button
             android:id="@+id/btnTrackingCustomer"

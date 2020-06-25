@@ -87,16 +87,14 @@ public class SendOffer extends AppCompatActivity {
 
 
         FirebaseUser userC = FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offers").child(post_krny_waly_ki_id).child(userC.getUid()).child(post_ki_id);
+        final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offer_Sent").child(userC.getUid()).child(post_ki_id);
         onClickRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("onClick")) {
-                    if (dataSnapshot.child("onClick").getValue().equals("1")) {
-                        btnSendOfferTasker.setText("Offer Sent");
-                        btnSendOfferTasker.setBackgroundColor(Color.LTGRAY);
-                        btnSendOfferTasker.setEnabled(false);
-                    }
+                if (dataSnapshot.exists()) {
+                    btnSendOfferTasker.setText("Offer Sent");
+                    btnSendOfferTasker.setBackgroundColor(Color.LTGRAY);
+                    btnSendOfferTasker.setEnabled(false);
                 }
             }
 
@@ -134,9 +132,13 @@ public class SendOffer extends AppCompatActivity {
                             DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Offers").child(post_krny_waly_ki_id);
                             offer_id = refrence.push().getKey();
                             SendOfferTasker sendOfferTasker = new SendOfferTasker(offerBudget, offerDeadline, offerDescription, offer_id, userName, user.getUid(), post_ki_id);
-                            refrence.child(user.getUid()).child(post_ki_id).setValue(sendOfferTasker);
+                            refrence/*.child(user.getUid())*/.child(post_ki_id).setValue(sendOfferTasker);
                             Toast.makeText(SendOffer.this, "Offer Sent!", Toast.LENGTH_SHORT).show();
-                            refrence.child(user.getUid()).child(post_ki_id).child("onClick").setValue("1");
+                            refrence/*.child(user.getUid())*/.child(post_ki_id).child("onClick").setValue("1");
+
+                            DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Offer_Sent").child(user.getUid()).child(post_ki_id);
+                            mRef.setValue("Offer_Sent");
+
                         }
 
                         @Override
@@ -144,14 +146,8 @@ public class SendOffer extends AppCompatActivity {
                             Toast.makeText(SendOffer.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-                    /* Getting Current User Name*/
                 }
             }
         });
-
-
     }
-
-
 }
-

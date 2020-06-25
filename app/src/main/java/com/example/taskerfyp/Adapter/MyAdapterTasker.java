@@ -133,16 +133,14 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
         });
 
         FirebaseUser userC = FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offers").child(posts.get(position).getId()).child(userC.getUid()).child(posts.get(position).getPostId());
+        final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offer_Sent").child(userC.getUid()).child(postkiid);
         onClickRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("onClick")) {
-                    if (dataSnapshot.child("onClick").getValue().equals("1")) {
-                        holder.btnSendOffer.setText("Offer Sent");
-                        holder.btnSendOffer.setBackgroundColor(Color.LTGRAY);
-                        holder.btnSendOffer.setEnabled(false);
-                    }
+                if (dataSnapshot.exists()) {
+                    holder.btnSendOffer.setText("Offer Sent");
+                    holder.btnSendOffer.setBackgroundColor(Color.LTGRAY);
+                    holder.btnSendOffer.setEnabled(false);
                 }
             }
 

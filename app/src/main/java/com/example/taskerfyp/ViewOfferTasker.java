@@ -50,15 +50,13 @@ public class ViewOfferTasker extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    list.clear();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        list.clear();
-                        for (DataSnapshot ds : dataSnapshot1.getChildren()) {
-                            SendOfferTasker sendOfferTasker = ds.getValue(SendOfferTasker.class);
-                            list.add(sendOfferTasker);
-                        }
-                        adapter = new ViewOfferAdapter(ViewOfferTasker.this, list);
-                        recyclerView.setAdapter(adapter);
+                        SendOfferTasker sendOfferTasker = dataSnapshot1.getValue(SendOfferTasker.class);
+                        list.add(sendOfferTasker);
                     }
+                    adapter = new ViewOfferAdapter(ViewOfferTasker.this, list);
+                    recyclerView.setAdapter(adapter);
                 } else
                     Toast.makeText(ViewOfferTasker.this, "No Offers To Show", Toast.LENGTH_SHORT).show();
             }

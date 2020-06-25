@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taskerfyp.ChatSystem.MessageActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,13 +51,6 @@ public class ViewProfileByCustomer extends AppCompatActivity {
         btn_chat_this_tasker = findViewById(R.id.btn_chat_with_tasker);
         dpTasker = findViewById(R.id.dpTasker);
 
-        btn_chat_this_tasker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ViewProfileByCustomer.this, "Chat", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(tasker_ki_profile_ki_id);
         mRefrence.addValueEventListener(new ValueEventListener() {
             @Override
@@ -66,14 +61,12 @@ public class ViewProfileByCustomer extends AppCompatActivity {
                     phone = dataSnapshot.child("taskerPhonenumber").getValue().toString();
                     String prof = dataSnapshot.child("taskerProfession").getValue().toString();
                     String gend = dataSnapshot.child("taskerGender").getValue().toString();
-                    String image = dataSnapshot.child("profileimage").getValue().toString();
 
                     phone_number.setText(phone);
                     email.setText(email_id);
                     gender.setText(gend);
                     name.setText(name_tasker);
                     profession.setText(prof);
-                    Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(dpTasker);
                 }
             }
 
@@ -83,11 +76,38 @@ public class ViewProfileByCustomer extends AppCompatActivity {
             }
         });
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(tasker_ki_profile_ki_id).child("profileimage");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String image = dataSnapshot.getValue().toString();
+                    Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(dpTasker);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         btn_call_this_tasker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" + phone));
+                startActivity(intent);
+            }
+        });
+        btn_chat_this_tasker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
+                String sender_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String reciever_id = getIntent().getStringExtra("tasker_ki_profile_ki_id");
+                intent.putExtra("sender_id", sender_id);
+                intent.putExtra("reciever_id", reciever_id);
                 startActivity(intent);
             }
         });

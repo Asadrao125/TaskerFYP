@@ -88,16 +88,6 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         holder.btnAcceptOffer.setText("Accepted");
                         holder.btnAcceptOffer.setBackgroundColor(Color.LTGRAY);
                         holder.btnAcceptOffer.setEnabled(false);
-
-                        holder.btnDeclineOffer.setBackgroundColor(Color.LTGRAY);
-                        holder.btnDeclineOffer.setEnabled(false);
-                    } else if (dataSnapshot.child("onClick").getValue().toString().equals("0")) {
-                        holder.btnDeclineOffer.setText("Declined");
-                        holder.btnDeclineOffer.setBackgroundColor(Color.LTGRAY);
-                        holder.btnDeclineOffer.setEnabled(false);
-
-                        holder.btnAcceptOffer.setBackgroundColor(Color.LTGRAY);
-                        holder.btnAcceptOffer.setEnabled(false);
                     }
                 }
             }
@@ -145,55 +135,10 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         /////////
 
                         DatabaseReference accepted_0ffer_refrence = FirebaseDatabase.getInstance().getReference("Accepted_Offers");
-                        accepted_0ffer_refrence.child(sendOfferTaskers.get(position).getPost_id()).setValue("Accepted!");
-                    }
+                        accepted_0ffer_refrence.child(sendOfferTaskers.get(position).getOffer_sender_id()).child(sendOfferTaskers.get(position).getPost_id()).setValue("Accepted!");
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        });
-
-        holder.btnDeclineOffer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                // Getting Curent User Name Who Will Accept That Post
-                DatabaseReference currentName = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(user.getUid());
-                currentName.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        name = dataSnapshot.child("customerUsername").getValue().toString();
-                        email = dataSnapshot.child("email").getValue().toString();
-                        number = dataSnapshot.child("customerPhonenumber").getValue().toString();
-                        gender = dataSnapshot.child("customerGender").getValue().toString();
-                        String current_user_id = user.getUid();
-                        String post_id = sendOfferTaskers.get(position).getPost_id();
-                        // Sending message to the tasker, that has offered for the post
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Messages").child(sendOfferTaskers.get(position).getOffer_sender_id());
-                        String message_id = reference.push().getKey();
-                        String message = name + " Has Been Declined Your Offer.";
-
-                        // Getting Current Date and Time
-                        Calendar calFordDate = Calendar.getInstance();
-                        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd yyyy");
-                        String date = currentDate.format(calFordDate.getTime());
-
-                        Calendar calFordTime = Calendar.getInstance();
-                        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm:ss a");
-                        String time = currentTime.format(calFordTime.getTime());
-                        // Getting Current Date and Time
-
-                        SendMessage sendMessage = new SendMessage(post_id, message_id, message, current_user_id, name, email, number, gender, time, date);
-                        reference.child(sendOfferTaskers.get(position).getPost_id()).setValue(sendMessage);
-                        reference.child(sendOfferTaskers.get(position).getPost_id()).child("onClick").setValue("0");
-                        Toast.makeText(context, "Offer declined messege x!", Toast.LENGTH_LONG).show();
-                        /////////
-
-                        DatabaseReference declined_0ffer_refrence = FirebaseDatabase.getInstance().getReference("Declined_Offers");
-                        declined_0ffer_refrence.child(sendOfferTaskers.get(position).getPost_id()).setValue("Declined!");
+                        DatabaseReference refref = FirebaseDatabase.getInstance().getReference("Chat_Able_Users");
+                        refref.child(sendOfferTaskers.get(position).getOffer_sender_id()).setValue("Yes");
                     }
 
                     @Override
@@ -251,7 +196,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView username, budget, deadline, description;
-        private Button btnAcceptOffer, btnDeclineOffer, btnTrackingCustomer;
+        private Button btnAcceptOffer, btnTrackingCustomer;
         CircleImageView prfile_image_tasker;
         Button btnViewPost;
 
@@ -262,7 +207,6 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
             deadline = itemView.findViewById(R.id.tvViewOfferDeadine);
             description = itemView.findViewById(R.id.tvViewOfferDescription);
             btnAcceptOffer = itemView.findViewById(R.id.btnAcceptOffer);
-            btnDeclineOffer = itemView.findViewById(R.id.btnDeclineOffer);
             prfile_image_tasker = itemView.findViewById(R.id.profile_image_tasker);
             btnTrackingCustomer = itemView.findViewById(R.id.btnTrackingCustomer);
             btnViewPost = itemView.findViewById(R.id.btnViewPost);

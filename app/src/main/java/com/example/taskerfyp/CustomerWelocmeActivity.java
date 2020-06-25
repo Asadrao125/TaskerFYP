@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taskerfyp.ChatSystem.Inbox;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,8 +44,8 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     SharedPreferences.Editor editor;
 
-    Button btnAddPost, btnViewPost, btnDeleteAccount, btnThemes,
-            btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnProfile, btnMap;
+    Button btnAddPost, btnViewPost, btnDeleteAccount, btnViewOffers,
+            btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnProfile, btnInbox;
     CircleImageView imgProfile;
     FirebaseUser currentFirebaseUser;
     int Image_Request_Code = 7;
@@ -66,13 +67,13 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
         btnAddPost = findViewById(R.id.btnAddpost);
         btnViewPost = findViewById(R.id.btnViewPost);
         btnEditProfile = findViewById(R.id.btnEditProfile);
-        btnThemes = findViewById(R.id.btnThemes);
+        btnViewOffers = findViewById(R.id.btnThemes);
         btnInviteFriends = findViewById(R.id.btnInviteFriends);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
         btnHelp = findViewById(R.id.btnHelp);
         btnReport = findViewById(R.id.btnReport);
         btnProfile = findViewById(R.id.btnProfile);
-        btnMap = findViewById(R.id.btnMap);
+        btnInbox = findViewById(R.id.btnInbox);
 
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mRef = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(currentFirebaseUser.getUid());
@@ -119,13 +120,6 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
             }
         });
 
-        btnMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //startActivity(new Intent(CustomerWelocmeActivity.this, MapsActivityCustomer.class));
-            }
-        });
-
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +149,7 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
             }
         });
 
-        btnThemes.setOnClickListener(new View.OnClickListener() {
+        btnViewOffers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(CustomerWelocmeActivity.this, "Themes", Toast.LENGTH_SHORT).show();
@@ -200,6 +194,13 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(CustomerWelocmeActivity.this, "Report", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnInbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Inbox.class));
             }
         });
     }

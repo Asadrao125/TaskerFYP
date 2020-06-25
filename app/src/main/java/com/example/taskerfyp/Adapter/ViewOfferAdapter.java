@@ -66,8 +66,8 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("profileimage")) {
-                    String image = dataSnapshot.child("profileimage").getValue().toString();
+                if (dataSnapshot.hasChild("image")) {
+                    String image = dataSnapshot.child("image").getValue().toString();
                     Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(holder.prfile_image_tasker);
                 }
             }
@@ -137,7 +137,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         DatabaseReference accepted_0ffer_refrence = FirebaseDatabase.getInstance().getReference("Accepted_Offers");
                         accepted_0ffer_refrence.child(sendOfferTaskers.get(position).getOffer_sender_id()).child(sendOfferTaskers.get(position).getPost_id()).setValue("Accepted!");
 
-                        DatabaseReference refref = FirebaseDatabase.getInstance().getReference("Chat_Able_Users");
+                        DatabaseReference refref = FirebaseDatabase.getInstance().getReference("Chat_Able_Users").child(user.getUid());
                         refref.child(sendOfferTaskers.get(position).getOffer_sender_id()).setValue("Yes");
                     }
 

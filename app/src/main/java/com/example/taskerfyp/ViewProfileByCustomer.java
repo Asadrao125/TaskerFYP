@@ -57,7 +57,7 @@ public class ViewProfileByCustomer extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     String name_tasker = dataSnapshot.child("taskerUsername").getValue().toString();
-                    String email_id = dataSnapshot.child("email").getValue().toString();
+                    String email_id = dataSnapshot.child("taskerEmail").getValue().toString();
                     phone = dataSnapshot.child("taskerPhonenumber").getValue().toString();
                     String prof = dataSnapshot.child("taskerProfession").getValue().toString();
                     String gend = dataSnapshot.child("taskerGender").getValue().toString();
@@ -76,7 +76,7 @@ public class ViewProfileByCustomer extends AppCompatActivity {
             }
         });
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(tasker_ki_profile_ki_id).child("profileimage");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(tasker_ki_profile_ki_id).child("image");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

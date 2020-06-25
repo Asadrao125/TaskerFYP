@@ -76,7 +76,7 @@ public class ViewPostDetail extends AppCompatActivity {
 
         //////
         String offer_send_krny_waly_ki_id = getIntent().getStringExtra("offer_send_krny_waly_ki_id");
-        DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(offer_send_krny_waly_ki_id).child("profileimage");
+        DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(offer_send_krny_waly_ki_id).child("image");
         refrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

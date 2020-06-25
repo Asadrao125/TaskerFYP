@@ -173,7 +173,7 @@ public class RegisterTasker extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         mRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Tasker");
-                        TaskerUser taskerUser = new TaskerUser(taskerUsername, taskerPhonenumber, taskerGender, taskerProfession, downloadUrl, taskerEmail);
+                        TaskerUser taskerUser = new TaskerUser(taskerUsername, taskerPhonenumber, taskerGender, taskerProfession, downloadUrl, taskerEmail, mAuth.getCurrentUser().getUid());
                         String current_user = mAuth.getCurrentUser().getUid();
                         mRef.child(current_user).setValue(taskerUser);
                         Toast.makeText(RegisterTasker.this, "Account Created !", Toast.LENGTH_SHORT).show();

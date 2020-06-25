@@ -46,7 +46,7 @@ public class Inbox extends AppCompatActivity {
         recycler_All_Chats.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
 
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker");
+        /*DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker");
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -56,6 +56,39 @@ public class Inbox extends AppCompatActivity {
                 }
                 userAdapter = new UserAdapter(Inbox.this, list);
                 recycler_All_Chats.setAdapter(userAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });*/
+
+        DatabaseReference DBRefrence = FirebaseDatabase.getInstance().getReference("Chat_Able_Users");
+        DBRefrence.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String ids = ds.getKey();
+                        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(ids);
+                        mRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                list.clear();
+                                TaskerUser taskerUser = dataSnapshot.getValue(TaskerUser.class);
+                                list.add(taskerUser);
+                                userAdapter = new UserAdapter(Inbox.this, list);
+                                recycler_All_Chats.setAdapter(userAdapter);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }
             }
 
             @Override

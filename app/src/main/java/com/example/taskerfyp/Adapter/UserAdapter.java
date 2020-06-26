@@ -70,8 +70,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "" + taskerUser.get(position).getTaskerUsername(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(context, "" + taskerUser.get(position).getTaskerID(), Toast.LENGTH_SHORT).show();
             }
         });
 

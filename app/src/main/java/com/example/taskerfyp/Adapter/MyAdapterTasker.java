@@ -83,7 +83,8 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
         });
 
         String postkiid = posts.get(position).getPostId();
-        DatabaseReference A_O_R = FirebaseDatabase.getInstance().getReference("Accepted_Offers");
+        String c_user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference A_O_R = FirebaseDatabase.getInstance().getReference("Accepted_Offers").child(c_user);
         A_O_R.child(postkiid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -133,7 +134,7 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
         });
 
         FirebaseUser userC = FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offer_Sent").child(userC.getUid()).child(postkiid);
+        final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offer_Sent").child(userC.getUid());
         onClickRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

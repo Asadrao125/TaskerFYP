@@ -64,30 +64,13 @@ public class Inbox extends AppCompatActivity {
             }
         });*/
 
-        DatabaseReference DBRefrence = FirebaseDatabase.getInstance().getReference("Chat_Able_Users");
+        String C_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference DBRefrence = FirebaseDatabase.getInstance().getReference("Chat_Able_Users").child(C_id);
         DBRefrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        String ids = ds.getKey();
-                        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(ids);
-                        mRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                list.clear();
-                                TaskerUser taskerUser = dataSnapshot.getValue(TaskerUser.class);
-                                list.add(taskerUser);
-                                userAdapter = new UserAdapter(Inbox.this, list);
-                                recycler_All_Chats.setAdapter(userAdapter);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Toast.makeText(Inbox.this, "" + ds.getKey(), Toast.LENGTH_SHORT).show();
                 }
             }
 

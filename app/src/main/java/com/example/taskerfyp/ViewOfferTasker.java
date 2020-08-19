@@ -44,19 +44,20 @@ public class ViewOfferTasker extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<SendOfferTasker>();
 
-        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Offers").child(current_user.getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference("Offers");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     list.clear();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        SendOfferTasker sendOfferTasker = dataSnapshot1.getValue(SendOfferTasker.class);
-                        list.add(sendOfferTasker);
+                        for (DataSnapshot shot : dataSnapshot1.getChildren()) {
+                            SendOfferTasker sendOfferTasker = shot.getValue(SendOfferTasker.class);
+                            list.add(sendOfferTasker);
+                        }
+                        adapter = new ViewOfferAdapter(ViewOfferTasker.this, list);
+                        recyclerView.setAdapter(adapter);
                     }
-                    adapter = new ViewOfferAdapter(ViewOfferTasker.this, list);
-                    recyclerView.setAdapter(adapter);
                 } else
                     Toast.makeText(ViewOfferTasker.this, "No Offers To Show", Toast.LENGTH_SHORT).show();
             }

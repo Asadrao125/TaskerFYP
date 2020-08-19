@@ -74,6 +74,7 @@ public class Tasker_View_Post extends AppCompatActivity {
                         databaseReference.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                list.clear();
                                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                                     title = String.valueOf(dataSnapshot1.child("title").getValue());
                                     if (taskerProffession.equals(title)) {

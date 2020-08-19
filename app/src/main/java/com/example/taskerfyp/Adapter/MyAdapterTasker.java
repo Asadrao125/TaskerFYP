@@ -134,7 +134,8 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
         });
 
         FirebaseUser userC = FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offer_Sent").child(userC.getUid());
+        final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offer_Sent")
+                .child(userC.getUid()).child(posts.get(position).getPostId());
         onClickRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

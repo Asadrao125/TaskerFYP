@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Inbox extends AppCompatActivity {
     RecyclerView recycler_All_Chats;
@@ -46,7 +48,7 @@ public class Inbox extends AppCompatActivity {
         recycler_All_Chats.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
 
-        /*DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker");
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker");
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -56,22 +58,6 @@ public class Inbox extends AppCompatActivity {
                 }
                 userAdapter = new UserAdapter(Inbox.this, list);
                 recycler_All_Chats.setAdapter(userAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-
-        String C_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference DBRefrence = FirebaseDatabase.getInstance().getReference("Chat_Able_Users").child(C_id);
-        DBRefrence.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Toast.makeText(Inbox.this, "" + ds.getKey(), Toast.LENGTH_SHORT).show();
-                }
             }
 
             @Override

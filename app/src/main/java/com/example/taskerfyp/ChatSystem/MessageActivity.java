@@ -108,8 +108,8 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String username = dataSnapshot.child("taskerUsername").getValue().toString();
                 username_chat.setText(username);
-                if (dataSnapshot.child("profileimage").exists()) {
-                    String image = dataSnapshot.child("profileimage").getValue().toString();
+                if (dataSnapshot.child("image").exists()) {
+                    String image = dataSnapshot.child("image").getValue().toString();
                     Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(profile_image_chat);
                 }
             }
@@ -122,8 +122,7 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String sender, String reciever, String time, String date, String message) {
-        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("All_Chats").child(fUser.getUid());
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("All_Chats");
         Chat sendMessage = new Chat(sender, reciever, time, date, message);
         databaseReference.push().setValue(sendMessage);
     }
@@ -131,7 +130,7 @@ public class MessageActivity extends AppCompatActivity {
     private void readMessages(final String myid, final String userid, final String imageURL) {
         mChat = new ArrayList<>();
         FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("All_Chats").child(fUser.getUid());
+        DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("All_Chats");
         refrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

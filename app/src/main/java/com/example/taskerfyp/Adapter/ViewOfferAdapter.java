@@ -77,6 +77,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
 
             }
         });
+
         String offer_sender_ki_id = sendOfferTaskers.get(position).getOffer_sender_id();
         String post_ki_id = sendOfferTaskers.get(position).getPost_id();
         DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("Messages").child(offer_sender_ki_id).child(post_ki_id);

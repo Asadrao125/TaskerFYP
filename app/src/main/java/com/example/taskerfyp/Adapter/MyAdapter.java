@@ -59,17 +59,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.task_time.setText(posts.get(position).getTime());
         holder.task_date.setText(posts.get(position).getDate());
 
-        String post_id = posts.get(position).getPostId();
+        final String post_id = posts.get(position).getPostId();
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Accepted_Offers").child(post_id);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Messages");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    holder.btnEditPost.setEnabled(false);
-                    holder.btnEditPost.setBackgroundColor(Color.LTGRAY);
-                    holder.btnDeletePost.setEnabled(false);
-                    holder.btnDeletePost.setBackgroundColor(Color.LTGRAY);
+                for (DataSnapshot shot : dataSnapshot.getChildren()) {
+                    if (shot.child(post_id).hasChild("onClick")) {
+                        holder.btnEditPost.setEnabled(false);
+                        holder.btnEditPost.setBackgroundColor(Color.LTGRAY);
+                        holder.btnDeletePost.setEnabled(false);
+                        holder.btnDeletePost.setBackgroundColor(Color.LTGRAY);
+                    }
                 }
             }
 

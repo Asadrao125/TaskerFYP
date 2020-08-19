@@ -66,7 +66,6 @@ public class SendOffer extends AppCompatActivity {
         btnSendOfferTasker = findViewById(R.id.btnSendOfferTasker);
         btnTrackingTasker = findViewById(R.id.btnTrackingTasker);
 
-
         DatabaseReference A_O_R = FirebaseDatabase.getInstance().getReference("Accepted_Offers");
         A_O_R.child(post_ki_id).addValueEventListener(new ValueEventListener() {
             @Override
@@ -129,12 +128,12 @@ public class SendOffer extends AppCompatActivity {
                                 Toast.makeText(SendOffer.this, "No Profile Image", Toast.LENGTH_SHORT).show();
                             }
                             userName = String.valueOf(dataSnapshot.child("taskerUsername").getValue());
-                            DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Offers").child(post_krny_waly_ki_id);
+                            DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Offers");
                             offer_id = refrence.push().getKey();
                             SendOfferTasker sendOfferTasker = new SendOfferTasker(offerBudget, offerDeadline, offerDescription, offer_id, userName, user.getUid(), post_ki_id);
-                            refrence/*.child(user.getUid())*/.child(post_ki_id).setValue(sendOfferTasker);
+                            refrence.child(post_ki_id).push().setValue(sendOfferTasker);
                             Toast.makeText(SendOffer.this, "Offer Sent!", Toast.LENGTH_SHORT).show();
-                            refrence/*.child(user.getUid())*/.child(post_ki_id).child("onClick").setValue("1");
+                            /*refrence.child(post_ki_id).push().child("onClick").setValue("1");*/
 
                             DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Offer_Sent").child(user.getUid()).child(post_ki_id);
                             mRef.setValue("Offer_Sent");

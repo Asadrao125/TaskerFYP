@@ -45,6 +45,16 @@ public class DeleteAccount extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Delete Account");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         btnAuthenticate = findViewById(R.id.btnAuthenticate);

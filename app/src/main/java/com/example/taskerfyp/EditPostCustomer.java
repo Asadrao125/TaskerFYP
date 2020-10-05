@@ -45,6 +45,16 @@ public class EditPostCustomer extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Edit Post");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         id = getIntent().getStringExtra("id");
 
         edtEditBudget = findViewById(R.id.edtEditBudget);

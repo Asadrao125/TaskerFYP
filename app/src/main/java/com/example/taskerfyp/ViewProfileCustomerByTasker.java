@@ -38,6 +38,16 @@ public class ViewProfileCustomerByTasker extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("View Profile");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         name = findViewById(R.id.name);
         phone_number = findViewById(R.id.phone_number);
         email = findViewById(R.id.email);
@@ -54,13 +64,16 @@ public class ViewProfileCustomerByTasker extends AppCompatActivity {
                     String email_id = dataSnapshot.child("email").getValue().toString();
                     phone = dataSnapshot.child("customerPhonenumber").getValue().toString();
                     String gend = dataSnapshot.child("customerGender").getValue().toString();
-                    String image = dataSnapshot.child("profileimage").getValue().toString();
 
                     phone_number.setText(phone);
                     email.setText(email_id);
                     gender.setText(gend);
                     name.setText(name_tasker);
-                    Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(dpTasker);
+
+                    if (dataSnapshot.hasChild("profileimage")) {
+                        String image = dataSnapshot.child("profileimage").getValue().toString();
+                        Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(dpTasker);
+                    }
                 }
             }
 

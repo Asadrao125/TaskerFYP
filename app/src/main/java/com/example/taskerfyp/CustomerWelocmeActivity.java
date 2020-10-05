@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -45,7 +46,7 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
 
     Button btnAddPost, btnViewPost, btnDeleteAccount, btnViewOffers,
-            btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnProfile, btnInbox;
+            btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnProfile, btnInbox, btnLogout;
     CircleImageView imgProfile;
     FirebaseUser currentFirebaseUser;
     int Image_Request_Code = 7;
@@ -74,6 +75,7 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
         btnReport = findViewById(R.id.btnReport);
         btnProfile = findViewById(R.id.btnProfile);
         btnInbox = findViewById(R.id.btnInbox);
+        btnLogout = findViewById(R.id.btnLogout);
 
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mRef = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(currentFirebaseUser.getUid());
@@ -201,6 +203,22 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Inbox.class));
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                SharedPreferences spreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor spreferencesEditor = spreferences.edit();
+                spreferencesEditor.remove("customer"); //we are removing customer value by key
+                spreferencesEditor.commit();
+
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+
+                Toast.makeText(CustomerWelocmeActivity.this, "Logout Successfully !", Toast.LENGTH_SHORT).show();
             }
         });
     }

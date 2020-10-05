@@ -13,14 +13,51 @@
         android:background="@drawable/border_view_post"
         android:padding="10dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image_tasker"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+        <Button
+            android:id="@+id/btnAcceptOffer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvViewOfferDeadine"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"
-            android:src="@mipmap/ic_profile" />
+            android:background="@drawable/border_view_post"
+            android:padding="10dp"
+            android:text="Accept" />
+
+        <Button
+            android:id="@+id/btnTrackingCustomer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tvViewOfferDeadine"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_view_post"
+            android:padding="10dp"
+            android:text="Tracking" />
+
+        <Button
+            android:id="@+id/btnViewPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvViewOfferDeadine"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/btnTrackingCustomer"
+            android:layout_toRightOf="@id/btnAcceptOffer"
+            android:background="@drawable/border_view_post"
+            android:text="View Post" />
+
+        <TextView
+            android:id="@+id/tvViewOfferDeadine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvViewOfferBudget"
+            android:background="@drawable/post_gray_border"
+            android:padding="5dp"
+            android:text="Deadline" />
 
         <TextView
             android:id="@+id/tvViewOfferName"
@@ -52,48 +89,17 @@
             android:padding="5dp"
             android:text="Budget" />
 
-        <TextView
-            android:id="@+id/tvViewOfferDeadine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvViewOfferBudget"
-            android:background="@drawable/post_gray_border"
-            android:padding="5dp"
-            android:text="Deadline" />
-
-        <Button
-            android:id="@+id/btnAcceptOffer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvViewOfferDeadine"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_tasker"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/border_view_post"
-            android:padding="10dp"
-            android:text="Accept" />
+            android:src="@mipmap/ic_profile" />
 
-        <Button
-            android:id="@+id/btnTrackingCustomer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvViewOfferDeadine"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border_view_post"
-            android:padding="10dp"
-            android:text="Tracking" />
-
-        <Button
-            android:id="@+id/btnViewPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border_view_post"
-            android:text="View Post" />
+        <!--  android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" -->
 
     </RelativeLayout>
 

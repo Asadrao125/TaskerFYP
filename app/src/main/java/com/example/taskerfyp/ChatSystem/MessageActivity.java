@@ -50,7 +50,7 @@ public class MessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        String reciever_id = getIntent().getStringExtra("reciever_id");
+        final String reciever_id = getIntent().getStringExtra("reciever_id");
 
         btnSend = findViewById(R.id.btnSend);
         txt_send = findViewById(R.id.txtSend);
@@ -88,13 +88,30 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        String sender_id = getIntent().getStringExtra("sender_id");
-        readMessages(sender_id, reciever_id, "https://firebasestorage.googleapis.com/v0/b/taskerfyp.appspot.com/o/Profile%20Images%2Fcom.google.firebase.auth.internal.zzn%40abe2bde.jpg?alt=media&token=fe7794c7-7e4a-4522-bc9a-766f014f8a2f");
+        final String sender_id = getIntent().getStringExtra("sender_id");
+
+        // Getting profile image of reciever
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(reciever_id);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("image")) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //readMessages(sender_id, reciever_id, "https://firebasestorage.googleapis.com/v0/b/taskerfyp.appspot.com/o/Profile%20Images%2Fcom.google.firebase.auth.internal.zzn%40abe2bde.jpg?alt=media&token=fe7794c7-7e4a-4522-bc9a-766f014f8a2f");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ViewOfferTasker.class);
+                Intent intent = new Intent(getApplicationContext(), Inbox.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -111,6 +128,9 @@ public class MessageActivity extends AppCompatActivity {
                 if (dataSnapshot.child("image").exists()) {
                     String image = dataSnapshot.child("image").getValue().toString();
                     Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(profile_image_chat);
+
+                    readMessages(sender_id, reciever_id, image);
+
                 }
             }
 
@@ -119,6 +139,25 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
+
+        profile_image_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ViewProfileByCustomer.class);
+                intent.putExtra("tasker_ki_profile_ki_id", reciever_id);
+                startActivity(intent);
+            }
+        });
+
+        username_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ViewProfileByCustomer.class);
+                intent.putExtra("tasker_ki_profile_ki_id", reciever_id);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void sendMessage(String sender, String reciever, String time, String date, String message) {

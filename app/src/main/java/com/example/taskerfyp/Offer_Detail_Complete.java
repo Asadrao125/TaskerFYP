@@ -33,6 +33,16 @@ public class Offer_Detail_Complete extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Detail");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         message = findViewById(R.id.message_message);
         timeeeeee = findViewById(R.id.timeeeeee);
         dateeee = findViewById(R.id.dateeee);
@@ -81,7 +91,7 @@ public class Offer_Detail_Complete extends AppCompatActivity {
                     time_detail.setText("Time: " + Time);
                     username_detail.setText("Name: " + Username);
                     date_detail.setText("Date: " + Date);
-                    deadline_Detail.setText("Deadline: " + Deadline);
+                    deadline_Detail.setText("Deadline: " + Deadline + " (s)");
                     description_detail.setText("Description: " + Description);
                     title_detail.setText("Title: " + title);
 

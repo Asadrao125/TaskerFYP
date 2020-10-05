@@ -51,6 +51,16 @@ public class AddPost extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Add Post");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         initilize();
 
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -119,6 +129,9 @@ public class AddPost extends AppCompatActivity {
             String postId = ref.push().getKey();
             Post post = new Post(current_user_id, titleCustomer, description, budget, deadline, time, date, CurrentUser_Name, imageUrl, postId);
             ref.child(postId).setValue(post);
+            edtTaskDescription.setText("");
+            edtTaskBudget.setText("");
+            edtTaskDeadline.setText("");
             Toast.makeText(this, "Post Uploaded!", Toast.LENGTH_SHORT).show();
         }
     }

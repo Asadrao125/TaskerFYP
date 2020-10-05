@@ -60,6 +60,16 @@ public class SendOffer extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Send Offer");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         edtSendOfferBudget = findViewById(R.id.edtSendOfferBudget);
         edtSendOfferDeadline = findViewById(R.id.edtSendOfferDeadline);
         edtSendOfferDescription = findViewById(R.id.edtSendOfferDescription);

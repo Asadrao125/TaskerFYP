@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/button"
+            android:background="@drawable/all_together"
             android:text="Login"
             android:textColor="#fff"
             android:textSize="18sp" />
@@ -97,6 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:background="@drawable/ripple_effect"
             android:text="Forgot Password!" />
 
         <TextView
@@ -109,6 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:background="@drawable/ripple_effect"
             android:text="Donot Have Account? Create Account" />
 
     </LinearLayout>

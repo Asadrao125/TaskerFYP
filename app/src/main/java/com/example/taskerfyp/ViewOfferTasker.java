@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,16 @@ public class ViewOfferTasker extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("View Offers");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         recyclerView = findViewById(R.id.recycler_view_offer);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<SendOfferTasker>();
@@ -58,8 +69,8 @@ public class ViewOfferTasker extends AppCompatActivity {
                         adapter = new ViewOfferAdapter(ViewOfferTasker.this, list);
                         recyclerView.setAdapter(adapter);
                     }
-                } else
-                    Toast.makeText(ViewOfferTasker.this, "No Offers To Show", Toast.LENGTH_SHORT).show();
+                } else setContentView(R.layout.no_data_found);
+                    //Toast.makeText(ViewOfferTasker.this, "No Offers To Show", Toast.LENGTH_SHORT).show();
             }
 
             @Override

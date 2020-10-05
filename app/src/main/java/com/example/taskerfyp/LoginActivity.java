@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("Login Here");
+        mTitle.setText("Login");
 
         final SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         firebaseAuthlistner = new FirebaseAuth.AuthStateListener() {
@@ -180,6 +181,9 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(getApplicationContext(), CustomerWelocmeActivity.class);
                                         startActivity(intent);
                                         finish();
+                                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                        editor.putString("customer", "done");
+                                        editor.apply();
                                     } else {
                                         Toast.makeText(LoginActivity.this, "This email doesnot exist in this category", Toast.LENGTH_SHORT).show();
                                         loadingBar.dismiss();
@@ -204,6 +208,9 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(getApplicationContext(), TaskerWelocmeActivity.class);
                                         startActivity(intent);
                                         finish();
+                                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                        editor.putString("tasker", "done");
+                                        editor.apply();
                                     } else {
                                         Toast.makeText(LoginActivity.this, "This email doesnot exist in this category", Toast.LENGTH_SHORT).show();
                                         loadingBar.dismiss();
@@ -229,6 +236,23 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        /*SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String tasker = prefs.getString("tasker", "Default Value");
+        String customer = prefs.getString("customer", "Default Value");
+
+        Log.d("VALUES", "onStart: "+tasker);
+        Log.d("VALUES", "onStart: "+customer);
+
+        if (!TextUtils.isEmpty(tasker) && tasker.equals("Yes")) {
+            startActivity(new Intent(getApplicationContext(), TaskerWelocmeActivity.class));
+            finish();
+        }
+        if (!TextUtils.isEmpty(customer) && customer.equals("Yes")) {
+            startActivity(new Intent(getApplicationContext(), CustomerWelocmeActivity.class));
+            finish();
+        }*/
+
         mAuth.addAuthStateListener(firebaseAuthlistner);
     }
 

@@ -45,7 +45,6 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="Name"
-
                         android:textAlignment="center"
                         android:textColor="#fff"
                         android:textSize="22sp"
@@ -57,8 +56,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="215dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="215dp"
                     android:orientation="vertical">
 
                     <!-- ADD POST, VIEW POST AND EDIT PROFILE -->
@@ -83,7 +82,14 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/border">
 
+                                <Button
+                                    android:id="@+id/btnAddpost"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent" />
+
                                 <ImageView
+                                    android:background="@drawable/ripple_effect"
                                     android:id="@+id/imgAddPost"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
@@ -95,16 +101,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/imgAddPost"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
+                                    android:layout_marginTop="7dp"
                                     android:text="Add Post"
                                     android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnAddpost"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                             </RelativeLayout>
 
@@ -126,6 +126,12 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/border">
 
+                                <Button
+                                    android:id="@+id/btnViewPost"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent" />
+
                                 <ImageView
                                     android:id="@+id/imgViewPost"
                                     android:layout_width="40dp"
@@ -138,16 +144,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/imgViewPost"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
+                                    android:layout_marginTop="7dp"
                                     android:text="View Post"
                                     android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnViewPost"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                             </RelativeLayout>
 
@@ -168,6 +168,12 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/border">
 
+                                <Button
+                                    android:id="@+id/btnEditProfile"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent" />
+
                                 <ImageView
                                     android:id="@+id/imgEditProfile"
                                     android:layout_width="40dp"
@@ -180,25 +186,18 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/imgEditProfile"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
+                                    android:layout_marginTop="7dp"
                                     android:text="Edit Profile"
                                     android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnEditProfile"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
 
                     </LinearLayout>
-                    <!-- ADD POST< VIEW POST AND EDIT PROFILE ENDS HERE-->
 
-                    <!-- VIEW OFFERS, INVITE FRIENDS AND DELETE ACCOUNT -->
+                    <!-- VIEW OFFERS, VIEW PROFILE AND DELETE ACCOUNT -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
@@ -219,6 +218,12 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/border">
 
+                                <Button
+                                    android:id="@+id/btnThemes"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent" />
+
                                 <ImageView
                                     android:id="@+id/imgThemes"
                                     android:layout_width="40dp"
@@ -231,16 +236,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/imgThemes"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
+                                    android:layout_marginTop="7dp"
                                     android:text="View Offers"
                                     android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnThemes"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                             </RelativeLayout>
 
@@ -260,6 +259,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/border">
+
+                                <Button
+                                    android:id="@+id/btnProfile"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent" />
 
                                 <ImageView
                                     android:id="@+id/image_profile"
@@ -273,16 +278,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/image_profile"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
+                                    android:layout_marginTop="7dp"
                                     android:text="View Profile"
                                     android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnProfile"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                             </RelativeLayout>
 
@@ -303,6 +302,12 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/border">
 
+                                <Button
+                                    android:id="@+id/btnDeleteAccount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent" />
+
                                 <ImageView
                                     android:id="@+id/imgDeleteACcount"
                                     android:layout_width="40dp"
@@ -315,27 +320,20 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/imgDeleteACcount"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
+                                    android:layout_marginTop="7dp"
                                     android:gravity="center_horizontal"
                                     android:text="Delete Account"
                                     android:textAlignment="center"
                                     android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnDeleteAccount"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
 
                     </LinearLayout>
-                    <!-- VIEW OFFER, INVITE FRIENDS AND DELETE ACCOUNT -->
 
-                    <!-- MAPS, INBOX AND VIEW PROFILE -->
+                    <!-- HELP, INBOX AND INVITE FRIENDS -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
@@ -356,6 +354,12 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/border">
 
+                                <Button
+                                    android:id="@+id/btnHelp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent" />
+
                                 <ImageView
                                     android:id="@+id/imgHelp"
                                     android:layout_width="40dp"
@@ -368,16 +372,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/imgHelp"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
+                                    android:layout_marginTop="7dp"
                                     android:text="Help"
                                     android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnHelp"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                             </RelativeLayout>
 
@@ -399,6 +397,12 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/border">
 
+                                <Button
+                                    android:id="@+id/btnInbox"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent" />
+
                                 <ImageView
                                     android:id="@+id/imgInbox"
                                     android:layout_width="40dp"
@@ -411,16 +415,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/imgInbox"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
+                                    android:layout_marginTop="7dp"
                                     android:text="Inbox"
                                     android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnInbox"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                             </RelativeLayout>
 
@@ -441,6 +439,12 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/border">
 
+                                <Button
+                                    android:id="@+id/btnInviteFriends"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent" />
+
                                 <ImageView
                                     android:id="@+id/imgInviteFriends"
                                     android:layout_width="40dp"
@@ -453,25 +457,18 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/imgInviteFriends"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
+                                    android:layout_marginTop="7dp"
                                     android:text="Invite Friends"
                                     android:textSize="14sp" />
-
-                                <Button
-                                    android:id="@+id/btnInviteFriends"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
 
                     </LinearLayout>
-                    <!-- MAPS, INBOX and VIEW PROFILE -->
 
-                    <!-- HELP, REPORT AND NOTIFICATIONS -->
+                    <!-- REPORT -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
@@ -493,6 +490,12 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/border">
 
+                                <Button
+                                    android:id="@+id/btnReport"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent" />
+
                                 <ImageView
                                     android:id="@+id/imgReport"
                                     android:layout_width="40dp"
@@ -505,24 +508,58 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/imgReport"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="7dp"
                                     android:layout_marginBottom="10dp"
+                                    android:layout_marginTop="7dp"
                                     android:text="Report"
                                     android:textSize="14sp" />
 
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border">
+
                                 <Button
-                                    android:id="@+id/btnReport"
+                                    android:id="@+id/btnLogout"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@android:color/transparent" />
+
+                                <ImageView
+                                    android:id="@+id/imgLogout"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@mipmap/logout" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/imgLogout"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginTop="7dp"
+                                    android:text="Logout"
+                                    android:textSize="14sp" />
 
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
 
                     </LinearLayout>
-                    <!-- HELP, REPORT AND NOTIFICATIONS-->
-
 
                 </LinearLayout>
 

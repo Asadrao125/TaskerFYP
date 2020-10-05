@@ -34,6 +34,16 @@ public class ResetPasswordActivity extends AppCompatActivity {
         mTitle.setText("Reset Password");
         mAuth = FirebaseAuth.getInstance();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         ResetPasswordSendEmailButton = findViewById(R.id.btnSendEmail);
         ResetEmailInput = findViewById(R.id.reset_password_email);
 

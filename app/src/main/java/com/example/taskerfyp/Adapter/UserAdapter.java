@@ -74,7 +74,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "" + taskerUser.get(position).getTaskerID(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "" + taskerUser.get(position).getTaskerUsername(), Toast.LENGTH_SHORT).show();
+
+                String sender_id = FirebaseAuth.getInstance().getUid();
+                String reciever_id = taskerUser.get(position).getTaskerID();
+
+                Intent intent = new Intent(context, MessageActivity.class);
+                intent.putExtra("sender_id", sender_id);
+                intent.putExtra("reciever_id", reciever_id);
+                context.startActivity(intent);
+
             }
         });
 

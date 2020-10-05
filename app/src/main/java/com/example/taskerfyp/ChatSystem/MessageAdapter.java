@@ -2,6 +2,7 @@ package com.example.taskerfyp.ChatSystem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskerfyp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -49,7 +51,10 @@ class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Chat chat = mChat.get(i);
         viewHolder.show_message.setText(chat.getMessage());
-        viewHolder.profile_image.setImageResource(R.mipmap.ic_profile);
+        //viewHolder.profile_image1.setImageResource(R.mipmap.ic_profile);
+        if (imageURL != null) {
+            //Picasso.get().load(imageURL).placeholder(R.mipmap.ic_profile).into(viewHolder.profile_image1);
+        }
     }
 
     @Override
@@ -59,12 +64,12 @@ class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView show_message;
-        public ImageView profile_image;
+        public ImageView profile_image1;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             show_message = itemView.findViewById(R.id.show_message);
-            profile_image = itemView.findViewById(R.id.profile_image);
+            profile_image1 = itemView.findViewById(R.id.profile_image1);
         }
     }
 

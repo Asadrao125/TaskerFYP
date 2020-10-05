@@ -8,12 +8,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taskerfyp.ChatSystem.Inbox;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,8 +42,9 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     SharedPreferences.Editor editor;
 
-    Button btnViewPost, btnDeleteAccount, btnNotification, btnInviteFriends, btnHelp, btnEditProfile, btnMaps, btnViewprofile;
+    Button btnViewPost, btnDeleteAccount, btnNotification, btnInviteFriends, btnHelp, btnEditProfile, btnLogoutTasker, btnViewprofile;
     CircleImageView imgProfile;
+    Button btnInboxTasker;
     TextView tv_job_title;
     FirebaseUser currentFirebaseUser;
     DatabaseReference mRef;
@@ -63,9 +67,17 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         btnInviteFriends = findViewById(R.id.btnInviteFriends);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
         btnHelp = findViewById(R.id.btnHelp);
-        btnMaps = findViewById(R.id.btnMaps);
+        btnLogoutTasker = findViewById(R.id.btnLogoutTasker);
         btnViewprofile = findViewById(R.id.btnViewProfile);
         tv_job_title = findViewById(R.id.tv_job_title);
+        btnInboxTasker = findViewById(R.id.btnInboxTasker);
+
+        btnInboxTasker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Inbox.class));
+            }
+        });
 
 
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -167,11 +179,20 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
             }
         });
 
-        btnMaps.setOnClickListener(new View.OnClickListener() {
+        btnLogoutTasker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(TaskerWelocmeActivity.this , MapsActivityTasker.class));
-                Toast.makeText(TaskerWelocmeActivity.this, "Maps", Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+
+                SharedPreferences spreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor spreferencesEditor = spreferences.edit();
+                spreferencesEditor.remove("tasker"); //we are removing tasker value by key
+                spreferencesEditor.commit();
+
+                Toast.makeText(TaskerWelocmeActivity.this, "Logout Successfully !", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -189,4 +210,30 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
             e.toString();
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+       /* if (FirebaseAuth.getInstance().getCurrentUser() != null)
+        {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            finish();
+        }*/
+    }
+
+    /* @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String tasker = prefs.getString("tasker", "Default Value");
+        String customer = prefs.getString("customer", "Default Value");
+
+        if (TextUtils.isEmpty(tasker) && tasker.equals("Yes")) {
+            startActivity(new Intent(getApplicationContext(), TaskerWelocmeActivity.class));
+            finish();
+        } else if (TextUtils.isEmpty(customer) && tasker.equals("Yes")) {
+            startActivity(new Intent(getApplicationContext(), CustomerWelocmeActivity.class));
+            finish();
+        }
+    }*/
 }

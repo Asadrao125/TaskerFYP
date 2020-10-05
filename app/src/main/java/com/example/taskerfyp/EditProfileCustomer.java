@@ -43,6 +43,16 @@ public class EditProfileCustomer extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Edit Profile");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         initilise();
         settingDataInEditText();
 
@@ -78,11 +88,7 @@ public class EditProfileCustomer extends AppCompatActivity {
                     if (dataSnapshot.hasChild("profileimage")) {
                         String image = dataSnapshot.child("profileimage").getValue().toString();
                         Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(CustomerEditProfileImage);
-                    } else {
-                        Toast.makeText(EditProfileCustomer.this, "You Havn't Updated Your Profile Image", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(EditProfileCustomer.this, "No Logged In User !", Toast.LENGTH_SHORT).show();
                 }
             }
 

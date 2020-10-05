@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,16 @@ public class Inbox extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Inbox");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         recycler_All_Chats = findViewById(R.id.recycler_All_Chats);
         recycler_All_Chats.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
@@ -52,12 +63,14 @@ public class Inbox extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot shot : dataSnapshot.getChildren()) {
-                    TaskerUser taskerUser = shot.getValue(TaskerUser.class);
-                    list.add(taskerUser);
-                }
-                userAdapter = new UserAdapter(Inbox.this, list);
-                recycler_All_Chats.setAdapter(userAdapter);
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot shot : dataSnapshot.getChildren()) {
+                        TaskerUser taskerUser = shot.getValue(TaskerUser.class);
+                        list.add(taskerUser);
+                    }
+                    userAdapter = new UserAdapter(Inbox.this, list);
+                    recycler_All_Chats.setAdapter(userAdapter);
+                } else setContentView(R.layout.no_data_found);
             }
 
             @Override

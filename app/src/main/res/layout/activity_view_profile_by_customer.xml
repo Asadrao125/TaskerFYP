@@ -31,6 +31,7 @@
             app:layout_constraintVertical_bias="0.028" />
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView2"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@mipmap/ic_message"
@@ -108,8 +109,8 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.292"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.101"
+            app:layout_constraintStart_toEndOf="@+id/circleImageView2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.792" />
 

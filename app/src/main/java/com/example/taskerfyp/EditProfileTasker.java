@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -42,6 +43,16 @@ public class EditProfileTasker extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Edit Profile");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         initilise();
         settingDataInEditText();
     }
@@ -70,11 +81,7 @@ public class EditProfileTasker extends AppCompatActivity {
                     if (dataSnapshot.hasChild("image")) {
                         String image = dataSnapshot.child("image").getValue().toString();
                         Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(TaskerEditProfileImage);
-                    } else {
-                        Toast.makeText(EditProfileTasker.this, "You Havn't Updated Your Profile Image", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(EditProfileTasker.this, "No Logged In User !", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -42,6 +42,16 @@ public class ViewProfileByCustomer extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("View Profile");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         name = findViewById(R.id.name);
         phone_number = findViewById(R.id.phone_number);
         email = findViewById(R.id.email);
@@ -100,6 +110,7 @@ public class ViewProfileByCustomer extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         btn_chat_this_tasker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

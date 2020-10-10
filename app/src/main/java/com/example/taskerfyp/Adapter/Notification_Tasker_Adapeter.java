@@ -42,7 +42,7 @@ public class Notification_Tasker_Adapeter extends RecyclerView.Adapter<Notificat
         holder.message_date.setText(sendMessage.get(position).getTime());
         holder.message_time.setText(sendMessage.get(position).getDate());
 
-        holder.btnDetail.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String post_ki_id = sendMessage.get(position).getPost_id();
@@ -70,14 +70,12 @@ public class Notification_Tasker_Adapeter extends RecyclerView.Adapter<Notificat
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView notification_message, message_time, message_date;
-        private Button btnDetail;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             notification_message = itemView.findViewById(R.id.notification_message_tv);
             message_time = itemView.findViewById(R.id.message_time);
             message_date = itemView.findViewById(R.id.message_date);
-            btnDetail = itemView.findViewById(R.id.btnDetail);
         }
     }
 }

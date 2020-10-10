@@ -74,6 +74,7 @@ public class Tasker_View_Post extends AppCompatActivity {
 
         DatabaseReference postrefrence;
         postrefrence = FirebaseDatabase.getInstance().getReference("All_Posts");
+        postrefrence.keepSynced(true);
         postrefrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

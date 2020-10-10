@@ -77,6 +77,7 @@ public class SendOffer extends AppCompatActivity {
         btnTrackingTasker = findViewById(R.id.btnTrackingTasker);
 
         DatabaseReference A_O_R = FirebaseDatabase.getInstance().getReference("Accepted_Offers");
+        A_O_R.keepSynced(true);
         A_O_R.child(post_ki_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -93,7 +94,6 @@ public class SendOffer extends AppCompatActivity {
 
             }
         });
-
 
         FirebaseUser userC = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference onClickRef = FirebaseDatabase.getInstance().getReference("Offer_Sent").child(userC.getUid()).child(post_ki_id);
@@ -126,9 +126,9 @@ public class SendOffer extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(offerDeadline)) {
                     edtSendOfferDeadline.setError("Enter Deadline");
                 } else {
-                    /* Getting Current Username*/
                     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     DatabaseReference reffff = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(user.getUid());
+                    reffff.keepSynced(true);
                     reffff.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -142,12 +142,16 @@ public class SendOffer extends AppCompatActivity {
                             offer_id = refrence.push().getKey();
                             SendOfferTasker sendOfferTasker = new SendOfferTasker(offerBudget, offerDeadline, offerDescription, offer_id, userName, user.getUid(), post_ki_id);
                             refrence.child(post_ki_id).push().setValue(sendOfferTasker);
+                            refrence.keepSynced(true);
                             Toast.makeText(SendOffer.this, "Offer Sent!", Toast.LENGTH_SHORT).show();
-                            /*refrence.child(post_ki_id).push().child("onClick").setValue("1");*/
 
                             DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Offer_Sent").child(user.getUid()).child(post_ki_id);
+                            mRef.keepSynced(true);
                             mRef.setValue("Offer_Sent");
 
+                            DatabaseReference dBRef = FirebaseDatabase.getInstance().getReference("Offers_Sent_By_Tasker");
+                            SendOfferTasker sendOfferTasker2 = new SendOfferTasker(offerBudget, offerDeadline, offerDescription, offer_id, userName, user.getUid(), post_ki_id);
+                            dBRef.child(user.getUid()).push().setValue(sendOfferTasker2);
                         }
 
                         @Override

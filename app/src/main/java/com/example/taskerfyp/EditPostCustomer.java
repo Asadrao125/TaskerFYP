@@ -64,7 +64,7 @@ public class EditPostCustomer extends AppCompatActivity {
         btnUpdatePost = findViewById(R.id.btnUpdatePost);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         refrence = FirebaseDatabase.getInstance().getReference("All_Posts").child(currentUser.getUid()).child(id);
-
+        refrence.keepSynced(true);
         // Getting Customer Post Data
         refrence.addValueEventListener(new ValueEventListener() {
             @Override

@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Tasker</string>
-
     <array name="gender">
 
         <item>Select Your Gender</item>
@@ -31,6 +29,8 @@
         <item>Laundry</item>
 
     </array>
+
+    <string name="app_name">Tasker</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps_customer">Map</string>
 

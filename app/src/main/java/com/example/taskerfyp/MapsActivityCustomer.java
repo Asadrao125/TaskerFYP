@@ -83,7 +83,6 @@ public class MapsActivityCustomer extends FragmentActivity implements OnMapReady
     Marker markerCurrent;
     SwitchCompat switchButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

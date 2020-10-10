@@ -56,6 +56,7 @@ public class ViewOfferTasker extends AppCompatActivity {
         list = new ArrayList<SendOfferTasker>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Offers");
+        databaseReference.keepSynced(true);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -28,6 +28,8 @@ public class ViewProfileByCustomer extends AppCompatActivity {
     Button btn_call_this_tasker, btn_chat_this_tasker;
     CircleImageView dpTasker;
     String phone;
+    Button btnRatings;
+    String tasker_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class ViewProfileByCustomer extends AppCompatActivity {
         setContentView(R.layout.activity_view_profile_by_customer);
 
         String tasker_ki_profile_ki_id = getIntent().getStringExtra("tasker_ki_profile_ki_id");
+        tasker_id = getIntent().getStringExtra("tasker_ki_profile_ki_id");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,8 +63,19 @@ public class ViewProfileByCustomer extends AppCompatActivity {
         btn_call_this_tasker = findViewById(R.id.btn_call_this_tasker);
         btn_chat_this_tasker = findViewById(R.id.btn_chat_with_tasker);
         dpTasker = findViewById(R.id.dpTasker);
+        btnRatings = findViewById(R.id.btnRatings);
+
+        btnRatings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RatingsActivity.class);
+                intent.putExtra("tasker_id", tasker_id);
+                startActivity(intent);
+            }
+        });
 
         DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(tasker_ki_profile_ki_id);
+        mRefrence.keepSynced(true);
         mRefrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

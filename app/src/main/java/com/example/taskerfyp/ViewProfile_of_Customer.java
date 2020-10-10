@@ -54,6 +54,7 @@ public class ViewProfile_of_Customer extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(user.getUid());
+        mRefrence.keepSynced(true);
         mRefrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

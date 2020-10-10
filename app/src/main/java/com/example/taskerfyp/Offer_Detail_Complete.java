@@ -1,13 +1,18 @@
 package com.example.taskerfyp;
 
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +25,9 @@ import com.google.firebase.database.ValueEventListener;
 public class Offer_Detail_Complete extends AppCompatActivity {
     private TextView message, timeeeeee, dateeee;
     private Button btnbtnbtn;
+    ImageView qr_placeholder;
     private TextView budget_detail, username_detail, description_detail, time_detail, title_detail, date_detail, deadline_Detail;
+    String post_ki_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +61,15 @@ public class Offer_Detail_Complete extends AppCompatActivity {
         title_detail = findViewById(R.id.title_detail);
         date_detail = findViewById(R.id.date_detail);
         deadline_Detail = findViewById(R.id.deadline_detail);
+        qr_placeholder = findViewById(R.id.qr_placeholder);
 
-        final String post_ki_id = getIntent().getStringExtra("post_ki_id");
+        post_ki_id = getIntent().getStringExtra("post_ki_id");
         final String current_user_ki_id = getIntent().getStringExtra("current_user_ki_id");
         String message_text = getIntent().getStringExtra("message");
         String time_time = getIntent().getStringExtra("time");
         String date_date = getIntent().getStringExtra("date");
+
+        generateQR();
 
         message.setText(message_text);
         timeeeeee.setText(time_time);
@@ -75,6 +85,7 @@ public class Offer_Detail_Complete extends AppCompatActivity {
         });
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("All_Posts").child(current_user_ki_id).child(post_ki_id);
+        ref.keepSynced(true);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -104,5 +115,13 @@ public class Offer_Detail_Complete extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void generateQR() {
+        QRGEncoder qrgEncoder = new QRGEncoder(post_ki_id, null, QRGContents.Type.TEXT, 500);
+        // Getting QR-Code as Bitmap
+        Bitmap bitmap = qrgEncoder.getBitmap();
+        Log.d("qrgencoder", "onClick: " + bitmap);
+        qr_placeholder.setImageBitmap(bitmap);
     }
 }

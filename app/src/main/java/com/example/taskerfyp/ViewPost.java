@@ -57,6 +57,7 @@ public class ViewPost extends AppCompatActivity {
 
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("All_Posts").child(current_user.getUid());
+        databaseReference.keepSynced(true);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

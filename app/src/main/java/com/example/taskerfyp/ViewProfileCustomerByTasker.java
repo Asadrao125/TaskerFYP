@@ -56,6 +56,7 @@ public class ViewProfileCustomerByTasker extends AppCompatActivity {
 
         DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("Users").child("Customer")
                 .child(getIntent().getStringExtra("Post_krny_waly_ki_id"));
+        mRefrence.keepSynced(true);
         mRefrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

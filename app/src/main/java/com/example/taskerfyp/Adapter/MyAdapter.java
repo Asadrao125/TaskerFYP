@@ -19,6 +19,7 @@ import com.example.taskerfyp.EditPostCustomer;
 import com.example.taskerfyp.Models.Post;
 import com.example.taskerfyp.Models.TaskerUser;
 import com.example.taskerfyp.R;
+import com.example.taskerfyp.ScanQRActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -142,6 +143,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 alert.show();
             }
         });
+
+        holder.btnScanQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String post_id = posts.get(position).getPostId();
+                //context.startActivity(new Intent(context, ScanQRActivity.class));
+                Intent intent = new Intent(context, ScanQRActivity.class);
+                intent.putExtra("key", post_id);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -153,6 +165,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         private TextView username, budget, deadline, prof_title, task_time, task_date, task_description;
         private CircleImageView profile_image;
         private Button btnEditPost, btnDeletePost;
+        private Button btnScanQR;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -166,6 +179,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             task_description = itemView.findViewById(R.id.task_description);
             btnEditPost = itemView.findViewById(R.id.btnEditPost);
             btnDeletePost = itemView.findViewById(R.id.btnDeletePost);
+            btnScanQR = itemView.findViewById(R.id.btnScanQR);
         }
     }
 }

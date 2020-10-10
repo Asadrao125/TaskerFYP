@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.taskerfyp.Adapter.MyAdapter;
-import com.example.taskerfyp.Adapter.Notification_Tasker_Adapeter;
-import com.example.taskerfyp.Models.SendMessage;
+import com.example.taskerfyp.Adapter.RatingsAdapter;
+import com.example.taskerfyp.Models.Post;
+import com.example.taskerfyp.Models.RatingModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,22 +26,23 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ViewMessageByTasker extends AppCompatActivity {
+public class RatingsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseReference databaseReference;
-    ArrayList<SendMessage> list;
-    Notification_Tasker_Adapeter adapter;
+    ArrayList<RatingModel> list;
+    RatingsAdapter ratingsAdapter;
+    String tasker_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_message_by_tasker);
+        setContentView(R.layout.activity_ratings);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("Notifications");
+        mTitle.setText("Ratings");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -51,12 +54,13 @@ public class ViewMessageByTasker extends AppCompatActivity {
             }
         });
 
-        recyclerView = findViewById(R.id.recycler_messages);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        list = new ArrayList<SendMessage>();
+        tasker_id = getIntent().getStringExtra("tasker_id");
 
-        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Messages").child(current_user.getUid());
+        recyclerView = findViewById(R.id.recycler_view_ratings);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        list = new ArrayList<>();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Ratings").child(tasker_id);
         databaseReference.keepSynced(true);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -64,12 +68,16 @@ public class ViewMessageByTasker extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     list.clear();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        SendMessage sendMessage = dataSnapshot1.getValue(SendMessage.class);
-                        list.add(sendMessage);
+                        RatingModel ratingModel = dataSnapshot1.getValue(RatingModel.class);
+                        list.add(ratingModel);
+                        Log.d("data_kya_hai", "onDataChange: " + dataSnapshot1.getValue());
                     }
-                    adapter = new Notification_Tasker_Adapeter(ViewMessageByTasker.this, list);
-                    recyclerView.setAdapter(adapter);
-                } else setContentView(R.layout.no_notification_yet);
+                    ratingsAdapter = new RatingsAdapter(RatingsActivity.this, list);
+                    recyclerView.setAdapter(ratingsAdapter);
+                } else {
+                    //Toast.makeText(ViewPost.this, "No Post To Show", Toast.LENGTH_SHORT).show();
+                    setContentView(R.layout.no_data_found);
+                }
             }
 
             @Override
@@ -77,5 +85,6 @@ public class ViewMessageByTasker extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

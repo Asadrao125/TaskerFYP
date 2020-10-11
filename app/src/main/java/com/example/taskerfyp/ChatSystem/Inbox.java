@@ -67,8 +67,6 @@ public class Inbox extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     list.clear();
                     for (DataSnapshot shot : dataSnapshot.getChildren()) {
-                       /* ChatUserModel chatUserModel = shot.getValue(ChatUserModel.class);
-                        list.add(chatUserModel);*/
                        if (!FirebaseAuth.getInstance().getUid().equals(shot.getKey()))
                        {
                            ChatUserModel chatUserModel = shot.getValue(ChatUserModel.class);

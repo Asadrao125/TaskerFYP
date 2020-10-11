@@ -6,10 +6,16 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="end"
+        android:background="@mipmap/ic_profile"/>
+
     <EditText
         android:id="@+id/review"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginBottom="20dp"
         android:hint="Review" />
 
@@ -21,10 +27,13 @@
         android:saveEnabled="true" />
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:id="@+id/btnSubmit"
+        android:background="@drawable/button"
         android:text="Submit Review"
+        android:layout_marginBottom="20dp"
+        android:textColor="@android:color/white"
         android:layout_marginTop="20dp"/>
 
 </LinearLayout>

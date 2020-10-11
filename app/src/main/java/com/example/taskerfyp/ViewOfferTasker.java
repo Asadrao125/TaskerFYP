@@ -70,8 +70,9 @@ public class ViewOfferTasker extends AppCompatActivity {
                         adapter = new ViewOfferAdapter(ViewOfferTasker.this, list);
                         recyclerView.setAdapter(adapter);
                     }
-                } else setContentView(R.layout.no_data_found);
-                    //Toast.makeText(ViewOfferTasker.this, "No Offers To Show", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(ViewOfferTasker.this, "No Offers To Show", Toast.LENGTH_SHORT).show();
+                //setContentView(R.layout.no_data_found);
             }
 
             @Override

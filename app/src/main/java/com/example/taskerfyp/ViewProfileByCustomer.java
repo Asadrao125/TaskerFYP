@@ -30,6 +30,7 @@ public class ViewProfileByCustomer extends AppCompatActivity {
     String phone;
     Button btnRatings;
     String tasker_id;
+    String name_tasker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class ViewProfileByCustomer extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String name_tasker = dataSnapshot.child("taskerUsername").getValue().toString();
+                    name_tasker = dataSnapshot.child("taskerUsername").getValue().toString();
                     String email_id = dataSnapshot.child("taskerEmail").getValue().toString();
                     phone = dataSnapshot.child("taskerPhonenumber").getValue().toString();
                     String prof = dataSnapshot.child("taskerProfession").getValue().toString();
@@ -133,6 +134,7 @@ public class ViewProfileByCustomer extends AppCompatActivity {
                 String reciever_id = getIntent().getStringExtra("tasker_ki_profile_ki_id");
                 intent.putExtra("sender_id", sender_id);
                 intent.putExtra("reciever_id", reciever_id);
+                intent.putExtra("name", name_tasker);
                 startActivity(intent);
             }
         });

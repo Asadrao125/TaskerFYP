@@ -75,7 +75,7 @@ public class RatingsActivity extends AppCompatActivity {
                     ratingsAdapter = new RatingsAdapter(RatingsActivity.this, list);
                     recyclerView.setAdapter(ratingsAdapter);
                 } else {
-                    Toast.makeText(RatingsActivity.this, "No Post To Show", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RatingsActivity.this, "No Rating To Show", Toast.LENGTH_SHORT).show();
                 }
             }
 

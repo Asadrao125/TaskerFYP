@@ -163,8 +163,6 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
                     if (dataSnapshot.hasChild("profileimage")) {
                         String image = dataSnapshot.child("profileimage").getValue().toString();
                         Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
-                    } else {
-                        Toast.makeText(context, "Customer has not updated profile picture", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -200,7 +198,6 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
             btnSendOffer = itemView.findViewById(R.id.btnSendOffer);
             btnTrackingTasker = itemView.findViewById(R.id.btnTrackingTasker);
             tv_offer_accepted = itemView.findViewById(R.id.tv_offer_accepted);
-
         }
     }
 }

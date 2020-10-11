@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +45,7 @@ public class MessageActivity extends AppCompatActivity {
     MessageAdapter messageAdapter;
     List<Chat> mChat;
     RecyclerView recyclerView;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,8 +123,8 @@ public class MessageActivity extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String username = dataSnapshot.child("username").getValue().toString();
                 String name = getIntent().getStringExtra("name");
+                Log.d("TAG", "onDataChange: "+name);
                 username_chat.setText(name);
                 readMessages(sender_id, reciever_id);
             }

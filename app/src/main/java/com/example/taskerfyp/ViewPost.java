@@ -70,8 +70,8 @@ public class ViewPost extends AppCompatActivity {
                     adapter = new MyAdapter(ViewPost.this, list);
                     recyclerView.setAdapter(adapter);
                 } else {
-                    //Toast.makeText(ViewPost.this, "No Post To Show", Toast.LENGTH_SHORT).show();
-                    setContentView(R.layout.no_data_found);
+                    Toast.makeText(ViewPost.this, "No Post To Show", Toast.LENGTH_SHORT).show();
+                    //setContentView(R.layout.no_data_found);
                 }
             }
 

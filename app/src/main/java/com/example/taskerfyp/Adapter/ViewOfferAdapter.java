@@ -3,6 +3,7 @@ package com.example.taskerfyp.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
     ArrayList<SendOfferTasker> sendOfferTaskers;
     private String name, email, number, gender;
     String message_id;
+    String username;
 
     public ViewOfferAdapter(Context c, ArrayList<SendOfferTasker> s) {
         context = c;
@@ -159,12 +161,30 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
             }
         });
 
+        //Getting username
+        DatabaseReference dbref = FirebaseDatabase.getInstance().getReference("Users").child("Tasker")
+                .child(sendOfferTaskers.get(position).getOffer_sender_id().toString());
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                name = dataSnapshot.child("taskerUsername").getValue().toString();
+                Log.d("name_tag", "onDataChange: "+name);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         holder.prfile_image_tasker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ViewProfileByCustomer.class);
                 String tasker_ki_profile_ki_id = sendOfferTaskers.get(position).getOffer_sender_id().toString();
                 intent.putExtra("tasker_ki_profile_ki_id", tasker_ki_profile_ki_id);
+                intent.putExtra("name", name);
+                Log.d("name_tag", "onClick: "+name);
                 context.startActivity(intent);
             }
         });
@@ -174,6 +194,8 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                 Intent intent = new Intent(context, ViewProfileByCustomer.class);
                 String tasker_ki_profile_ki_id = sendOfferTaskers.get(position).getOffer_sender_id().toString();
                 intent.putExtra("tasker_ki_profile_ki_id", tasker_ki_profile_ki_id);
+                intent.putExtra("name", name);
+                Log.d("name_tag", "onClick: "+name);
                 context.startActivity(intent);
             }
         });

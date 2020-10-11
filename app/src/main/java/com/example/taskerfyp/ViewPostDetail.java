@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,10 +73,11 @@ public class ViewPostDetail extends AppCompatActivity {
                         username.setText(usernamePost);
                         taskDate.setText(datePost);
                         taskTime.setText(timePost);
-                        profTitle.setText(titlePost);
+                        profTitle.setText("Title: "+titlePost);
                         taskDescription.setText("Description: \n" + descriptionPost);
                         budget.setText("Budget: " + budgetPost + " Rs");
                         deadline.setText("Deadline: " + deadlinePost + " Day(s)");
+                        Log.d("response_kya", "onDataChange: " + snapshot.child(id).getValue());
                     }
                 }
             }

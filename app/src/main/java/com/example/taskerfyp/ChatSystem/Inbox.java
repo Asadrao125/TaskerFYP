@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.taskerfyp.Adapter.MyAdapter;
 import com.example.taskerfyp.Adapter.UserAdapter;
+import com.example.taskerfyp.Models.ChatUserModel;
 import com.example.taskerfyp.Models.Post;
 import com.example.taskerfyp.Models.TaskerUser;
 import com.example.taskerfyp.R;
@@ -31,7 +32,7 @@ import java.util.List;
 
 public class Inbox extends AppCompatActivity {
     RecyclerView recycler_All_Chats;
-    ArrayList<TaskerUser> list;
+    ArrayList<ChatUserModel> list;
     UserAdapter userAdapter;
 
     @Override
@@ -59,18 +60,26 @@ public class Inbox extends AppCompatActivity {
         recycler_All_Chats.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
 
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker");
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("All_Users");
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    list.clear();
                     for (DataSnapshot shot : dataSnapshot.getChildren()) {
-                        TaskerUser taskerUser = shot.getValue(TaskerUser.class);
-                        list.add(taskerUser);
+                       /* ChatUserModel chatUserModel = shot.getValue(ChatUserModel.class);
+                        list.add(chatUserModel);*/
+                       if (!FirebaseAuth.getInstance().getUid().equals(shot.getKey()))
+                       {
+                           ChatUserModel chatUserModel = shot.getValue(ChatUserModel.class);
+                           list.add(chatUserModel);
+                       }
                     }
                     userAdapter = new UserAdapter(Inbox.this, list);
                     recycler_All_Chats.setAdapter(userAdapter);
-                } else setContentView(R.layout.no_data_found);
+                } else {
+                    Toast.makeText(Inbox.this, "No User To Show", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

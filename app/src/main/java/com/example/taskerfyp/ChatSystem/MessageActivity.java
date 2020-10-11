@@ -76,22 +76,20 @@ public class MessageActivity extends AppCompatActivity {
 
                 String sender_id = getIntent().getStringExtra("sender_id");
                 String reciever_id = getIntent().getStringExtra("reciever_id");
-
                 String message = txt_send.getText().toString().trim();
 
                 if (!message.equals("")) {
                     sendMessage(sender_id, reciever_id, time, date, message);
-                    Toast.makeText(MessageActivity.this, "Msg Sent!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MessageActivity.this, "Msg Sent!", Toast.LENGTH_SHORT).show();
                     txt_send.setText("");
-                } else
-                    Toast.makeText(MessageActivity.this, "Type Something !", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         final String sender_id = getIntent().getStringExtra("sender_id");
 
         // Getting profile image of reciever
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(reciever_id);
+       /* DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(reciever_id);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -104,7 +102,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
         //readMessages(sender_id, reciever_id, "https://firebasestorage.googleapis.com/v0/b/taskerfyp.appspot.com/o/Profile%20Images%2Fcom.google.firebase.auth.internal.zzn%40abe2bde.jpg?alt=media&token=fe7794c7-7e4a-4522-bc9a-766f014f8a2f");
 
@@ -119,19 +117,14 @@ public class MessageActivity extends AppCompatActivity {
 
         profile_image_chat = findViewById(R.id.profile_image_chat);
         username_chat = findViewById(R.id.username_chat);
-        mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(reciever_id);
+        mRef = FirebaseDatabase.getInstance().getReference("All_Users").child(sender_id);
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String username = dataSnapshot.child("taskerUsername").getValue().toString();
-                username_chat.setText(username);
-                if (dataSnapshot.child("image").exists()) {
-                    String image = dataSnapshot.child("image").getValue().toString();
-                    Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(profile_image_chat);
-
-                    readMessages(sender_id, reciever_id, image);
-
-                }
+                String username = dataSnapshot.child("username").getValue().toString();
+                String name = getIntent().getStringExtra("name");
+                username_chat.setText(name);
+                readMessages(sender_id, reciever_id);
             }
 
             @Override
@@ -166,7 +159,7 @@ public class MessageActivity extends AppCompatActivity {
         databaseReference.push().setValue(sendMessage);
     }
 
-    private void readMessages(final String myid, final String userid, final String imageURL) {
+    private void readMessages(final String myid, final String userid) {
         mChat = new ArrayList<>();
         FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("All_Chats");
@@ -180,7 +173,7 @@ public class MessageActivity extends AppCompatActivity {
                             chat.getReciever().equals(userid) && chat.getSender().equals(myid)) {
                         mChat.add(chat);
                     }
-                    messageAdapter = new MessageAdapter(MessageActivity.this, mChat, imageURL);
+                    messageAdapter = new MessageAdapter(MessageActivity.this, mChat);
                     recyclerView.setAdapter(messageAdapter);
                 }
             }

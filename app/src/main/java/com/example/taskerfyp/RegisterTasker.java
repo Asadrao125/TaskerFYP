@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taskerfyp.Models.ChatUserModel;
 import com.example.taskerfyp.Models.TaskerUser;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -176,6 +177,14 @@ public class RegisterTasker extends AppCompatActivity {
                         TaskerUser taskerUser = new TaskerUser(taskerUsername, taskerPhonenumber, taskerGender, taskerProfession, downloadUrl, taskerEmail, mAuth.getCurrentUser().getUid());
                         String current_user = mAuth.getCurrentUser().getUid();
                         mRef.child(current_user).setValue(taskerUser);
+
+                        //Saving this data for chat purpose
+                        ChatUserModel chatUserModel = new ChatUserModel(taskerUsername, current_user, "tasker", taskerGender, taskerPhonenumber, taskerEmail);
+                        DatabaseReference chatUserRefrence = FirebaseDatabase.getInstance().getReference("All_Users")
+                                .child(current_user);
+                        chatUserRefrence.setValue(chatUserModel);
+                        //
+
                         Toast.makeText(RegisterTasker.this, "Account Created !", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getApplicationContext(), TaskerWelocmeActivity.class));
                         finish();
@@ -193,5 +202,4 @@ public class RegisterTasker extends AppCompatActivity {
             });
         }
     }
-
 }

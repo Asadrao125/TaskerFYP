@@ -138,8 +138,8 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         DatabaseReference accepted_0ffer_refrence = FirebaseDatabase.getInstance().getReference("Accepted_Offers");
                         accepted_0ffer_refrence.child(sendOfferTaskers.get(position).getOffer_sender_id()).child(sendOfferTaskers.get(position).getPost_id()).setValue("Accepted!");
 
-                        DatabaseReference refref = FirebaseDatabase.getInstance().getReference("Users").child("Tasker");
-                        refref.child(sendOfferTaskers.get(position).getOffer_sender_id()).child("chat_able_user").setValue("Yes");
+                        /*DatabaseReference refref = FirebaseDatabase.getInstance().getReference("Users").child("Tasker");
+                        refref.child(sendOfferTaskers.get(position).getOffer_sender_id()).child("chat_able_user").setValue("Yes");*/
                     }
 
                     @Override

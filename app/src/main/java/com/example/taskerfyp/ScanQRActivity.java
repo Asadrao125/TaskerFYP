@@ -19,6 +19,7 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.example.taskerfyp.Models.RatingModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -112,8 +113,14 @@ public class ScanQRActivity extends AppCompatActivity {
                             rating = ratingBar.getRating();
                             RatingModel ratingModel = new RatingModel(rating, review, date, name);
                             mRefrence.child(offer_sender_id).push().setValue(ratingModel);
+
+                            //Setting Post Completion Status
+                           /* DatabaseReference reference = FirebaseDatabase.getInstance().getReference("All_Posts")
+                                    .child(FirebaseAuth.getInstance().getUid()).child(post_id);
+                            reference.child("status").setValue("Completed");*/
+
                             startActivity(new Intent(getApplicationContext(), ViewPost.class));
-                            finish();
+                            //finish();
                         }
                     }
 

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskerfyp.ChatSystem.Inbox;
 import com.example.taskerfyp.ChatSystem.MessageActivity;
+import com.example.taskerfyp.Models.ChatUserModel;
 import com.example.taskerfyp.Models.Post;
 import com.example.taskerfyp.Models.TaskerUser;
 import com.example.taskerfyp.R;
@@ -34,11 +35,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> {
     Context context;
-    ArrayList<TaskerUser> taskerUser;
+    ArrayList<ChatUserModel> chatUserModels;
 
-    public UserAdapter(Context c, ArrayList<TaskerUser> tU) {
+    public UserAdapter(Context c, ArrayList<ChatUserModel> tU) {
         context = c;
-        taskerUser = tU;
+        chatUserModels = tU;
     }
 
 
@@ -58,9 +59,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                holder.user_ka_nam.setText(taskerUser.get(position).getTaskerUsername());
-                holder.job_title.setText(taskerUser.get(position).getTaskerProfession());
-                Picasso.get().load(taskerUser.get(position).getImage()).placeholder(R.mipmap.ic_profile).into(holder.DP);
+                holder.user_ka_nam.setText(chatUserModels.get(position).getUsername());
+                holder.job_title.setText(chatUserModels.get(position).getTitle());
             }
 
             @Override
@@ -74,24 +74,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "" + taskerUser.get(position).getTaskerUsername(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(context, "" + chatUserModels.get(position).getUsername(), Toast.LENGTH_SHORT).show();
                 String sender_id = FirebaseAuth.getInstance().getUid();
-                String reciever_id = taskerUser.get(position).getTaskerID();
-
+                String reciever_id = chatUserModels.get(position).getUserid();
                 Intent intent = new Intent(context, MessageActivity.class);
                 intent.putExtra("sender_id", sender_id);
                 intent.putExtra("reciever_id", reciever_id);
+                intent.putExtra("name", chatUserModels.get(position).getUsername());
                 context.startActivity(intent);
 
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return taskerUser.size();
+        return chatUserModels.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {

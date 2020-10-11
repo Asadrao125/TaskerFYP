@@ -61,7 +61,6 @@ public class MapsActivityTasker extends FragmentActivity implements OnMapReadyCa
 
     private GoogleMap mMap;
 
-
     private static final int MY_PERMISSION_REQUEST_CODE = 7000;
     private static final int PLAY_SERVICE_RES_REQUEST = 7001;
     private LocationRequest locationRequest;
@@ -269,6 +268,9 @@ public class MapsActivityTasker extends FragmentActivity implements OnMapReadyCa
 
     private void loadAllAvailableCustomer() {
         //load all available customer in distance 3km
+
+        final String post_krny_waly_ki_id = getIntent().getStringExtra("post_krny_waly_ki_iddd");
+
         DatabaseReference driverLocation = FirebaseDatabase.getInstance().getReference("Customer_lat_lng");
         GeoFire geoFire = new GeoFire(driverLocation);
 
@@ -280,12 +282,11 @@ public class MapsActivityTasker extends FragmentActivity implements OnMapReadyCa
             public void onKeyEntered(final String key, final GeoLocation location) {
 
                 FirebaseDatabase.getInstance().getReference("Users").child("Customer")
-                        .child(getIntent().getStringExtra("post_krny_waly_ki_iddd"))
+                        .child(post_krny_waly_ki_id)
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 CustomerUser customerUser = dataSnapshot.getValue(CustomerUser.class);
-
                                 mMap.addMarker(new MarkerOptions()
                                         .position(new LatLng(lastlocation.getLatitude(), lastlocation.getLongitude()))
                                         .flat(true)

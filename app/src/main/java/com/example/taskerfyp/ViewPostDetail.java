@@ -54,7 +54,7 @@ public class ViewPostDetail extends AppCompatActivity {
         username = findViewById(R.id.username);
 
         mRef = FirebaseDatabase.getInstance().getReference("All_Posts");
-        mRef.keepSynced(true);
+        //mRef.keepSynced(true);
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

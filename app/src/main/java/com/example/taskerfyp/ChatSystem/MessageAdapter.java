@@ -22,16 +22,14 @@ import java.util.List;
 class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     private Context mcontext;
     private List<Chat> mChat;
-    private String imageURL;
     public static final int MSG_ITEM_RIGHT = 1;
     public static final int MSG_ITEM_LEFT = 0;
 
     FirebaseUser fUser;
 
-    public MessageAdapter(Context mcontext, List<Chat> mChat, String imageURL) {
+    public MessageAdapter(Context mcontext, List<Chat> mChat) {
         this.mcontext = mcontext;
         this.mChat = mChat;
-        this.imageURL = imageURL;
     }
 
     @NonNull
@@ -52,9 +50,6 @@ class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
         Chat chat = mChat.get(i);
         viewHolder.show_message.setText(chat.getMessage());
         //viewHolder.profile_image1.setImageResource(R.mipmap.ic_profile);
-        if (imageURL != null) {
-            //Picasso.get().load(imageURL).placeholder(R.mipmap.ic_profile).into(viewHolder.profile_image1);
-        }
     }
 
     @Override

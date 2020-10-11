@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taskerfyp.Models.ChatUserModel;
 import com.example.taskerfyp.Models.CustomerUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -117,6 +118,14 @@ public class RegisterCustomer extends AppCompatActivity {
                         user.setCustomerUsername(edtCustomerUsername.getText().toString());
                         user.setCustomerGender(spinnerCustomerGender.getSelectedItem().toString());
                         user.setCustomerPhonenumber(edtCustomerPhonenumber.getText().toString());
+
+                        //Saving this data for chat purpose
+                        ChatUserModel chatUserModel = new ChatUserModel(customerUsername, FirebaseAuth.getInstance().getUid(),
+                                "customer", customerGender, customerPhonenumber, customerEmail);
+                        DatabaseReference chatUserRefrence = FirebaseDatabase.getInstance().getReference("All_Users")
+                                .child(FirebaseAuth.getInstance().getUid());
+                        chatUserRefrence.setValue(chatUserModel);
+                        //
 
                         customerRef.updateChildren(customerrMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override

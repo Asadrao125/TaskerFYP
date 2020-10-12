@@ -110,8 +110,6 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
                     if (dataSnapshot.hasChild("profileimage")) {
                         String image = dataSnapshot.child("profileimage").getValue().toString();
                         Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(imgProfile);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Please select profile image first.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

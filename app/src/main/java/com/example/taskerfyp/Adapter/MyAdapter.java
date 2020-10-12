@@ -94,8 +94,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     if (dataSnapshot.hasChild("profileimage")) {
                         String image = dataSnapshot.child("profileimage").getValue().toString();
                         Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
-                    } else {
-                        Toast.makeText(context, "Please select profile image first.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

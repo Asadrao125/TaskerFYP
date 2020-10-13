@@ -26,7 +26,7 @@ public class ViewProfile_of_Tasker extends AppCompatActivity {
     TextView name, phone_number, email, gender, profession;
     CircleImageView dpTasker;
     String phone;
-    Button btnEditProfile;
+    Button btnEditProfile, btnRatings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,14 @@ public class ViewProfile_of_Tasker extends AppCompatActivity {
         profession = findViewById(R.id.profession);
         dpTasker = findViewById(R.id.dpTasker);
         btnEditProfile = findViewById(R.id.btnEditProfile);
+        btnRatings = findViewById(R.id.btnRatings);
+
+        btnRatings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), RatingsActivityTasker.class));
+            }
+        });
 
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override

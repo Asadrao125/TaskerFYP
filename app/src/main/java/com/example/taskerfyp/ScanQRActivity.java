@@ -124,12 +124,11 @@ public class ScanQRActivity extends AppCompatActivity {
                             mRefrence.child(offer_sender_id).push().setValue(ratingModel);
 
                             //Setting Post Completion Status
-                           /* DatabaseReference reference = FirebaseDatabase.getInstance().getReference("All_Posts")
+                            /*DatabaseReference reference = FirebaseDatabase.getInstance().getReference("All_Posts")
                                     .child(FirebaseAuth.getInstance().getUid()).child(post_id);
                             reference.child("status").setValue("Completed");*/
 
                             startActivity(new Intent(getApplicationContext(), ViewPost.class));
-                            //finish();
                         }
                     }
 

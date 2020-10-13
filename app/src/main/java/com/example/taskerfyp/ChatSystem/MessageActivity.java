@@ -106,7 +106,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = getIntent().getStringExtra("name");
-                Log.d("TAG", "onDataChange: "+name);
+                Log.d("TAG", "onDataChange: " + name);
                 username_chat.setText(name);
                 readMessages(sender_id, reciever_id);
             }

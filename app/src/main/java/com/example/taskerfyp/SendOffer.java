@@ -148,10 +148,6 @@ public class SendOffer extends AppCompatActivity {
                             DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Offer_Sent").child(user.getUid()).child(post_ki_id);
                             mRef.keepSynced(true);
                             mRef.setValue("Offer_Sent");
-
-                            DatabaseReference dBRef = FirebaseDatabase.getInstance().getReference("Offers_Sent_By_Tasker");
-                            SendOfferTasker sendOfferTasker2 = new SendOfferTasker(offerBudget, offerDeadline, offerDescription, offer_id, userName, user.getUid(), post_ki_id);
-                            dBRef.child(user.getUid()).push().setValue(sendOfferTasker2);
                         }
 
                         @Override

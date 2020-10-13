@@ -13,13 +13,6 @@
         android:layout_gravity="end"
         android:src="@drawable/ic_baseline_cancel_24"/>
 
-    <EditText
-        android:id="@+id/review"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginBottom="20dp"
-        android:hint="Review" />
-
     <RatingBar
         android:id="@+id/rating"
         android:layout_width="wrap_content"
@@ -27,11 +20,19 @@
         android:numStars="5"
         android:saveEnabled="true" />
 
+    <EditText
+        android:background="@drawable/post_gray_border"
+        android:id="@+id/review"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginBottom="20dp"
+        android:hint="  Review" />
+
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:id="@+id/btnSubmit"
-        android:background="@drawable/button"
+        android:background="@drawable/all_together"
         android:text="Submit Review"
         android:layout_marginBottom="20dp"
         android:textColor="@android:color/white"

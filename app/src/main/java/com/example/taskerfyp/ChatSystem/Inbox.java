@@ -75,8 +75,6 @@ public class Inbox extends AppCompatActivity {
                     }
                     userAdapter = new UserAdapter(Inbox.this, list);
                     recycler_All_Chats.setAdapter(userAdapter);
-                } else {
-                    Toast.makeText(Inbox.this, "No User To Show", Toast.LENGTH_SHORT).show();
                 }
             }
 

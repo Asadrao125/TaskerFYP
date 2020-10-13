@@ -31,6 +31,7 @@
             app:layout_constraintVertical_bias="0.028" />
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView4"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@mipmap/ic_message"
@@ -108,10 +109,10 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.326"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.101"
+            app:layout_constraintStart_toEndOf="@+id/circleImageView4"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.792" />
+            app:layout_constraintVertical_bias="0.795" />
 
         <TextView
             android:id="@+id/name"
@@ -164,6 +165,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.408" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/all_together"
+            android:padding="20dp"
+            android:text="Edit Profile"
+            android:id="@+id/btnEditProfile"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.928" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

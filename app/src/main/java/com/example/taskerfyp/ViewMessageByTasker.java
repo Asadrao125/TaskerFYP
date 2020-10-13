@@ -69,7 +69,9 @@ public class ViewMessageByTasker extends AppCompatActivity {
                     }
                     adapter = new Notification_Tasker_Adapeter(ViewMessageByTasker.this, list);
                     recyclerView.setAdapter(adapter);
-                } else setContentView(R.layout.no_notification_yet);
+                } else {
+                    Toast.makeText(ViewMessageByTasker.this, "No Notification To SHow", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

@@ -39,14 +39,11 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class CustomerWelocmeActivity extends AppCompatActivity {
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     SharedPreferences.Editor editor;
-
     Button btnAddPost, btnViewPost, btnDeleteAccount, btnViewOffers,
-            btnInviteFriends, btnHelp, btnEditProfile, btnReport, btnProfile, btnInbox, btnLogout;
+            btnInviteFriends, btnHelp, btnProfile, btnInbox, btnLogout;
     CircleImageView imgProfile;
     FirebaseUser currentFirebaseUser;
     int Image_Request_Code = 7;
@@ -67,12 +64,10 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
         imgProfile = findViewById(R.id.imgProfile);
         btnAddPost = findViewById(R.id.btnAddpost);
         btnViewPost = findViewById(R.id.btnViewPost);
-        btnEditProfile = findViewById(R.id.btnEditProfile);
         btnViewOffers = findViewById(R.id.btnThemes);
         btnInviteFriends = findViewById(R.id.btnInviteFriends);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
         btnHelp = findViewById(R.id.btnHelp);
-        btnReport = findViewById(R.id.btnReport);
         btnProfile = findViewById(R.id.btnProfile);
         btnInbox = findViewById(R.id.btnInbox);
         btnLogout = findViewById(R.id.btnLogout);
@@ -90,7 +85,7 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
 
             }
         });
-        /* Update Profile Image */
+
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +95,6 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
                 startActivityForResult(intent, Image_Request_Code);
             }
         });
-        /* Update Profile Image */
 
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customer").child(currentFirebaseUser.getUid());
         UsersRef.addValueEventListener(new ValueEventListener() {
@@ -141,14 +135,6 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
             }
         });
 
-        btnEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(CustomerWelocmeActivity.this, "Edit Profile", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), EditProfileCustomer.class));
-            }
-        });
-
         btnViewOffers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,12 +150,14 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
                 shareIntent();
             }
         });
+
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), DeleteAccount.class));
+                startActivity(new Intent(getApplicationContext(), DeleteAccountCustomer.class));
             }
         });
+
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,13 +175,6 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
                     }
                 });
                 alertDialog.show();
-            }
-        });
-
-        btnReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CustomerWelocmeActivity.this, "Report", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -234,7 +215,6 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //Toast.makeText(CustomerWelocmeActivity.this, "Account Deletion Cancel", Toast.LENGTH_LONG).show();
                     }
                 });
 

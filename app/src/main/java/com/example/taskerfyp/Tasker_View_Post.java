@@ -104,7 +104,9 @@ public class Tasker_View_Post extends AppCompatActivity {
                             }
                         });
                     }
-                } else setContentView(R.layout.no_post_yet);
+                } else {
+                    Toast.makeText(Tasker_View_Post.this, "No Post To Show", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

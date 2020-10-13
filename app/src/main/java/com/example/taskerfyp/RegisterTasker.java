@@ -46,12 +46,8 @@ public class RegisterTasker extends AppCompatActivity {
     private Spinner spinnerTaskerProfession;
     private FirebaseAuth mAuth;
     private Button btnCreateTasker;
-    CircleImageView imgProfile;
-    int Image_Request_Code = 7;
     DatabaseReference mRef;
-    String downloadUrl;
     ProgressDialog loadingBar;
-    StorageReference UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,15 +70,6 @@ public class RegisterTasker extends AppCompatActivity {
                 createTasker();
             }
         });
-        imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, Image_Request_Code);
-            }
-        });
 
     }
 
@@ -95,7 +82,6 @@ public class RegisterTasker extends AppCompatActivity {
         spinnerTaskerProfession = findViewById(R.id.spinnerTaskerProfession);
         mAuth = FirebaseAuth.getInstance();
         btnCreateTasker = findViewById(R.id.btnCreateTasker);
-        imgProfile = findViewById(R.id.imgProfile);
         loadingBar = new ProgressDialog(this);
     }
 
@@ -103,45 +89,6 @@ public class RegisterTasker extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null) {
-            Uri ImageUri = data.getData();
-
-            CropImage.activity(ImageUri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1, 1)
-                    .start(this);
-        }
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-
-                final StorageReference filePath = UserProfileImageRef.child(".jpg");
-
-                filePath.putFile(resultUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if (!task.isSuccessful()) {
-                            throw task.getException();
-                        }
-                        return filePath.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()) {
-                            Uri downUri = task.getResult();
-                            downloadUrl = downUri.toString();
-                        }
-                    }
-                });
-            }
-        }
     }
 
     private void createTasker() {
@@ -174,7 +121,7 @@ public class RegisterTasker extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         mRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Tasker");
-                        TaskerUser taskerUser = new TaskerUser(taskerUsername, taskerPhonenumber, taskerGender, taskerProfession, downloadUrl, taskerEmail, mAuth.getCurrentUser().getUid());
+                        TaskerUser taskerUser = new TaskerUser(taskerUsername, taskerPhonenumber, taskerGender, taskerProfession, taskerEmail, mAuth.getCurrentUser().getUid());
                         String current_user = mAuth.getCurrentUser().getUid();
                         mRef.child(current_user).setValue(taskerUser);
 

@@ -41,14 +41,16 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
 
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     SharedPreferences.Editor editor;
-
-    Button btnViewPost, btnDeleteAccount, btnNotification, btnInviteFriends, btnHelp, btnEditProfile, btnLogoutTasker, btnViewprofile;
+    Button btnViewPost, btnDeleteAccount, btnNotification, btnInviteFriends, btnHelp, btnLogoutTasker, btnViewprofile;
     CircleImageView imgProfile;
     Button btnInboxTasker;
     TextView tv_job_title;
     FirebaseUser currentFirebaseUser;
     DatabaseReference mRef;
     DatabaseReference UsersRef;
+    int Image_Request_Code = 7;
+    String downloadUrl;
+    StorageReference UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("image");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,6 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         final TextView mTitle = findViewById(R.id.toolbar_title);
         imgProfile = findViewById(R.id.imgProfile);
         btnViewPost = findViewById(R.id.btnViewPost);
-        btnEditProfile = findViewById(R.id.btnEditProfile);
         btnNotification = findViewById(R.id.btnNotification);
         btnInviteFriends = findViewById(R.id.btnInviteFriends);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
@@ -72,10 +73,13 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         tv_job_title = findViewById(R.id.tv_job_title);
         btnInboxTasker = findViewById(R.id.btnInboxTasker);
 
-        btnInboxTasker.setOnClickListener(new View.OnClickListener() {
+        imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Inbox.class));
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, Image_Request_Code);
             }
         });
 
@@ -105,8 +109,6 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
                     if (dataSnapshot.hasChild("image")) {
                         String image = dataSnapshot.child("image").getValue().toString();
                         Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(imgProfile);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Please select profile image first.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -114,6 +116,13 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        btnInboxTasker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Inbox.class));
             }
         });
 
@@ -128,13 +137,6 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Tasker_View_Post.class));
-            }
-        });
-
-        btnEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), EditProfileTasker.class));
             }
         });
 
@@ -155,7 +157,7 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TaskerWelocmeActivity.this, "Delete Account", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), DeleteAccountTasker.class));
             }
         });
 
@@ -212,28 +214,54 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-       /* if (FirebaseAuth.getInstance().getCurrentUser() != null)
-        {
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-            finish();
-        }*/
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null) {
+            Uri ImageUri = data.getData();
+
+            CropImage.activity(ImageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1, 1)
+                    .start(this);
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+
+                final StorageReference filePath = UserProfileImageRef.child(".jpg");
+
+                filePath.putFile(resultUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+                        return filePath.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downUri = task.getResult();
+                            downloadUrl = downUri.toString();
+                            mRef.child("image").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(getApplicationContext(), "Profile Image Updated!", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        String message = task.getException().getMessage();
+                                        Toast.makeText(getApplicationContext(), "Error Occured: " + message, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+                        }
+                    }
+                });
+            }
+        }
     }
 
-    /* @Override
-    protected void onStart() {
-        super.onStart();
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String tasker = prefs.getString("tasker", "Default Value");
-        String customer = prefs.getString("customer", "Default Value");
-
-        if (TextUtils.isEmpty(tasker) && tasker.equals("Yes")) {
-            startActivity(new Intent(getApplicationContext(), TaskerWelocmeActivity.class));
-            finish();
-        } else if (TextUtils.isEmpty(customer) && tasker.equals("Yes")) {
-            startActivity(new Intent(getApplicationContext(), CustomerWelocmeActivity.class));
-            finish();
-        }
-    }*/
 }

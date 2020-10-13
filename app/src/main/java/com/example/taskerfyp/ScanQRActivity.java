@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -83,6 +84,7 @@ public class ScanQRActivity extends AppCompatActivity {
         View v = inflater.inflate(R.layout.dialog_rating, null);
 
         Button btnSubmit = v.findViewById(R.id.btnSubmit);
+        ImageView btnCancel = v.findViewById(R.id.btnCancel);
         final EditText edtReview = v.findViewById(R.id.review);
         final RatingBar ratingBar = v.findViewById(R.id.rating);
 
@@ -94,6 +96,13 @@ public class ScanQRActivity extends AppCompatActivity {
 
         Log.d("review", "showDialog: " + review);
         Log.d("rating", "showDialog: " + rating);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
+            }
+        });
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

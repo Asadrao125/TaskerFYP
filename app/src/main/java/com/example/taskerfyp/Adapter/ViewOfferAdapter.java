@@ -167,8 +167,10 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                name = dataSnapshot.child("taskerUsername").getValue().toString();
-                Log.d("name_tag", "onDataChange: "+name);
+                if (dataSnapshot.child("taskerUsername").exists()) {
+                    name = dataSnapshot.child("taskerUsername").getValue().toString();
+                    Log.d("name_tag", "onDataChange: " + name);
+                }
             }
 
             @Override
@@ -184,7 +186,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                 String tasker_ki_profile_ki_id = sendOfferTaskers.get(position).getOffer_sender_id().toString();
                 intent.putExtra("tasker_ki_profile_ki_id", tasker_ki_profile_ki_id);
                 intent.putExtra("name", name);
-                Log.d("name_tag", "onClick: "+name);
+                Log.d("name_tag", "onClick: " + name);
                 context.startActivity(intent);
             }
         });
@@ -195,7 +197,7 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                 String tasker_ki_profile_ki_id = sendOfferTaskers.get(position).getOffer_sender_id().toString();
                 intent.putExtra("tasker_ki_profile_ki_id", tasker_ki_profile_ki_id);
                 intent.putExtra("name", name);
-                Log.d("name_tag", "onClick: "+name);
+                Log.d("name_tag", "onClick: " + name);
                 context.startActivity(intent);
             }
         });

@@ -90,24 +90,6 @@ public class MessageActivity extends AppCompatActivity {
 
         final String sender_id = getIntent().getStringExtra("sender_id");
 
-        // Getting profile image of reciever
-       /* DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(reciever_id);
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("image")) {
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-
-        //readMessages(sender_id, reciever_id, "https://firebasestorage.googleapis.com/v0/b/taskerfyp.appspot.com/o/Profile%20Images%2Fcom.google.firebase.auth.internal.zzn%40abe2bde.jpg?alt=media&token=fe7794c7-7e4a-4522-bc9a-766f014f8a2f");
-
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

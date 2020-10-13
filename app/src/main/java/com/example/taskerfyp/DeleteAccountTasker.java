@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,25 +18,20 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-public class DeleteAccount extends AppCompatActivity {
+public class DeleteAccountTasker extends AppCompatActivity {
     EditText edtEmail, edtPassword;
     Button btnAuthenticate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delete_account);
+        setContentView(R.layout.activity_delete_account_tasker);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,20 +67,19 @@ public class DeleteAccount extends AppCompatActivity {
 
     public void showAlertDialog() {
         AlertDialog.Builder builder =
-                new AlertDialog.Builder(DeleteAccount.this);
-        builder.setMessage("All Your Post Will Also Be Deleted.\nDo you want to delete account?")
+                new AlertDialog.Builder(DeleteAccountTasker.this);
+        builder.setMessage("All Your Data Be Deleted.\nDo you want continue?")
                 .setTitle("Delete Account")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        settingCounterValue();
                         RemoveUserAuth();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(DeleteAccount.this, "Account Deletion Cancel", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DeleteAccountTasker.this, "Account Deletion Cancel", Toast.LENGTH_LONG).show();
                     }
                 });
         builder.create().show();
@@ -109,7 +102,7 @@ public class DeleteAccount extends AppCompatActivity {
                         showAlertDialog();
                     } else {
                         String message = task.getException().getMessage();
-                        Toast.makeText(DeleteAccount.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DeleteAccountTasker.this, "Error: " + message, Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -126,10 +119,10 @@ public class DeleteAccount extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(currentUser.getUid());
-                        DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("All_Posts").child(currentUser.getUid());
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(currentUser.getUid());
+                        DatabaseReference mmRefrence = FirebaseDatabase.getInstance().getReference("All_Users").child(currentUser.getUid());
+                        mmRefrence.removeValue();
                         reference.removeValue();
-                        mRefrence.removeValue();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         finish();
                     }
@@ -141,13 +134,5 @@ public class DeleteAccount extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    public void settingCounterValue() {
-        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
-        final DatabaseReference counterRefrence = FirebaseDatabase.getInstance()
-                .getReference("Current_UID_Post_Counter").child(user.getUid()).child("Count");
-        counterRefrence.removeValue();
     }
 }

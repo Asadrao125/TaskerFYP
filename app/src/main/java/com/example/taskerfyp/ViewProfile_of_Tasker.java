@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ public class ViewProfile_of_Tasker extends AppCompatActivity {
     TextView name, phone_number, email, gender, profession;
     CircleImageView dpTasker;
     String phone;
+    Button btnEditProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class ViewProfile_of_Tasker extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("View Profile");
+        mTitle.setText("My Profile");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -53,6 +55,14 @@ public class ViewProfile_of_Tasker extends AppCompatActivity {
         gender = findViewById(R.id.gender);
         profession = findViewById(R.id.profession);
         dpTasker = findViewById(R.id.dpTasker);
+        btnEditProfile = findViewById(R.id.btnEditProfile);
+
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), EditProfileTasker.class));
+            }
+        });
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference mRefrence = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(user.getUid());

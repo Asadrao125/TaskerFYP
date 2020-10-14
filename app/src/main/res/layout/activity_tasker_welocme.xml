@@ -72,7 +72,7 @@
                     android:layout_marginRight="10dp"
                     android:orientation="vertical">
 
-                    <!-- VIEW POST & VIEW PROFILE -->
+                    <!-- VIEW POST & MY PROFILE -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
@@ -167,7 +167,7 @@
 
                     </LinearLayout>
 
-                    <!-- EDIT PROFILE and NOTIFICATION -->
+                    <!-- NOTIFICATION AND INBOX -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
@@ -260,7 +260,7 @@
 
                     </LinearLayout>
 
-                    <!-- HELP and MAPS -->
+                    <!-- DELETE ACCOUNT AND LOGOUT-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
@@ -353,8 +353,7 @@
 
                     </LinearLayout>
 
-                    <!-- INVITE FRIENDS and DELETE ACCOUNT -->
-
+                    <!-- INVITE FRIENDS AND HELP -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
@@ -408,6 +407,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
+                            android:layout_marginLeft="5dp"
                             android:gravity="center"
                             android:orientation="vertical"
                             app:cardCornerRadius="10dp">

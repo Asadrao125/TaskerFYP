@@ -40,8 +40,6 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
     Context context;
     ArrayList<SendOfferTasker> sendOfferTaskers;
     private String name, email, number, gender;
-    String message_id;
-    String username;
 
     public ViewOfferAdapter(Context c, ArrayList<SendOfferTasker> s) {
         context = c;
@@ -129,8 +127,8 @@ public class ViewOfferAdapter extends RecyclerView.Adapter<ViewOfferAdapter.MyVi
                         Calendar calFordTime = Calendar.getInstance();
                         SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm:ss a");
                         String time = currentTime.format(calFordTime.getTime());
-                        // Getting Current Date and Time
 
+                        // Getting Current Date and Time
                         SendMessage sendMessage = new SendMessage(post_id, message_id, message, current_user_id, name, email, number, gender, time, date);
                         reference.child(sendOfferTaskers.get(position).getPost_id()).setValue(sendMessage);
                         reference.child(sendOfferTaskers.get(position).getPost_id()).child("onClick").setValue("1");

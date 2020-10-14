@@ -97,7 +97,7 @@
             android:id="@+id/btnCreateTasker"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button"
+            android:background="@drawable/all_together"
             android:text="Create Account"
             android:textColor="#fff" />
 

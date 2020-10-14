@@ -46,7 +46,7 @@ public class RegisterCustomer extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("Customer");
+        mTitle.setText("Register Customer");
         mTitle.setTextSize(24);
 
         initialize();

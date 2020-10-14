@@ -59,7 +59,7 @@ public class RegisterTasker extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("Tasker");
+        mTitle.setText("Register Tasker");
         mTitle.setTextSize(26);
 
         initialize();

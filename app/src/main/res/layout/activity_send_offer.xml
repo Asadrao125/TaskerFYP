@@ -68,7 +68,7 @@
             android:layout_width="250dp"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button"
+            android:background="@drawable/all_together"
             android:text="Send Offer"
             android:textColor="#fff"
             android:textSize="18sp" />

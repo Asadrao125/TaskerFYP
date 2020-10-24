@@ -20,6 +20,7 @@ import com.example.taskerfyp.Models.Post;
 import com.example.taskerfyp.Models.TaskerUser;
 import com.example.taskerfyp.R;
 import com.example.taskerfyp.ScanQRActivity;
+import com.example.taskerfyp.ViewPost;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -129,6 +130,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                         .child(user.getUid())
                                         .child(posts.get(position).getPostId());
                                 refrence.removeValue();
+                                context.startActivity(new Intent(context, ViewPost.class));
+                                ((ViewPost)context).finish();
                                 Toast.makeText(context, "Post Deleted !", Toast.LENGTH_SHORT).show();
                             }
                         })

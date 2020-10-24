@@ -4,90 +4,185 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
     tools:context=".AddPost">
 
-    <include
-        layout="@layout/toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+  <!-- <LinearLayout
+       android:layout_width="match_parent"
+       android:orientation="vertical"
+       android:background="@color/colorPrimary"
+       android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
+       <include
+           layout="@layout/toolbar"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintTop_toTopOf="parent" />
+
+       <LinearLayout
+           android:id="@+id/linearLayout3"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:background="@drawable/background_curve_login"
+           android:gravity="center"
+           android:orientation="vertical">
+
+           <Spinner
+               android:id="@+id/spinnerCustomerProfession"
+               android:layout_width="300dp"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="20dp"
+               android:entries="@array/title"
+               android:focusable="true" />
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:id="@+id/TILDescription"
+               style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+
+               <EditText
+                   android:id="@+id/edtTaskDescription"
+                   android:layout_width="300dp"
+                   android:layout_height="150dp"
+                   android:ems="10"
+                   android:hint="Task Description"
+                   android:inputType="textMultiLine|textCapSentences"
+                   android:lines="5" />
+
+           </com.google.android.material.textfield.TextInputLayout>
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:id="@+id/TILBudget"
+               style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="20dp"
+               android:layout_marginBottom="20dp">
+
+               <EditText
+                   android:id="@+id/edtTaskBudget"
+                   android:layout_width="300dp"
+                   android:layout_height="wrap_content"
+                   android:hint="Budget"
+                   android:inputType="number" />
+
+           </com.google.android.material.textfield.TextInputLayout>
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:id="@+id/TILDeadline"
+               style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+
+               <EditText
+                   android:id="@+id/edtTaskeDeadline"
+                   android:layout_width="300dp"
+                   android:layout_height="wrap_content"
+                   android:hint="Deadline In Days"
+                   android:inputType="number" />
+
+           </com.google.android.material.textfield.TextInputLayout>
+
+           <Button
+               android:id="@+id/btnAddPostCustomer"
+               android:layout_width="300dp"
+               android:layout_height="60dp"
+               android:layout_marginTop="20dp"
+               android:background="@drawable/all_together"
+               android:text="Add Post"
+               android:textColor="#fff"
+               android:textSize="18sp" />
+
+       </LinearLayout>
+
+   </LinearLayout>-->
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:background="@drawable/background_curve_login"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <Spinner
-            android:id="@+id/spinnerCustomerProfession"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:entries="@array/title"
-            android:focusable="true" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/TILDescription"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edtTaskDescription"
-                android:layout_width="300dp"
-                android:layout_height="150dp"
-                android:ems="10"
-                android:hint="Task Description"
-                android:inputType="textMultiLine|textCapSentences"
-                android:lines="5" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/TILBudget"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
-
-            <EditText
-                android:id="@+id/edtTaskBudget"
-                android:layout_width="300dp"
+            <LinearLayout
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Budget"
-                android:inputType="number" />
+                android:orientation="vertical">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <Spinner
+                    android:layout_marginTop="50dp"
+                    android:id="@+id/spinnerCustomerProfession"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:entries="@array/title"
+                    android:focusable="true" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/TILDeadline"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TILDescription"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/edtTaskeDeadline"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="Deadline In Days"
-                android:inputType="number" />
+                    <EditText
+                        android:hint="Description"
+                        android:id="@+id/edtTaskDescription"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:lines="4" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnAddPostCustomer"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/all_together"
-            android:text="Add Post"
-            android:textColor="#fff"
-            android:textSize="18sp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TILBudget"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp">
 
-    </LinearLayout>
+                    <EditText
+                        android:id="@+id/edtTaskBudget"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Budget"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TILDeadline"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/edtTaskeDeadline"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Deadline In Days"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btnAddPostCustomer"
+                    android:layout_width="300dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/all_together"
+                    android:text="Add Post"
+                    android:textColor="#fff"
+                    android:layout_marginBottom="20dp"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

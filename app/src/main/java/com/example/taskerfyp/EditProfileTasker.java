@@ -38,7 +38,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class EditProfileTasker extends AppCompatActivity {
     CircleImageView TaskerEditProfileImage;
     EditText TaskerEditProfileUsername, TaskerEditProfilePhone, TaskerEditProfileEmail;
-    //EditText TaskerEditProfilePassword;
     Spinner TaskerEditProfileGender, TaskerEditProfileProfession;
     Button TaskerEditProfileUpdateButton;
     DatabaseReference TaskerEditProfileRefrence;

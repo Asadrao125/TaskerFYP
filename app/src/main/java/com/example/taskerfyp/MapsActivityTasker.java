@@ -261,9 +261,10 @@ public class MapsActivityTasker extends FragmentActivity implements OnMapReadyCa
                     }
                 });
             }
-        } else {
-            Toast.makeText(this, "Cannot get your location", Toast.LENGTH_SHORT).show();
         }
+        /*else {
+            Toast.makeText(this, "Cannot get your location", Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     private void loadAllAvailableCustomer() {

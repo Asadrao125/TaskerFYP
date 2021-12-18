@@ -55,7 +55,10 @@ public class Tasker_View_Post extends AppCompatActivity {
         });
 
         recyclerView = findViewById(R.id.recycler_post);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
         list = new ArrayList<>();
 
         user = FirebaseAuth.getInstance().getCurrentUser();

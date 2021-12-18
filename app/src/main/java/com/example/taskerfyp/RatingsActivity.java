@@ -57,7 +57,10 @@ public class RatingsActivity extends AppCompatActivity {
         tasker_id = getIntent().getStringExtra("tasker_id");
 
         recyclerView = findViewById(R.id.recycler_view_ratings);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
         list = new ArrayList<>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Ratings").child(tasker_id);

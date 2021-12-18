@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +29,7 @@ public class Offer_Detail_Complete extends AppCompatActivity {
     ImageView qr_placeholder;
     private TextView budget_detail, username_detail, description_detail, time_detail, title_detail, date_detail, deadline_Detail;
     String post_ki_id;
+    String message_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class Offer_Detail_Complete extends AppCompatActivity {
 
         post_ki_id = getIntent().getStringExtra("post_ki_id");
         final String current_user_ki_id = getIntent().getStringExtra("current_user_ki_id");
-        String message_text = getIntent().getStringExtra("message");
+        message_text = getIntent().getStringExtra("message");
         String time_time = getIntent().getStringExtra("time");
         String date_date = getIntent().getStringExtra("date");
 
@@ -84,28 +86,48 @@ public class Offer_Detail_Complete extends AppCompatActivity {
             }
         });
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("All_Posts").child(current_user_ki_id).child(post_ki_id);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child("Customer")
+                .child(current_user_ki_id);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                username_detail.setText("Name: " + dataSnapshot.child("customerUsername").getValue());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("All_Posts")
+                .child(current_user_ki_id).child(post_ki_id);
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                title_detail.setText("Title: " + dataSnapshot.child("title").getValue());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Offers").child(post_ki_id);
         ref.keepSynced(true);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String Budget = dataSnapshot.child("budget").getValue().toString();
-                    String Username = dataSnapshot.child("current_user_name").getValue().toString();
-                    String Date = dataSnapshot.child("date").getValue().toString();
-                    String Deadline = dataSnapshot.child("deadline").getValue().toString();
-                    String Description = dataSnapshot.child("description").getValue().toString();
-                    String Time = dataSnapshot.child("time").getValue().toString();
-                    String title = dataSnapshot.child("title").getValue().toString();
 
-                    budget_detail.setText("Budget: " + Budget);
-                    time_detail.setText("Time: " + Time);
-                    username_detail.setText("Name: " + Username);
-                    date_detail.setText("Date: " + Date);
-                    deadline_Detail.setText("Deadline: " + Deadline + " (s)");
-                    description_detail.setText("Description: " + Description);
-                    title_detail.setText("Title: " + title);
-
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        description_detail.setText("Description: " + ds.child("offer_description").getValue());
+                        deadline_Detail.setText("Deadline: " + ds.child("offer_deadline").getValue() + " (s)");
+                        budget_detail.setText("Budget: " + ds.child("offer_budget").getValue());
+                        time_detail.setText("Time: " + ds.child("time").getValue());
+                        date_detail.setText("Date: " + ds.child("date").getValue());
+                    }
                 }
             }
 

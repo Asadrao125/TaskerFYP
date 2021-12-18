@@ -37,6 +37,7 @@ public class ScanQRActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
     String review;
     float rating;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +57,31 @@ public class ScanQRActivity extends AppCompatActivity {
                         Log.d("post_ki_id", "run: " + result.getText());
 
                         if (result.getText().equals(post_id)) {
-                            Toast.makeText(ScanQRActivity.this, "IDs Matched!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ScanQRActivity.this, "QR Code Matched!", Toast.LENGTH_SHORT).show();
                             showDialog();
                         } else {
-                            Toast.makeText(ScanQRActivity.this, "IDs Does Not Matched!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ScanQRActivity.this, "QR Code Does Not Matched!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
             }
         });
+
+        //
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Users").child("Customer")
+                .child(FirebaseAuth.getInstance().getUid());
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                name = dataSnapshot.child("customerUsername").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -113,7 +130,7 @@ public class ScanQRActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             String offer_sender_id = ds.child("offer_sender_id").getValue().toString();
-                            String name = ds.child("userName").getValue().toString();
+                            // name = ds.child("userName").getValue().toString();
                             Log.d("offer_sender_id", "onDataChange: " + offer_sender_id);
                             Date d = new Date();
                             String date = String.valueOf(DateFormat.format("MMMM d, yyyy ", d.getTime()));
@@ -129,6 +146,7 @@ public class ScanQRActivity extends AppCompatActivity {
                             reference.child("status").setValue("Completed");*/
 
                             startActivity(new Intent(getApplicationContext(), ViewPost.class));
+                            finish();
                         }
                     }
 

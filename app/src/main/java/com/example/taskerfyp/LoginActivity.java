@@ -181,9 +181,9 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(getApplicationContext(), CustomerWelocmeActivity.class);
                                         startActivity(intent);
                                         finish();
-                                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                        /*SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                                         editor.putString("customer", "done");
-                                        editor.apply();
+                                        editor.apply();*/
                                     } else {
                                         Toast.makeText(LoginActivity.this, "This email doesnot exist in this category", Toast.LENGTH_SHORT).show();
                                         loadingBar.dismiss();
@@ -208,9 +208,9 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(getApplicationContext(), TaskerWelocmeActivity.class);
                                         startActivity(intent);
                                         finish();
-                                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                        /*SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                                         editor.putString("tasker", "done");
-                                        editor.apply();
+                                        editor.apply();*/
                                     } else {
                                         Toast.makeText(LoginActivity.this, "This email doesnot exist in this category", Toast.LENGTH_SHORT).show();
                                         loadingBar.dismiss();
@@ -236,23 +236,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        /*SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String tasker = prefs.getString("tasker", "Default Value");
-        String customer = prefs.getString("customer", "Default Value");
-
-        Log.d("VALUES", "onStart: "+tasker);
-        Log.d("VALUES", "onStart: "+customer);
-
-        if (!TextUtils.isEmpty(tasker) && tasker.equals("Yes")) {
-            startActivity(new Intent(getApplicationContext(), TaskerWelocmeActivity.class));
-            finish();
-        }
-        if (!TextUtils.isEmpty(customer) && customer.equals("Yes")) {
-            startActivity(new Intent(getApplicationContext(), CustomerWelocmeActivity.class));
-            finish();
-        }*/
-
         mAuth.addAuthStateListener(firebaseAuthlistner);
     }
 

@@ -8,8 +8,10 @@ public class SendOfferTasker {
     String userName;
     String offer_sender_id;
     String post_id;
+    String time;
+    String date;
 
-    public SendOfferTasker(String offer_budget, String offer_deadline, String offer_description, String offer_id, String userName, String offer_sender_id, String post_id) {
+    public SendOfferTasker(String offer_budget, String offer_deadline, String offer_description, String offer_id, String userName, String offer_sender_id, String post_id, String time, String date) {
         this.offer_budget = offer_budget;
         this.offer_deadline = offer_deadline;
         this.offer_description = offer_description;
@@ -17,6 +19,8 @@ public class SendOfferTasker {
         this.userName = userName;
         this.offer_sender_id = offer_sender_id;
         this.post_id = post_id;
+        this.time = time;
+        this.date = date;
     }
 
     public SendOfferTasker() {
@@ -76,5 +80,21 @@ public class SendOfferTasker {
 
     public void setPost_id(String post_id) {
         this.post_id = post_id;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

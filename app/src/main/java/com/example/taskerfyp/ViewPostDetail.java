@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,13 +63,13 @@ public class ViewPostDetail extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (dataSnapshot.exists()) {
                         String id = getIntent().getStringExtra("post_ki_id");
-                        String usernamePost = snapshot.child(id).child("current_user_name").getValue().toString();
-                        String datePost = snapshot.child(id).child("date").getValue().toString();
-                        String timePost = snapshot.child(id).child("time").getValue().toString();
-                        String titlePost = snapshot.child(id).child("title").getValue().toString();
-                        String descriptionPost = snapshot.child(id).child("description").getValue().toString();
-                        String budgetPost = snapshot.child(id).child("budget").getValue().toString();
-                        String deadlinePost = snapshot.child(id).child("deadline").getValue().toString();
+                        String usernamePost = String.valueOf(snapshot.child(id).child("current_user_name").getValue());
+                        String datePost = String.valueOf(snapshot.child(id).child("date").getValue());
+                        String timePost = String.valueOf(snapshot.child(id).child("time").getValue());
+                        String titlePost = String.valueOf(snapshot.child(id).child("title").getValue());
+                        String descriptionPost = String.valueOf(snapshot.child(id).child("description").getValue());
+                        String budgetPost = String.valueOf(snapshot.child(id).child("budget").getValue());
+                        String deadlinePost = String.valueOf(snapshot.child(id).child("deadline").getValue());
 
                         username.setText(usernamePost);
                         taskDate.setText(datePost);
@@ -90,7 +91,7 @@ public class ViewPostDetail extends AppCompatActivity {
 
         //////
         String offer_send_krny_waly_ki_id = getIntent().getStringExtra("offer_send_krny_waly_ki_id");
-        DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Users").child("Tasker").child(offer_send_krny_waly_ki_id).child("image");
+        DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Users").child("Customer").child(FirebaseAuth.getInstance().getUid()).child("profileimage");
         refrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ViewPost extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -52,8 +53,17 @@ public class ViewPost extends AppCompatActivity {
         });
 
         recyclerView = findViewById(R.id.recycler_post);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        //
+
+        recyclerView.setLayoutManager(linearLayoutManager);
         list = new ArrayList<>();
+
+        //Collections.reverse(list);
 
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("All_Posts").child(current_user.getUid());

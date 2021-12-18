@@ -35,6 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class SendOffer extends AppCompatActivity {
@@ -134,13 +136,25 @@ public class SendOffer extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.hasChild("profileimage")) {
                                 image = dataSnapshot.child("profileimage").getValue().toString();
-                            } else {
-                                Toast.makeText(SendOffer.this, "No Profile Image", Toast.LENGTH_SHORT).show();
                             }
+                            /*else {
+                                Toast.makeText(SendOffer.this, "No Profile Image", Toast.LENGTH_SHORT).show();
+                            }*/
                             userName = String.valueOf(dataSnapshot.child("taskerUsername").getValue());
                             DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Offers");
                             offer_id = refrence.push().getKey();
-                            SendOfferTasker sendOfferTasker = new SendOfferTasker(offerBudget, offerDeadline, offerDescription, offer_id, userName, user.getUid(), post_ki_id);
+
+                            // Getting Current Date and Time
+                            Calendar calFordDate = Calendar.getInstance();
+                            SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd yyyy");
+                            String date = currentDate.format(calFordDate.getTime());
+
+                            Calendar calFordTime = Calendar.getInstance();
+                            SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm:ss a");
+                            String time = currentTime.format(calFordTime.getTime());
+                            // Getting Current Date and Time
+
+                            SendOfferTasker sendOfferTasker = new SendOfferTasker(offerBudget, offerDeadline, offerDescription, offer_id, userName, user.getUid(), post_ki_id, time, date);
                             refrence.child(post_ki_id).push().setValue(sendOfferTasker);
                             refrence.keepSynced(true);
                             Toast.makeText(SendOffer.this, "Offer Sent!", Toast.LENGTH_SHORT).show();
@@ -155,6 +169,11 @@ public class SendOffer extends AppCompatActivity {
                             Toast.makeText(SendOffer.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
+
+                    edtSendOfferBudget.setText("");
+                    edtSendOfferDeadline.setText("");
+                    edtSendOfferDescription.setText("");
+
                 }
             }
         });

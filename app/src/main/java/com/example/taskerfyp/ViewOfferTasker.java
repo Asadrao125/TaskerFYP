@@ -52,7 +52,10 @@ public class ViewOfferTasker extends AppCompatActivity {
         });
 
         recyclerView = findViewById(R.id.recycler_view_offer);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
         list = new ArrayList<SendOfferTasker>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Offers");

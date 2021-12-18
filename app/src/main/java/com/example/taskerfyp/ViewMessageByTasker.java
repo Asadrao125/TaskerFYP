@@ -52,7 +52,10 @@ public class ViewMessageByTasker extends AppCompatActivity {
         });
 
         recyclerView = findViewById(R.id.recycler_messages);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
         list = new ArrayList<SendMessage>();
 
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();

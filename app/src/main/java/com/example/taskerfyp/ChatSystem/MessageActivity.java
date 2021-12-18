@@ -46,6 +46,7 @@ public class MessageActivity extends AppCompatActivity {
     List<Chat> mChat;
     RecyclerView recyclerView;
     String username;
+    String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
 
         final String reciever_id = getIntent().getStringExtra("reciever_id");
+        title = getIntent().getStringExtra("title");
 
         btnSend = findViewById(R.id.btnSend);
         txt_send = findViewById(R.id.txtSend);
@@ -116,6 +118,42 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
+
+        if (title.equals("customer")) {
+            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Users").child("Customer");
+            dbRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        String image = String.valueOf(ds.child("profileimage").getValue());
+                        Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(profile_image_chat);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        if (title.equals("tasker")) {
+            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker");
+            dbRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        String image = ds.child("image").getValue().toString();
+                        Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(profile_image_chat);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
 
         profile_image_chat.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,9 +13,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -56,9 +59,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class MapsActivityCustomer extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -82,54 +87,28 @@ public class MapsActivityCustomer extends FragmentActivity implements OnMapReady
 
     Marker markerCurrent;
     SwitchCompat switchButton;
+    Button btnTrack;
+    double desLat, desLng;
+    double srcLat, srcLng;
+    String address1, address2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_customer);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        setUpLocation();
 
-
-        switchButton = findViewById(R.id.switch_button);
-
-        SharedPreferences sharedPreferences = getSharedPreferences("save", MODE_PRIVATE);
-        switchButton.setChecked(sharedPreferences.getBoolean("value", false));
-
-        switchButton.setOnClickListener(new View.OnClickListener() {
+        btnTrack = findViewById(R.id.btnTrack);
+        btnTrack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (switchButton.isChecked()) {
-                    SharedPreferences.Editor editor = getSharedPreferences("save", MODE_PRIVATE).edit();
-                    editor.putBoolean("value", true);
-                    editor.apply();
-                    switchButton.setChecked(true);
-
-                    startlocationUpdates();
-
-                    displayLocation();
-
-                    Toast.makeText(MapsActivityCustomer.this, "location shairing", Toast.LENGTH_SHORT).show();
-                } else {
-                    SharedPreferences.Editor editor = getSharedPreferences("save", MODE_PRIVATE).edit();
-                    editor.putBoolean("value", false);
-                    editor.apply();
-
-                    switchButton.setChecked(false);
-
-                    stopLoationUpdates();
-
-                    markerCurrent.remove();
-                    customer_lat_lng_ref.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(false);
-                    mMap.clear();
-
-                    Toast.makeText(MapsActivityCustomer.this, "You are Offline ", Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View view) {
+                redirectToGoogleMap();
             }
         });
-        setUpLocation();
+
     }
 
 
@@ -188,7 +167,6 @@ public class MapsActivityCustomer extends FragmentActivity implements OnMapReady
                             displayLocation();
                         }
                     }
-
                 }
         }
     }
@@ -206,9 +184,7 @@ public class MapsActivityCustomer extends FragmentActivity implements OnMapReady
             if (checkPlayServices()) {
                 buildGoogleApiClient();
                 creatLocationReaquest();
-                if (switchButton.isChecked()) {
-                    displayLocation();
-                }
+                displayLocation();
             }
         }
     }
@@ -253,6 +229,9 @@ public class MapsActivityCustomer extends FragmentActivity implements OnMapReady
 
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(lastlocation.getLatitude(), lastlocation.getLongitude()), 8000);
         geoQuery.removeAllListeners();
+
+        desLat = lastlocation.getLatitude();
+        desLng = lastlocation.getLongitude();
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
@@ -303,16 +282,6 @@ public class MapsActivityCustomer extends FragmentActivity implements OnMapReady
         });
     }
 
-
-    private void stopLoationUpdates() {
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-    }
-
     private void displayLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -320,33 +289,34 @@ public class MapsActivityCustomer extends FragmentActivity implements OnMapReady
         }
         lastlocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if (lastlocation != null) {
-            if (switchButton.isChecked()) {
 
-                customer_lat_lng_ref = FirebaseDatabase.getInstance().getReference("Customer_lat_lng");
-                geoFire = new GeoFire(customer_lat_lng_ref);
-                final double latitude = lastlocation.getLatitude();
-                final double longitude = lastlocation.getLongitude();
+            customer_lat_lng_ref = FirebaseDatabase.getInstance().getReference("Customer_lat_lng");
+            geoFire = new GeoFire(customer_lat_lng_ref);
+            final double latitude = lastlocation.getLatitude();
+            final double longitude = lastlocation.getLongitude();
 
-                geoFire.setLocation(FirebaseAuth.getInstance().getCurrentUser().getUid(), new GeoLocation(latitude, longitude), new GeoFire.CompletionListener() {
-                    @Override
-                    public void onComplete(String key, DatabaseError error) {
 
-                        //Add Marker
-                        if (markerCurrent != null)
-                            markerCurrent.remove(); //Remove already marker
-                        markerCurrent = mMap.addMarker(new MarkerOptions()
-                                //.title(String.valueOf(BitmapDescriptorFactory.fromResource(R.drawable.car)))
-                                .position(new LatLng(latitude, longitude))
-                                .title("Your Location"));
+            geoFire.setLocation(FirebaseAuth.getInstance().getCurrentUser().getUid(), new GeoLocation(latitude, longitude), new GeoFire.CompletionListener() {
+                @Override
+                public void onComplete(String key, DatabaseError error) {
 
-                        //Move marker to this position
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15.0f));
+                    //Add Marker
+                    if (markerCurrent != null)
+                        markerCurrent.remove(); //Remove already marker
+                    markerCurrent = mMap.addMarker(new MarkerOptions()
+                            //.title(String.valueOf(BitmapDescriptorFactory.fromResource(R.drawable.car)))
+                            .position(new LatLng(latitude, longitude))
+                            .title("Your Location"));
 
-                        loadAllAvailableTasker();
-                    }
-                });
+                    srcLat = latitude;
+                    srcLng = longitude;
 
-            }
+                    //Move marker to this position
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15.0f));
+
+                    loadAllAvailableTasker();
+                }
+            });
         } else {
             Log.d("ERROR", "Cannot get your location");
         }
@@ -394,6 +364,35 @@ public class MapsActivityCustomer extends FragmentActivity implements OnMapReady
     @Override
     public void onLocationChanged(Location location) {
         lastlocation = location;
+
+
         displayLocation();
     }
+
+    public void redirectToGoogleMap() {
+        try {
+            Geocoder geocoder;
+            List<Address> addresses1;
+            geocoder = new Geocoder(this, Locale.getDefault());
+            addresses1 = geocoder.getFromLocation(srcLat, srcLng, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            address1 = addresses1.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+            List<Address> addresses2;
+            geocoder = new Geocoder(this, Locale.getDefault());
+            addresses2 = geocoder.getFromLocation(desLat, desLng, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            address2 = addresses2.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Toast.makeText(this, "" + address2, Toast.LENGTH_SHORT).show();
+
+        Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + address1 + "/" + address2);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.setPackage("com.google.android.apps.maps");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
+    }
+
 }

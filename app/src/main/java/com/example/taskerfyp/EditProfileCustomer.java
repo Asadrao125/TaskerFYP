@@ -38,7 +38,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class EditProfileCustomer extends AppCompatActivity {
     CircleImageView CustomerEditProfileImage;
     EditText CustomerEditProfileUsername, CustomerEditProfilePhone, CustomerEditProfileEmail;
-    //CustomerEditProfilePassword;
     Spinner CustomerEditProfileGender;
     Button CustomerEditProfileUpdateButton;
     DatabaseReference CustomerEditProfileRefrence;
@@ -98,7 +97,6 @@ public class EditProfileCustomer extends AppCompatActivity {
         CustomerEditProfileUsername = findViewById(R.id.CustomerEditProfileUsername);
         CustomerEditProfilePhone = findViewById(R.id.CustomerEditProfilePhone);
         CustomerEditProfileEmail = findViewById(R.id.CustomerEditProfileEmail);
-        //CustomerEditProfilePassword = findViewById(R.id.CustomerEditProfilePassword);
         CustomerEditProfileGender = findViewById(R.id.CustomerEditProfileGender);
         CustomerEditProfileUpdateButton = findViewById(R.id.CustomerEditProfileUpdateButton);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -130,8 +128,6 @@ public class EditProfileCustomer extends AppCompatActivity {
     private void updateProfile() {
         String name = CustomerEditProfileUsername.getText().toString().trim();
         String phone = CustomerEditProfilePhone.getText().toString().trim();
-        //String email = CustomerEditProfileEmail.getText().toString().trim();
-        //String password = CustomerEditProfilePassword.getText().toString().trim();
         String gender = CustomerEditProfileGender.getSelectedItem().toString().trim();
 
         if (gender.equals("Male")) {
@@ -177,7 +173,6 @@ public class EditProfileCustomer extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
                             Uri downUri = task.getResult();
-                            //Toast.makeText(getApplicationContext(), "Profile Image stored successfully to Firebase storage...", Toast.LENGTH_SHORT).show();
                             final String downloadUrl = downUri.toString();
                             mRef.child("profileimage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

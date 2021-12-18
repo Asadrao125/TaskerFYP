@@ -152,7 +152,6 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
             }
         });
 
-        ////////
         DatabaseReference UsersRef;
         id = posts.get(position).getId();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customer").child(id);
@@ -172,7 +171,6 @@ public class MyAdapterTasker extends RecyclerView.Adapter<MyAdapterTasker.MyView
 
             }
         });
-        ////////
     }
 
     @Override

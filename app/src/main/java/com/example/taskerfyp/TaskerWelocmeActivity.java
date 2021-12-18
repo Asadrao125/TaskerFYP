@@ -47,6 +47,7 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
     TextView tv_job_title;
     FirebaseUser currentFirebaseUser;
     DatabaseReference mRef;
+    DatabaseReference mRef2;
     DatabaseReference UsersRef;
     int Image_Request_Code = 7;
     String downloadUrl;
@@ -245,6 +246,8 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Uri downUri = task.getResult();
                             downloadUrl = downUri.toString();
+                            DatabaseReference mRef2 = FirebaseDatabase.getInstance().getReference("All_Users");
+                            mRef2.child(currentFirebaseUser.getUid()).child("profileimage").setValue(downloadUrl);
                             mRef.child("image").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -256,7 +259,6 @@ public class TaskerWelocmeActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-
                         }
                     }
                 });

@@ -45,7 +45,6 @@ public class MessageActivity extends AppCompatActivity {
     MessageAdapter messageAdapter;
     List<Chat> mChat;
     RecyclerView recyclerView;
-    String username;
     String title;
 
     @Override

@@ -7,14 +7,24 @@ public class ChatUserModel {
     String gender;
     String phonenumber;
     String email;
+    String profileimage;
 
-    public ChatUserModel(String username, String userid, String title, String gender, String phonenumber, String email) {
+    public ChatUserModel(String username, String userid, String title, String gender, String phonenumber, String email, String profileimage) {
         this.username = username;
         this.userid = userid;
         this.title = title;
         this.gender = gender;
         this.phonenumber = phonenumber;
         this.email = email;
+        this.profileimage = profileimage;
+    }
+
+    public String getProfileImage() {
+        return profileimage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileimage = profileImage;
     }
 
     public ChatUserModel() {

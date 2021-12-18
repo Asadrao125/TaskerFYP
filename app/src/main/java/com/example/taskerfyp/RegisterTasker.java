@@ -126,7 +126,7 @@ public class RegisterTasker extends AppCompatActivity {
                         mRef.child(current_user).setValue(taskerUser);
 
                         //Saving this data for chat purpose
-                        ChatUserModel chatUserModel = new ChatUserModel(taskerUsername, current_user, "tasker", taskerGender, taskerPhonenumber, taskerEmail);
+                        ChatUserModel chatUserModel = new ChatUserModel(taskerUsername, current_user, "tasker", taskerGender, taskerPhonenumber, taskerEmail,"");
                         DatabaseReference chatUserRefrence = FirebaseDatabase.getInstance().getReference("All_Users")
                                 .child(current_user);
                         chatUserRefrence.setValue(chatUserModel);

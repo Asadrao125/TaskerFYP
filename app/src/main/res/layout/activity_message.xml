@@ -14,8 +14,9 @@
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
             android:src="@drawable/ic_baseline_arrow_back_ios_24" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -35,38 +36,52 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/typing_area"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:padding="5dp">
+        android:elevation="5dp"
+        android:padding="5dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="5dp"
+        app:cardUseCompatPadding="true">
 
-        <EditText
-            android:id="@+id/txtSend"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/btnSend"
-            android:background="@drawable/post_gray_border"
-            android:hint="Type a message . ."
-            android:padding="8dp" />
+            android:layout_alignParentBottom="true"
+            android:padding="5dp">
 
-        <ImageButton
-            android:id="@+id/btnSend"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/ic_send" />
+            <EditText
+                android:id="@+id/txtSend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/btnSend"
+                android:background="@null"
+                android:hint="Type a message . ."
+                android:padding="8dp" />
 
-    </RelativeLayout>
+            <ImageButton
+                android:id="@+id/btnSend"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_send" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/typing_area"
-        android:layout_below="@+id/toolbar" />
+        android:layout_above="@id/typing_area"
+        android:layout_below="@+id/toolbar"
+        tools:listitem="@layout/chat_item_left" />
 
 </RelativeLayout>

@@ -1,7 +1,5 @@
 package com.example.taskerfyp.Models;
 
-import android.net.Uri;
-
 public class Post {
     String id;
     String title;

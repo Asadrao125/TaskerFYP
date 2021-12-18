@@ -1,5 +1,6 @@
 package com.example.taskerfyp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ public class Notification_Tasker_Adapeter extends RecyclerView.Adapter<Notificat
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Notification_Tasker_Adapeter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull Notification_Tasker_Adapeter.MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.notification_message.setText(sendMessage.get(position).getMessage());
         holder.message_date.setText(sendMessage.get(position).getTime());
         holder.message_time.setText(sendMessage.get(position).getDate());

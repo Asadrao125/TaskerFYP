@@ -135,6 +135,7 @@ public class ViewProfileByCustomer extends AppCompatActivity {
                 intent.putExtra("sender_id", sender_id);
                 intent.putExtra("reciever_id", reciever_id);
                 intent.putExtra("name", name_tasker);
+                intent.putExtra("title", "tasker");
                 startActivity(intent);
             }
         });

@@ -295,8 +295,9 @@ public class CustomerWelocmeActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
                             Uri downUri = task.getResult();
-                            //Toast.makeText(getApplicationContext(), "Profile Image stored successfully to Firebase storage...", Toast.LENGTH_SHORT).show();
                             final String downloadUrl = downUri.toString();
+                            DatabaseReference mRef2 = FirebaseDatabase.getInstance().getReference("All_Users");
+                            mRef2.child(currentFirebaseUser.getUid()).child("profileimage").setValue(downloadUrl);
                             mRef.child("profileimage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

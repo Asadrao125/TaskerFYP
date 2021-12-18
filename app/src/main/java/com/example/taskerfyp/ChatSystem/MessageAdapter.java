@@ -24,7 +24,6 @@ class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     private List<Chat> mChat;
     public static final int MSG_ITEM_RIGHT = 1;
     public static final int MSG_ITEM_LEFT = 0;
-
     FirebaseUser fUser;
 
     public MessageAdapter(Context mcontext, List<Chat> mChat) {
@@ -42,14 +41,14 @@ class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
             View view = LayoutInflater.from(mcontext).inflate(R.layout.chat_item_left, viewGroup, false);
             return new MessageAdapter.ViewHolder(view);
         }
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Chat chat = mChat.get(i);
         viewHolder.show_message.setText(chat.getMessage());
-        //viewHolder.profile_image1.setImageResource(R.mipmap.ic_profile);
+        viewHolder.profile_image1.setImageResource(R.mipmap.ic_profile);
+        viewHolder.time.setText(chat.getTime());
     }
 
     @Override
@@ -60,11 +59,13 @@ class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView show_message;
         public ImageView profile_image1;
+        public TextView time;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             show_message = itemView.findViewById(R.id.show_message);
             profile_image1 = itemView.findViewById(R.id.profile_image1);
+            time = itemView.findViewById(R.id.time);
         }
     }
 

@@ -67,11 +67,10 @@ public class Inbox extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     list.clear();
                     for (DataSnapshot shot : dataSnapshot.getChildren()) {
-                       if (!FirebaseAuth.getInstance().getUid().equals(shot.getKey()))
-                       {
-                           ChatUserModel chatUserModel = shot.getValue(ChatUserModel.class);
-                           list.add(chatUserModel);
-                       }
+                        if (!FirebaseAuth.getInstance().getUid().equals(shot.getKey())) {
+                            ChatUserModel chatUserModel = shot.getValue(ChatUserModel.class);
+                            list.add(chatUserModel);
+                        }
                     }
                     userAdapter = new UserAdapter(Inbox.this, list);
                     recycler_All_Chats.setAdapter(userAdapter);

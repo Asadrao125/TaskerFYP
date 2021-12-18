@@ -1,5 +1,6 @@
 package com.example.taskerfyp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -52,7 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.username.setText(posts.get(position).getCurrent_user_name());
         holder.budget.setText("Budget: " + posts.get(position).getBudget() + " Rs");
         holder.deadline.setText("Deadline: " + posts.get(position).getDeadline() + " day(s)");
@@ -83,7 +84,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             }
         });
 
-        ////////
         DatabaseReference UsersRef;
         FirebaseUser currentUser;
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -93,7 +93,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     if (dataSnapshot.hasChild("profileimage")) {
-                        String image = dataSnapshot.child("profileimage").getValue().toString();
+                        String image = String.valueOf(dataSnapshot.child("profileimage").getValue());
                         Picasso.get().load(image).placeholder(R.mipmap.ic_profile).into(holder.profile_image);
                     }
                 }
@@ -104,7 +104,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
             }
         });
-        ////////
+
         holder.btnEditPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +131,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                         .child(posts.get(position).getPostId());
                                 refrence.removeValue();
                                 context.startActivity(new Intent(context, ViewPost.class));
-                                ((ViewPost)context).finish();
+                                ((ViewPost) context).finish();
                                 Toast.makeText(context, "Post Deleted !", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -149,7 +149,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public void onClick(View view) {
                 String post_id = posts.get(position).getPostId();
-                //context.startActivity(new Intent(context, ScanQRActivity.class));
                 Intent intent = new Intent(context, ScanQRActivity.class);
                 intent.putExtra("key", post_id);
                 context.startActivity(intent);

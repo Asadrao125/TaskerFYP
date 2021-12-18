@@ -1,5 +1,6 @@
 package com.example.taskerfyp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -42,7 +43,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         chatUserModels = tU;
     }
 
-
     @NonNull
     @Override
     public UserAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,15 +52,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-
-        //////
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users").child("Tasker");
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 holder.user_ka_nam.setText(chatUserModels.get(position).getUsername());
                 holder.job_title.setText(chatUserModels.get(position).getTitle());
+                Picasso.get().load(chatUserModels.get(position).getProfileImage())
+                        .placeholder(R.mipmap.ic_profile).into(holder.image);
             }
 
             @Override
@@ -72,7 +72,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Toast.makeText(context, "" + chatUserModels.get(position).getUsername(), Toast.LENGTH_SHORT).show();
                 String sender_id = FirebaseAuth.getInstance().getUid();
                 String reciever_id = chatUserModels.get(position).getUserid();
                 Intent intent = new Intent(context, MessageActivity.class);
@@ -93,12 +92,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView user_ka_nam;
-        private CircleImageView DP;
+        private CircleImageView image;
         private TextView job_title;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            DP = itemView.findViewById(R.id.DP);
+            image = itemView.findViewById(R.id.image);
             user_ka_nam = itemView.findViewById(R.id.user_ka_nam);
             job_title = itemView.findViewById(R.id.job_title);
         }

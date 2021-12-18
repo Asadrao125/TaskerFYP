@@ -121,11 +121,10 @@ public class RegisterCustomer extends AppCompatActivity {
 
                         //Saving this data for chat purpose
                         ChatUserModel chatUserModel = new ChatUserModel(customerUsername, FirebaseAuth.getInstance().getUid(),
-                                "customer", customerGender, customerPhonenumber, customerEmail);
+                                "customer", customerGender, customerPhonenumber, customerEmail,"");
                         DatabaseReference chatUserRefrence = FirebaseDatabase.getInstance().getReference("All_Users")
                                 .child(FirebaseAuth.getInstance().getUid());
                         chatUserRefrence.setValue(chatUserModel);
-                        //
 
                         customerRef.updateChildren(customerrMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
